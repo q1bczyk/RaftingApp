@@ -1,0 +1,19 @@
+# Użycie obrazu SDK .NET w wersji 7.0
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+WORKDIR /src
+
+# Kopiowanie pliku .csproj i przywracanie zależności
+COPY ./Project.Api/Project.Api.csproj ./Project.Api/
+RUN dotnet restore ./Project.Api/Project.Api.csproj
+
+# Kopiowanie całego kodu aplikacji
+COPY . .
+
+# Ustawienie katalogu roboczego na folder z aplikacją
+WORKDIR /src/Project.Api
+
+# Ekspozycja portu aplikacji
+EXPOSE 5000
+
+# Uruchomienie aplikacji w trybie watch
+CMD ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:5000"]

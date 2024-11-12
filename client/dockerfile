@@ -1,0 +1,20 @@
+# Używamy obrazu Node.js 18 jako bazowego
+FROM node:18
+
+# Ustawiamy katalog roboczy w kontenerze
+WORKDIR /app
+
+# Kopiujemy pliki package.json i package-lock.json do katalogu roboczego
+COPY package*.json ./
+
+# Instalujemy zależności
+RUN npm install
+
+# Kopiujemy wszystkie pliki aplikacji do kontenera
+COPY . .
+
+# Eksponujemy port 4200, na którym Angular będzie nasłuchiwał
+EXPOSE 4200
+
+# Uruchamiamy aplikację Angular (ustawiamy host na 0.0.0.0, aby umożliwić dostęp z zewnątrz)
+CMD ["npm", "run", "start", "--", "--host", "0.0.0.0", "--poll", "2000"]
