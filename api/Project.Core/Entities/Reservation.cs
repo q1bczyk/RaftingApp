@@ -20,6 +20,7 @@ namespace Project.Core.Entities
         public int ParticipantNumber { get; set; }
         [Required]
         public Payment Payment { get; set; }
+        public IEnumerable<Equipment> Equipments { get; set; } = [];
         public IEnumerable<ReservationEquipment> ReservationEquipment { get; } = [];
 
     }

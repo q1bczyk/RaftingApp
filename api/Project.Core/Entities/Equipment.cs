@@ -8,6 +8,7 @@ namespace Project.Core.Entities
         public string EquipmentTypeId { get; set; }
         [Required]
         public EquipmentType EquipmentType { get; set; } = null!;
+        public IEnumerable<Reservation> Reservations { get; set; } = [];
         public IEnumerable<ReservationEquipment> ReservationEquipment { get; } = [];
     }
 }
