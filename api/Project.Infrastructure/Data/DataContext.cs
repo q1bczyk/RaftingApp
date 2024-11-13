@@ -17,6 +17,14 @@ namespace Project.Infrastructure.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
+        public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Equipment> Equipment { get; set; }
+        public DbSet<EquipmentType> EquipmentTypes { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ReservationEquipment> ReservationsEquipment { get; set; }
+        public DbSet<Settings> Settings { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
