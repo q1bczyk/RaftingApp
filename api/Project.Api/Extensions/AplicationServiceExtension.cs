@@ -1,5 +1,6 @@
-using Project.Core.Interfaces.IServices.IOtherServices;
-using Project.Core.Services.OtherServices;
+
+using Microsoft.EntityFrameworkCore;
+using Project.Infrastructure.Data;
 
 namespace Project.Api.Extensions
 {
@@ -7,8 +8,11 @@ namespace Project.Api.Extensions
     {
         public static IServiceCollection AddAplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddScoped<ITokenService, TokenService>();
 
+            services.AddDbContext<DataContext>(opt => {
+                opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            });
+            
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
