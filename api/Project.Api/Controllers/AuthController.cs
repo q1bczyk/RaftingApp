@@ -19,5 +19,12 @@ namespace Project.Api.Controllers
             await _authService.Register(registerDTO);
             return Ok(new SuccessResponseDTO("Account has been created. Confirmation link has been send on your email"));
         }
+
+        [HttpPost("Login")]
+        public async Task<ActionResult<LoggedUserDTO>> Login(LoginDTO loginDTO)
+        {
+            var loggedUser = await _authService.Login(loginDTO);
+            return Ok(loggedUser);
+        }
     }
 }

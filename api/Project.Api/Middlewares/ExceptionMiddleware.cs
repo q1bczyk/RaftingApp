@@ -36,11 +36,17 @@ public class ExceptionMiddleware
         catch (ApiControlledException ex)
         {
              _logger.LogError(ex, ex.Message);
-            
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            string details = "Unauthorized";
 
-            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "Bad request");
+            context.Response.ContentType = "application/json";
+            if(ex.StatusCode == 400){
+                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                details = "Bad Request";
+            }
+            else if(ex.StatusCode == 401)
+                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+
+            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, details);
 
             await GenerateResponse(context, response);
         }
