@@ -1,12 +1,11 @@
 using api;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.Interfaces.IRepositories;
 using Project.Infrastructure.Data;
 
 namespace Project.Infrastructure.Repositories
 {
-    public class BaseRepository<T> : IBaseRepository<T> where T : class
+    public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
         private readonly DataContext _context;
         protected DbSet<T> DbSet => _context.Set<T>();

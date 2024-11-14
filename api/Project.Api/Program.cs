@@ -11,6 +11,12 @@ builder.Services.RegisterServices(builder.Configuration);
 
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(builder => builder
