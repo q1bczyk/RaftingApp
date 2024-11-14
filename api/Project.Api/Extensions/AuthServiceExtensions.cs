@@ -12,7 +12,8 @@ namespace Project.Api.Extensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddIdentityCore<User>(opt => {
-                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireNonAlphanumeric = true;
+                opt.Password.RequiredLength = 8;
                 opt.User.RequireUniqueEmail = true;
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.AllowedUserNameCharacters = null;

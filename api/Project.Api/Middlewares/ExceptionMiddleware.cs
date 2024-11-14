@@ -29,7 +29,18 @@ public class ExceptionMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
 
-            var response = new ApiException(context.Response.StatusCode, ex.Message, "Resource not found");
+            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "Resource not found");
+
+            await GenerateResponse(context, response);
+        }
+        catch (ApiControlledException ex)
+        {
+             _logger.LogError(ex, ex.Message);
+            
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "Bad request");
 
             await GenerateResponse(context, response);
         }
@@ -41,14 +52,14 @@ public class ExceptionMiddleware
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             var response = _env.IsDevelopment()
-            ? new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace)
-            : new ApiException(context.Response.StatusCode, ex.Message, "Internal server error");
+            ? new ApiExceptionResponse(context.Response.StatusCode, ex.Message, ex.StackTrace)
+            : new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "Internal server error");
 
             await GenerateResponse(context, response);
         }
     }
 
-    private async Task GenerateResponse(HttpContext context, ApiException response)
+    private async Task GenerateResponse(HttpContext context, ApiExceptionResponse response)
     {
         var options = new JsonSerializerOptions
         {

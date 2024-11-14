@@ -1,4 +1,3 @@
-using api;
 namespace api;
 
 public class NotFoundException : Exception

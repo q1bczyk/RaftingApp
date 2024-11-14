@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project.Core.DTO.Auth
 {
-    public abstract class BaseAuthDTO
+    public class BaseAuthDTO
     {
-        [Required]
+        [Required, EmailAddress]
         public string Email { get; set; }
     }
 }

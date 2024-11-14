@@ -7,6 +7,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.RegisterServices(builder.Configuration);
 
 var app = builder.Build();
@@ -25,9 +26,8 @@ app.UseCors(builder => builder
     .AllowAnyMethod());
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
