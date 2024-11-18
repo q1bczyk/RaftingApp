@@ -11,12 +11,14 @@ namespace Project.Core.Services.OtherServices
     {
         private readonly UserManager<User> _userManager;
         private readonly ITokenService _tokenService;
+        private readonly IMailService _mailService;
         private readonly IBaseMapper<RegisterDTO, User> _mapper;
-        public AuthService(UserManager<User> userManager, ITokenService tokenService, IBaseMapper<RegisterDTO, User> mapper)
+        public AuthService(UserManager<User> userManager, ITokenService tokenService, IBaseMapper<RegisterDTO, User> mapper, IMailService mailService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _mapper = mapper;
+            _mailService = mailService;
         }
         public Task ConfirmAccount(ConfirmAccountDTO confirmAccountDTO)
         {
@@ -47,20 +49,22 @@ namespace Project.Core.Services.OtherServices
             return loggedUser;
         }
 
-        public Task PasswordReset(BaseAuthDTO passwordResetDTO)
+        public Task PasswordReset(BaseAuthDTO passwordResetDTO, string requestUrl)
         {
             throw new NotImplementedException();
         }
 
-        public async Task Register(RegisterDTO registerDTO)
+        public async Task Register(RegisterDTO registerDTO, string requestUrl)
         {
             var newUser = _mapper.MapToModel(registerDTO);
             newUser.UserName = registerDTO.Email.ToLower();
-
             var result = await _userManager.CreateAsync(newUser, registerDTO.Password);
 
             if(!result.Succeeded)
                 throw new ApiControlledException(string.Join(", ", result.Errors.Select(e => e.Description)), null, 400);
+            
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+            await _mailService.SendConfirmToken(registerDTO.Email, token, requestUrl);
         }
 
         public Task ResendConfirmationToken(BaseAuthDTO confirmationDTO)

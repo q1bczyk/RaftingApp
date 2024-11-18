@@ -22,10 +22,10 @@ public class ExceptionMiddleware
         {
             await _next(context);
         }
-        catch(NotFoundException ex)
+        catch (NotFoundException ex)
         {
             _logger.LogError(ex, ex.Message);
-            
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
 
@@ -35,15 +35,16 @@ public class ExceptionMiddleware
         }
         catch (ApiControlledException ex)
         {
-             _logger.LogError(ex, ex.Message);
+            _logger.LogError(ex, ex.Message);
             string details = "Unauthorized";
 
             context.Response.ContentType = "application/json";
-            if(ex.StatusCode == 400){
+            if (ex.StatusCode == 400)
+            {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 details = "Bad Request";
             }
-            else if(ex.StatusCode == 401)
+            else if (ex.StatusCode == 401)
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
 
             var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, details);
@@ -53,7 +54,7 @@ public class ExceptionMiddleware
         catch (Exception ex)
         {
             _logger.LogError(ex, ex.Message);
-            
+
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 

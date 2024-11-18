@@ -16,7 +16,8 @@ namespace Project.Api.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterDTO registerDTO)
         {
-            await _authService.Register(registerDTO);
+            var requestUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
+            await _authService.Register(registerDTO, requestUrl);
             return Ok(new SuccessResponseDTO("Account has been created. Confirmation link has been send on your email"));
         }
 

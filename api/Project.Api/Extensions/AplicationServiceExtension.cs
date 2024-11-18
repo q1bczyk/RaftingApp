@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Project.Api.Helpers;
 using Project.Infrastructure.Data;
 
 namespace Project.Api.Extensions
@@ -14,6 +15,8 @@ namespace Project.Api.Extensions
             });
             
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.Configure<EmailConfig>(config.GetSection("EmailConfig"));
 
             return services;
         }
