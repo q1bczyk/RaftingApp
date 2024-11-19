@@ -27,5 +27,12 @@ namespace Project.Api.Controllers
             var loggedUser = await _authService.Login(loginDTO);
             return Ok(loggedUser);
         }
+
+        [HttpPost("ConfirmAccount")]
+        public async Task<ActionResult> ConfirmAccount(ConfirmAccountDTO confirmAccountDTO)
+        {
+            await _authService.ConfirmAccount(confirmAccountDTO);
+            return Ok(new SuccessResponseDTO("Account has been confirmed, now you can sign in"));
+        }
     }
 }

@@ -20,23 +20,34 @@ namespace Project.Core.Services.OtherServices
             _mapper = mapper;
             _mailService = mailService;
         }
-        public Task ConfirmAccount(ConfirmAccountDTO confirmAccountDTO)
+        public async Task ConfirmAccount(ConfirmAccountDTO confirmAccountDTO)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByIdAsync(confirmAccountDTO.UserId);
+
+            if(user == null)
+                throw new NotFoundException("User not found");
+
+            if(user.EmailConfirmed)
+                throw new ApiControlledException("Account is already confirmed", 400, "Account is already confirmed");
+
+            var result = await _userManager.ConfirmEmailAsync(user, confirmAccountDTO.Token);
+
+            if(!result.Succeeded)
+                throw new ApiControlledException("Account activation failed", 400, string.Join(", ", result.Errors.Select(e => e.Description)));
         }
 
         public async Task<LoggedUserDTO> Login(LoginDTO loginDTO)
         {
             var user = await _userManager.FindByEmailAsync(loginDTO.Email);
             if(user == null)
-                throw new ApiControlledException("Wrong email or password", null, 401);
+                throw new ApiControlledException("Wrong email or password", 401, "Wrong email or password. Enter correct details");
 
             var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
             if(!loginSuccess)
-                throw new ApiControlledException("Wrong email or password", null, 401);
+                throw new ApiControlledException("Wrong email or password", 401, "Wrong email or password. Enter correct details");
 
             if(!user.EmailConfirmed)
-                throw new ApiControlledException("Account is not confirmed", null, 401);
+                throw new ApiControlledException("Account is not confirmed", 401, "Check email and confirm your account");
 
             var token = await _tokenService.CreateToken(user);
 
@@ -61,10 +72,10 @@ namespace Project.Core.Services.OtherServices
             var result = await _userManager.CreateAsync(newUser, registerDTO.Password);
 
             if(!result.Succeeded)
-                throw new ApiControlledException(string.Join(", ", result.Errors.Select(e => e.Description)), null, 400);
+                throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
             
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-            await _mailService.SendConfirmToken(registerDTO.Email, token, requestUrl);
+            await _mailService.SendConfirmToken(registerDTO.Email, token, newUser.Id, requestUrl);
         }
 
         public Task ResendConfirmationToken(BaseAuthDTO confirmationDTO)
@@ -76,5 +87,6 @@ namespace Project.Core.Services.OtherServices
         {
             throw new NotImplementedException();
         }
+
     }
 }

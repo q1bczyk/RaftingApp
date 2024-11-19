@@ -36,18 +36,27 @@ public class ExceptionMiddleware
         catch (ApiControlledException ex)
         {
             _logger.LogError(ex, ex.Message);
-            string details = "Unauthorized";
 
             context.Response.ContentType = "application/json";
+            
             if (ex.StatusCode == 400)
-            {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                details = "Bad Request";
-            }
+
             else if (ex.StatusCode == 401)
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
 
-            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, details);
+            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, ex.Details);
+
+            await GenerateResponse(context, response);
+        }
+        catch (FileNotFoundException ex)
+        {
+            _logger.LogError(ex, ex.Message);
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.NotFound;
+
+            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "File not found");
 
             await GenerateResponse(context, response);
         }

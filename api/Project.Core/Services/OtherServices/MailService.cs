@@ -27,10 +27,10 @@ namespace Project.Core.Services.OtherServices
             throw new NotImplementedException();
         }
 
-        public async Task SendConfirmToken(string addressee, string token, string requestUrl)
+        public async Task SendConfirmToken(string addressee, string token, string userId, string requestUrl)
         {
             string emailTemplate = LoadEmailTemplate("Templates/accountConfirmationTemplate.html");
-            string confirmationLink = $"{requestUrl}{_emailConfig.Value.EmailConfirmReturnPath}/{token}";
+            string confirmationLink = $"{requestUrl}{_emailConfig.Value.EmailConfirmReturnPath}?token={token}&userId={userId}";
             string emailBody = emailTemplate.Replace("{{ConfirmationLink}}", confirmationLink);
             await SendEmail(addressee, "Rafting - Potwierdź konto", emailBody);
         }
