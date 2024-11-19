@@ -22,10 +22,7 @@ namespace Project.Core.Services.OtherServices
         }
         public async Task ConfirmAccount(ConfirmAccountDTO confirmAccountDTO)
         {
-            var user = await _userManager.FindByIdAsync(confirmAccountDTO.UserId);
-
-            if(user == null)
-                throw new NotFoundException("User not found");
+            var user = await GetUserById(confirmAccountDTO.UserId); 
 
             if(user.EmailConfirmed)
                 throw new ApiControlledException("Account is already confirmed", 400, "Account is already confirmed");
@@ -38,10 +35,8 @@ namespace Project.Core.Services.OtherServices
 
         public async Task<LoggedUserDTO> Login(LoginDTO loginDTO)
         {
-            var user = await _userManager.FindByEmailAsync(loginDTO.Email);
-            if(user == null)
-                throw new ApiControlledException("Wrong email or password", 401, "Wrong email or password. Enter correct details");
-
+            var user = await GetUserByEmail(loginDTO.Email);
+            
             var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
             if(!loginSuccess)
                 throw new ApiControlledException("Wrong email or password", 401, "Wrong email or password. Enter correct details");
@@ -62,13 +57,8 @@ namespace Project.Core.Services.OtherServices
 
         public async Task PasswordReset(BaseAuthDTO passwordResetDTO, string requestUrl)
         {
-            var user = await _userManager.FindByEmailAsync(passwordResetDTO.Email);
-
-            if(user == null)
-                throw new NotFoundException("User not found");
-
+            var user = await GetUserByEmail(passwordResetDTO.Email);
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
-
             await _mailService.SendPasswordResetToken(user.Email, token, user.Id, requestUrl);
         }
 
@@ -85,14 +75,40 @@ namespace Project.Core.Services.OtherServices
             await _mailService.SendConfirmToken(newUser.Email, token, newUser.Id, requestUrl);
         }
 
-        public Task ResendConfirmationToken(BaseAuthDTO confirmationDTO)
+        public async Task ResendConfirmationToken(BaseAuthDTO confirmationDTO, string requestUrl)
         {
-            throw new NotImplementedException();
+            var user = await GetUserByEmail(confirmationDTO.Email);
+            string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            await _mailService.SendConfirmToken(user.Email, token, user.Id, requestUrl);
         }
 
-        public Task SetNewPassword(SetNewPasswordDTO setNewPasswordDTO)
+        public async Task SetNewPassword(SetNewPasswordDTO setNewPasswordDTO)
         {
-            throw new NotImplementedException();
+            var user = await GetUserById(setNewPasswordDTO.UserId);
+            var result = await _userManager.ResetPasswordAsync(user, setNewPasswordDTO.Token, setNewPasswordDTO.Password);
+            if(!result.Succeeded)
+                throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
+
+        }
+
+        private async Task<User> GetUserByEmail(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if(user == null)
+                throw new NotFoundException("User not found");
+
+            return user;
+        }
+
+        private async Task<User> GetUserById(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if(user == null)
+                throw new NotFoundException("User not found");
+
+            return user;
         }
 
     }

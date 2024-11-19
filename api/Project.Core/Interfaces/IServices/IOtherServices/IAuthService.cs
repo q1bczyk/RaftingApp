@@ -7,7 +7,7 @@ namespace Project.Core.Interfaces.IServices.IOtherServices
         Task Register(RegisterDTO registerDTO, string requestUrl);
         Task<LoggedUserDTO> Login(LoginDTO loginDTO);
         Task ConfirmAccount(ConfirmAccountDTO confirmAccountDTO);
-        Task ResendConfirmationToken(BaseAuthDTO confirmationDTO);
+        Task ResendConfirmationToken(BaseAuthDTO confirmationDTO, string requestUrl);
         Task PasswordReset(BaseAuthDTO passwordResetDTO, string requestUrl);
         Task SetNewPassword(SetNewPasswordDTO setNewPasswordDTO);
     }
