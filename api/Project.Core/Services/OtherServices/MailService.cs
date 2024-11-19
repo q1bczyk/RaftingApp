@@ -32,12 +32,15 @@ namespace Project.Core.Services.OtherServices
             string emailTemplate = LoadEmailTemplate("Templates/accountConfirmationTemplate.html");
             string confirmationLink = $"{requestUrl}{_emailConfig.Value.EmailConfirmReturnPath}?token={token}&userId={userId}";
             string emailBody = emailTemplate.Replace("{{ConfirmationLink}}", confirmationLink);
-            await SendEmail(addressee, "Rafting - Potwierdź konto", emailBody);
+            await SendEmail(addressee, "RaftingApp - Potwierdź konto", emailBody);
         }
 
-        public Task SendPasswordResetToken(string addressee, string token, string requestUrl)
+        public async Task SendPasswordResetToken(string addressee, string token, string userId, string requestUrl)
         {
-            throw new NotImplementedException();
+            string emailTemplate = LoadEmailTemplate("Templates/passwordResetTemplate.html");
+            string passwordResetLink = $"{requestUrl}{_emailConfig.Value.NewPasswordReturnPath}?token={token}&userId={userId}";
+            string emailBody = emailTemplate.Replace("{{PasswordResetLink}}", passwordResetLink);
+            await SendEmail(addressee, "RaftingApp - Reseetuj hasło", emailBody);
         }
 
         private string LoadEmailTemplate(string templatePath)

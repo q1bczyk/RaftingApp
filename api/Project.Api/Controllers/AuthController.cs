@@ -16,8 +16,7 @@ namespace Project.Api.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterDTO registerDTO)
         {
-            var requestUrl = $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
-            await _authService.Register(registerDTO, requestUrl);
+            await _authService.Register(registerDTO, GetRequestPath());
             return Ok(new SuccessResponseDTO("Account has been created. Confirmation link has been send on your email"));
         }
 
@@ -33,6 +32,18 @@ namespace Project.Api.Controllers
         {
             await _authService.ConfirmAccount(confirmAccountDTO);
             return Ok(new SuccessResponseDTO("Account has been confirmed, now you can sign in"));
+        }
+
+        [HttpPost("PasswordReset")]
+        public async Task<ActionResult> PasswordReset(BaseAuthDTO passwordResetDTO)
+        {
+            await _authService.PasswordReset(passwordResetDTO, GetRequestPath());
+            return Ok(new SuccessResponseDTO("Password reset link has been sended. Check your email"));
+        }
+
+        private string GetRequestPath()
+        {
+            return $"{HttpContext.Request.Scheme}://{HttpContext.Request.Host}";
         }
     }
 }

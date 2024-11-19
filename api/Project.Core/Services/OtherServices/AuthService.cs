@@ -60,9 +60,16 @@ namespace Project.Core.Services.OtherServices
             return loggedUser;
         }
 
-        public Task PasswordReset(BaseAuthDTO passwordResetDTO, string requestUrl)
+        public async Task PasswordReset(BaseAuthDTO passwordResetDTO, string requestUrl)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(passwordResetDTO.Email);
+
+            if(user == null)
+                throw new NotFoundException("User not found");
+
+            string token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            await _mailService.SendPasswordResetToken(user.Email, token, user.Id, requestUrl);
         }
 
         public async Task Register(RegisterDTO registerDTO, string requestUrl)
@@ -75,7 +82,7 @@ namespace Project.Core.Services.OtherServices
                 throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
             
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-            await _mailService.SendConfirmToken(registerDTO.Email, token, newUser.Id, requestUrl);
+            await _mailService.SendConfirmToken(newUser.Email, token, newUser.Id, requestUrl);
         }
 
         public Task ResendConfirmationToken(BaseAuthDTO confirmationDTO)
