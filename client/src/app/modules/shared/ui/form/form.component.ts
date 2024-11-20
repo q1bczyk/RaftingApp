@@ -27,7 +27,6 @@ export class FormComponent {
   onFormSubmit() : void {
     if(this.formSettings.formGroup.invalid)
       return
-    this.loadingService.loadingOn();
     this.formSubmitEvent.emit(this.formSettings.formGroup);
   }
 

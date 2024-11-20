@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { FormComponent } from "../../../shared/ui/form/form.component";
 import { FormSettingType } from '../../../shared/types/ui/form.type';
@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common';
 import { mapFormToModel } from '../../../core/utils/mapper/mapper';
 import { LoginType } from '../../types/login.type';
 import { catchError, of, take } from 'rxjs';
+import { ApiManager } from '../../../core/api/api-manager';
+import { LoggedInUserType } from '../../types/logged-in-user.type';
+import { LoadingService } from '../../../shared/services/loading.service';
 
 @Component({
   selector: 'app-auth-form',
@@ -21,21 +24,10 @@ export class AuthFormComponent
 {
     loginForm : FormSettingType = loginForm;
 
-    constructor(private authService : AuthService){}
+    constructor(private authService : AuthService, public apiManager : ApiManager<LoggedInUserType>){}
 
     onFormSubmit(data : FormGroup){
       const mappedForm : LoginType = mapFormToModel<LoginType>(data);
-      this.authService.login(mappedForm)
-        .pipe(
-          take(1),
-                catchError((error) => {
-                        console.log(error);
-                        return of(undefined)
-                    })
-        )
-        .subscribe(res => {
-          console.log(res);
-        })
-        
+      this.apiManager.exeApiRequest(this.authService.login(mappedForm));
     }
 }
