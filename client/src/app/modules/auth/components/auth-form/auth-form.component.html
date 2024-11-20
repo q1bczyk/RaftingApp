@@ -7,8 +7,9 @@
     </div>
     <div class="p-4">
         <app-form
-            [formSettings]="loginForm"
+            [formSettings]="form"
             (formSubmitEvent)="onFormSubmit($event)"
         />
+        <ng-content></ng-content>
     </div>
 </div>

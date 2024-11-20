@@ -3,7 +3,7 @@ import { Observable, take } from "rxjs";
 import { LoadingService } from "../../shared/services/loading.service";
 
 @Injectable({
-    providedIn: 'root' // Dzięki temu ApiManager będzie dostępny przez DI
+    providedIn: 'root' 
 })
 
 export class ApiManager<GetType>{
@@ -22,6 +22,7 @@ export class ApiManager<GetType>{
         )
         .subscribe((data : GetType | undefined) => {
             this.data.set(data);
+            onSuccess ? onSuccess() : null;
             this.loadingService.loadingOff();
         });
     }
