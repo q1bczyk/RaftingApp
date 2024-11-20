@@ -15,7 +15,7 @@ html, body{
 .wrapper
 {
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     background-color: #fcfcfc;
 }
 
@@ -38,5 +38,10 @@ html, body{
     }
 }
 
+.p-button:disabled{
+    background-color: #ffffff00;
+    color: var(--surface-500);
+    border: 1px solid var(--surface-500);
+}
 
 
