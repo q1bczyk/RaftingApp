@@ -8,6 +8,7 @@
     <div class="p-4">
         <app-form
             [formSettings]="loginForm"
+            (formSubmitEvent)="onFormSubmit($event)"
         />
     </div>
 </div>
