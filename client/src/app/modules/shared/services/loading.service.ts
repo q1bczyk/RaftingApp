@@ -14,7 +14,7 @@ export class LoadingService{
         this.loading.set(false);
     }
 
-    isLoading() : WritableSignal<boolean>{
-        return this.loading;
+    isLoading() : boolean{
+        return this.loading();
     }
 }

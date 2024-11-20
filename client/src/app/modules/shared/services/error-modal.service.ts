@@ -4,18 +4,30 @@ import { Injectable, WritableSignal, signal } from "@angular/core";
     providedIn: 'root',
 })
 export class ErrorModalService{
-    private errorModal : WritableSignal<ErrorModalType> = signal({isMoadlOpen: false, errorStatusCode : 0, errorMessage : ''});
+    private errorModal : WritableSignal<ErrorModalType> = signal({isMoadlOpen: true, errorStatusCode : 404, errorMessage : 'Nie znaleziono danego zasobu'});
 
-    loadingOn(){
-        this.loading.set(true);
+    get getModal() : ErrorModalType{
+        return this.errorModal();
     }
 
-    loadingOff(){
-        this.loading.set(false);
+    closeModal(){
+        this.errorModal.update(modalState => ({
+            ...modalState,
+            isMoadlOpen : false
+        }));
     }
 
-    isLoading() : WritableSignal<boolean>{
-        return this.loading;
+    openModal(statusCode : number, errorMessage : string){
+        this.setError(statusCode, errorMessage)
+    }
+
+    private setError(statusCode : number, errorMessage : string){
+        const error : ErrorModalType = {
+            isMoadlOpen : true,
+            errorStatusCode : statusCode,
+            errorMessage : errorMessage
+        }
+        this.errorModal.set(error);
     }
 }
 

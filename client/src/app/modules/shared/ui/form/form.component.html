@@ -22,11 +22,11 @@
     }
    }
     <button 
-        [disabled]="isFormInvalid() || loadingService.isLoading()()"
+        [disabled]="isFormInvalid() || loadingService.isLoading()"
         class="btn btn-primary rounded mt-2"
         type="submit"
         >
-        @if (loadingService.isLoading()()){
+        @if (loadingService.isLoading()){
             <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
                 <span class="sr-only"></span>
             </div>

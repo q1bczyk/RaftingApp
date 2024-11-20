@@ -1,4 +1,7 @@
 <main class="main">
+   @if(errorModalService.getModal.isMoadlOpen){
+      <app-error-modal/>
+   }
    <router-outlet/>
 </main>
 
