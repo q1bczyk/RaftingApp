@@ -27,21 +27,20 @@ html, body{
     background-color: #00000056;
 }
 
-.p-button-primary{
-    background-color: var(--orange-500);
-    border: 0;
+.btn-primary{
+    background-color: var(--orange-500) !important;
+    border: 0 !important;
     text-transform: uppercase;
     letter-spacing: 1px;
 
     &:hover{
-            background-color: var(--orange-400);
+            background-color: var(--orange-400) !important;
     }
 }
 
-.p-button:disabled{
-    background-color: #ffffff00;
-    color: var(--surface-500);
-    border: 1px solid var(--surface-500);
+.btn-primary:disabled{
+    background-color: var(--surface-200) !important;
+    color: var(--surface-500) !important;
 }
 
 
