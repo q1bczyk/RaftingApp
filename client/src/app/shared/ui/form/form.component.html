@@ -1,0 +1,33 @@
+<form 
+    class="d-flex flex-column gap-2"
+    [formGroup]="formSettings.formGroup"
+    (ngSubmit)="onFormSubmit()">
+   @for (control of controls; track $index){
+    <label for="control">{{formSettings.fields[control].label}}</label>
+    @if (formSettings.fields[control].fieldType === 'password' || 
+        formSettings.fields[control].fieldType === 'text' || 
+        formSettings.fields[control].fieldType === 'textarea'){
+        <input 
+        pInputText 
+        [id]="control"
+        [type]="formSettings.fields[control].fieldType"
+        [placeholder]="formSettings.fields[control].label"
+        [formControlName]="control"
+        />
+        @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched ){
+            <small id="username-help" class="text-secondary">
+               {{formSettings.fields[control].validationMessage}}
+           </small>
+       }
+    }
+   }
+    <button 
+        pButton 
+        pRipple 
+        [label]="formSettings.buttonLabel" 
+        [disabled]="isFormInvalid()"
+        class="p-button-primary rounded mt-2"
+        type="submit"
+        >
+    </button>
+</form>
