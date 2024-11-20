@@ -4,7 +4,7 @@ import { Injectable, WritableSignal, signal } from "@angular/core";
     providedIn: 'root',
 })
 export class ErrorModalService{
-    private errorModal : WritableSignal<ErrorModalType> = signal({isMoadlOpen: true, errorStatusCode : 404, errorMessage : 'Nie znaleziono danego zasobu'});
+    private errorModal : WritableSignal<ErrorModalType> = signal({isMoadlOpen: false, errorStatusCode : 404, errorMessage : 'Nie znaleziono danego zasobu'});
 
     get getModal() : ErrorModalType{
         return this.errorModal();
