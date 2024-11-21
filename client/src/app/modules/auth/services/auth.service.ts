@@ -33,11 +33,18 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
                 })
             )
     }
+    
     confirmAccount(data: ConfirmAccountType): Observable<ApiSuccessResponse> {
         throw new Error("Method not implemented.");
     }
+
     passwordReset(data: BaseAuthType): Observable<ApiSuccessResponse> {
-        throw new Error("Method not implemented.");
+        return this.http.post<ApiSuccessResponse>(`${this.url}/passwordReset`, data)
+            .pipe(
+                map(res => {
+                    return res;
+                })
+            )
     }
     resendConfirmationToken(data: BaseAuthType): Observable<ApiSuccessResponse> {
         throw new Error("Method not implemented.");

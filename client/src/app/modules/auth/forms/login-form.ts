@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { FormFieldType, FormSettingType } from "../../shared/types/ui/form.type";
-import { passwordStrengthValidator } from "./validators/password-strength.validator";
+import { passwordStrengthValidator } from "./custom-validators/password-strength.validator";
 
 const loginFormGroup: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),

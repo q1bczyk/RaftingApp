@@ -9,7 +9,11 @@ export const authRoutes: Routes = [
             {
                 path: 'login', 
                 loadComponent: () => import('./pages/login/login.component').then(m => m.LoginComponent)
-            }
+            },
+            {
+                path: 'password-reset', 
+                loadComponent: () => import('./pages/password-reset/password-reset.component').then(m => m.PasswordResetComponent)
+            },
         ]
     },
    

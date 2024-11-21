@@ -21,6 +21,7 @@ import { LoggedInUserType } from '../../types/logged-in-user.type';
 export class AuthFormComponent 
 {
     @Input() form : FormSettingType = { formGroup : new FormGroup({}), fields : {}, buttonLabel : ''};
+    @Input() formTitle : string = '';
     @Output() transferFormEvent : EventEmitter<FormGroup> = new EventEmitter<FormGroup>;
 
     constructor(private authService : AuthService, public apiManager : ApiManager<LoggedInUserType>){}

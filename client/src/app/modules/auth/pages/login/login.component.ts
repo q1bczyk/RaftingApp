@@ -9,6 +9,7 @@ import { AuthService } from '../../services/auth.service';
 import { ApiManager } from '../../../core/api/api-manager';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../../../shared/services/loading.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -21,14 +22,24 @@ export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginTyp
  
   constructor(
     private http: HttpClient,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private router : Router
   ){
     super(new AuthService(http), new ApiManager<LoggedInUserType>(loadingService), loginForm);
   }
 
   override onFormSubmit(form: FormGroup) : void {
     const mappedForm : LoginType = this.convertForm(form)
-    this.apiManager.exeApiRequest(this.authService.login(mappedForm), () => console.log("SUKCES!"));
+    this.apiManager.exeApiRequest(this.authService.login(mappedForm), () => this.router.navigate(["/admin"]));
   }
+
+  passwordResetNavigate(){
+    this.router.navigate(["auth/password-reset"]);
+  }
+
+  private onLoginSuccess() : void{
+    
+  }
+
 
 }

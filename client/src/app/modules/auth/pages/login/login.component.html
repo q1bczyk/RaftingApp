@@ -1,8 +1,9 @@
 <app-auth-form
     [form]="form"
+    [formTitle]="'Zaloguj się'"
     (transferFormEvent)="onFormSubmit($event)"
 >
 <div class="mt-2 ">
-    <p class="hover text-warning">Zapomiałeś hasła?</p>
+    <p class="hover text-warning" (click)="passwordResetNavigate()">Zapomiałeś hasła?</p>
 </div>
 </app-auth-form>
