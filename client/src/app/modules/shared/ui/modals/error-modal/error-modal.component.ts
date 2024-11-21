@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ErrorModalService } from '../../../services/error-modal.service';
+import { ErrorService } from '../../../services/error.service';
 
 @Component({
   selector: 'app-error-modal',
@@ -9,5 +9,5 @@ import { ErrorModalService } from '../../../services/error-modal.service';
   styleUrl: './error-modal.component.scss'
 })
 export class ErrorModalComponent {
-  constructor(public errorModalService : ErrorModalService){}
+  constructor(public errorModalService : ErrorService){}
 }

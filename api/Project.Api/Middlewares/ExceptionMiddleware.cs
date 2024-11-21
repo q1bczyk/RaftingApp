@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Json;
 using Project.Core.Exceptions;
@@ -22,6 +23,17 @@ public class ExceptionMiddleware
         {
             await _next(context);
         }
+        catch (ValidationException ex)
+        {
+            _logger.LogError(ex, "Validation error: {Message}", ex.Message);
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+
+            var response = new ApiExceptionResponse(context.Response.StatusCode, "Wprowadzone dane są nieporpawne", ex.ValidationResult?.ErrorMessage);
+
+            await GenerateResponse(context, response);
+        }
         catch (NotFoundException ex)
         {
             _logger.LogError(ex, ex.Message);
@@ -29,7 +41,7 @@ public class ExceptionMiddleware
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.NotFound;
 
-            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "Resource not found");
+            var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, "Nie znaleziono zasobu");
 
             await GenerateResponse(context, response);
         }

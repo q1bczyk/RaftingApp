@@ -39,10 +39,10 @@ namespace Project.Core.Services.OtherServices
             
             var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
             if(!loginSuccess)
-                throw new ApiControlledException("Wrong email or password", 401, "Wrong email or password. Enter correct details");
+                throw new ApiControlledException("Błędny email lub hasło", 401, "Błędny email lub hasło. Wprowadź poprawne dane");
 
             if(!user.EmailConfirmed)
-                throw new ApiControlledException("Account is not confirmed", 401, "Check email and confirm your account");
+                throw new ApiControlledException("Konto nie jest potwierdzone", 401, "Sprawdź maila i potwierdź konto");
 
             var token = await _tokenService.CreateToken(user);
 
