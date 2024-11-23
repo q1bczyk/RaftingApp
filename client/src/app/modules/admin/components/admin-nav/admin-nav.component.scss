@@ -1,6 +1,6 @@
 @import "../../../../../../node_modules/bootstrap/scss/bootstrap.scss";
 
-.navigation{
+.navigation{    
     width: 220px;
     min-height: 100vh;
     position: fixed;
@@ -13,8 +13,12 @@
     // transform: translateX(-102%);
 
     .logo{
-        padding: 20px;
         border-bottom: 1px solid var(--surface-100);
+        width: 100%;
+        padding: 4px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     
     ul{
