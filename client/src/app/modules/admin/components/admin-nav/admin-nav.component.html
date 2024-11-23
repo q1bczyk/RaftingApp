@@ -1,0 +1,16 @@
+<div class="navigation shadow">
+  <div class="logo">logo
+    
+  </div>
+  <ul>
+    @for (link of links; track $index) {
+      <li routerLinkActive="active">
+        <div></div>
+        <a [routerLink]="link.path">
+          <i [className]="link.icon"></i>
+          {{link.label}}
+        </a>
+      </li>
+    }
+  </ul>
+</div>

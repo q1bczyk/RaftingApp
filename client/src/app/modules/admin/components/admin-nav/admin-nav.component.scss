@@ -1,0 +1,77 @@
+@import "../../../../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+.navigation{
+    width: 220px;
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transition: all ease-in-out 0.3s;
+    z-index: 1;
+    background-color: white;
+    border-right: 1px solid var(--surface-300);
+    // transform: translateX(-102%);
+
+    .logo{
+        padding: 20px;
+        border-bottom: 1px solid var(--surface-100);
+    }
+    
+    ul{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+        li{
+            padding: 0px 20px;
+            width: 90%;
+            min-height: 40px;
+            border-end-end-radius: 10px;
+            border-start-end-radius: 10px;
+            display: flex;
+            align-items: center;
+            transition: all ease-in-out 0.2s;
+            position: relative;
+            
+            div{
+                position: absolute;
+                left: 0;
+                height: 40px;
+                width: 4px;
+                transition: all ease-in-out 0.2s;
+            }
+
+            &:hover{
+                background-color: #ffeccc;
+                cursor: pointer; 
+
+                div{
+                    background-color: var(--orange-500);
+                }
+            }
+        }
+
+        .active{
+
+            background-color: #ffeccc;
+
+            div{
+                background-color: var(--orange-500);
+            }
+
+        }
+    }
+
+    a{
+        text-decoration: none;
+        color: black;
+    }
+
+    @include media-breakpoint-up(lg) {
+        transform: translateX(0);
+    }
+}
+
+
+
+
