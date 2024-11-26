@@ -9,9 +9,14 @@ namespace Project.Infrastructure.Repositories
     {
         private readonly DataContext _context;
         protected DbSet<T> DbSet => _context.Set<T>();
+        public BaseRepository(DataContext context)
+        {
+            _context = context;
+        }
         public async Task<T> Create(T model)
         {
             await _context.Set<T>().AddAsync(model);
+            await Save();
             return model;
         }
 

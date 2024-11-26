@@ -27,6 +27,7 @@ namespace Project.Core.Services.OtherServices
         public async Task<string> Upload(IFormFile file, string fileName)
         {
             IsFileExtensionAllowed(file);
+            fileName = fileName.ToLower().Replace(" ", "_"); 
             Stream stream = file.OpenReadStream();
             await FilesContainer.UploadBlobAsync(fileName, stream);
             string fileUrl = FilesContainer.GetBlobClient(fileName).Uri.ToString();

@@ -1,6 +1,6 @@
-using System;
 using System.ComponentModel.DataAnnotations;
 
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
 public class ParticipantsValidationAttribute : ValidationAttribute
 {
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)

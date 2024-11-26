@@ -6,6 +6,6 @@ namespace Project.Core.DTO.EquipmentDTO
     public class AddEquipmentTypeDTO : BaseEquipmentDTO
     {
         [Required]
-        IFormFile file;
+        public IFormFile file { get; set; }
     }
 }
