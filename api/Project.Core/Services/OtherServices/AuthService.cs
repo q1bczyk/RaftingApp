@@ -55,14 +55,14 @@ namespace Project.Core.Services.OtherServices
             return loggedUser;
         }
 
-        public async Task PasswordReset(BaseAuthDTO passwordResetDTO, string requestUrl)
+        public async Task PasswordReset(BaseAuthDTO passwordResetDTO )
         {
             var user = await GetUserByEmail(passwordResetDTO.Email);
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            await _mailService.SendPasswordResetToken(user.Email, token, user.Id, requestUrl);
+            await _mailService.SendPasswordResetToken(user.Email, token, user.Id);
         }
 
-        public async Task Register(RegisterDTO registerDTO, string requestUrl)
+        public async Task Register(RegisterDTO registerDTO)
         {
             var newUser = _mapper.MapToModel(registerDTO);
             newUser.UserName = registerDTO.Email.ToLower();
@@ -72,14 +72,14 @@ namespace Project.Core.Services.OtherServices
                 throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
             
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-            await _mailService.SendConfirmToken(newUser.Email, token, newUser.Id, requestUrl);
+            await _mailService.SendConfirmToken(newUser.Email, token, newUser.Id);
         }
 
-        public async Task ResendConfirmationToken(BaseAuthDTO confirmationDTO, string requestUrl)
+        public async Task ResendConfirmationToken(BaseAuthDTO confirmationDTO)
         {
             var user = await GetUserByEmail(confirmationDTO.Email);
             string token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            await _mailService.SendConfirmToken(user.Email, token, user.Id, requestUrl);
+            await _mailService.SendConfirmToken(user.Email, token, user.Id);
         }
 
         public async Task SetNewPassword(SetNewPasswordDTO setNewPasswordDTO)

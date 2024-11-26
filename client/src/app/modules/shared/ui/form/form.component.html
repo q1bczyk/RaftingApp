@@ -14,12 +14,18 @@
         [placeholder]="formSettings.fields[control].label"
         [formControlName]="control"
         />
-        @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched ){
+        @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched && control !== 'confirmPassword' ){
             <small id="username-help" class="text-danger">
                 <i class="bi bi-info-circle-fill me-2"></i> 
                 {{formSettings.fields[control].validationMessage}}
            </small>
        }
+       @if(control === 'confirmPassword' && formSettings.formGroup.errors?.['passwordMismatch'] && formSettings.formGroup.get(control)?.touched){
+        <small id="password-mismatch-help" class="text-danger">
+            <i class="bi bi-info-circle-fill me-2"></i> 
+            Hasła muszą być takie same.
+        </small>
+        }
     }
    }
     <button 
