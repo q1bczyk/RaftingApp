@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Project.Api.Helpers;
+using Project.Core.Helpers;
 using Project.Infrastructure.Data;
 
 namespace Project.Api.Extensions
@@ -17,6 +18,7 @@ namespace Project.Api.Extensions
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.Configure<EmailConfig>(config.GetSection("EmailConfig"));
+            services.Configure<AzureBlobConfig>(config.GetSection("AzureBlobConfig"));
 
             return services;
         }

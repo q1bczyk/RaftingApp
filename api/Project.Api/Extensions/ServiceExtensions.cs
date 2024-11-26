@@ -16,6 +16,7 @@ namespace Project.Api.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IMailService, MailService>();
+            services.AddScoped<IFileService, FileService>();
 
             //repositories
 
