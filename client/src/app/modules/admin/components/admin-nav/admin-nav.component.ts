@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu'; 
 import { NavItemType } from '../../types/ui/nav-item.type';
 import { navItems } from './nav-items/nav-item';

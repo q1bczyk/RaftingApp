@@ -36,7 +36,13 @@
             align-items: center;
             transition: all ease-in-out 0.2s;
             position: relative;
+            margin-top: 2px;
             
+            i{
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+
             div{
                 position: absolute;
                 left: 0;
@@ -46,12 +52,19 @@
             }
 
             &:hover{
-                background-color: #ffeccc;
                 cursor: pointer; 
 
                 div{
                     background-color: var(--orange-500);
                 }
+
+                a{
+                    color: black;
+                }
+            }
+
+            a{
+                color: var(--surface-600);
             }
         }
 
@@ -63,12 +76,21 @@
                 background-color: var(--orange-500);
             }
 
+            &:hover{
+                cursor: default;
+                background-color: #ffeccc;
+            }
+
+            a{
+                cursor: default;
+                color: black;
+            }
         }
     }
 
     a{
         text-decoration: none;
-        color: black;
+        transition: color ease-in-out 0.2s;
     }
 
     @include media-breakpoint-up(lg) {
