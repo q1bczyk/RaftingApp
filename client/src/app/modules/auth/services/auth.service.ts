@@ -50,6 +50,11 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
         throw new Error("Method not implemented.");
     }
     setNewPassword(data: NewPasswordType): Observable<ApiSuccessResponse> {
-        throw new Error("Method not implemented.");
+        return this.http.post<ApiSuccessResponse>(`${this.url}/SetNewPassword`, data)
+        .pipe(
+            map(res => {
+                return res;
+            })
+        )
     }
 }

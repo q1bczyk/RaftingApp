@@ -27,18 +27,18 @@ namespace Project.Core.Services.OtherServices
             throw new NotImplementedException();
         }
 
-        public async Task SendConfirmToken(string addressee, string token, string userId, string requestUrl)
+        public async Task SendConfirmToken(string addressee, string token, string userId)
         {
             string emailTemplate = LoadEmailTemplate("Templates/accountConfirmationTemplate.html");
-            string confirmationLink = $"{requestUrl}{_emailConfig.Value.EmailConfirmReturnPath}?token={token}&userId={userId}";
+            string confirmationLink = $"{_emailConfig.Value.ClientUrl}{_emailConfig.Value.EmailConfirmReturnPath}?token={token}&userId={userId}";
             string emailBody = emailTemplate.Replace("{{ConfirmationLink}}", confirmationLink);
             await SendEmail(addressee, "RaftingApp - Potwierdź konto", emailBody);
         }
 
-        public async Task SendPasswordResetToken(string addressee, string token, string userId, string requestUrl)
+        public async Task SendPasswordResetToken(string addressee, string token, string userId)
         {
             string emailTemplate = LoadEmailTemplate("Templates/passwordResetTemplate.html");
-            string passwordResetLink = $"{requestUrl}{_emailConfig.Value.NewPasswordReturnPath}?token={token}&userId={userId}";
+            string passwordResetLink = $"{_emailConfig.Value.ClientUrl}{_emailConfig.Value.NewPasswordReturnPath}?token={token}&userId={userId}";
             string emailBody = emailTemplate.Replace("{{PasswordResetLink}}", passwordResetLink);
             await SendEmail(addressee, "RaftingApp - Reseetuj hasło", emailBody);
         }
