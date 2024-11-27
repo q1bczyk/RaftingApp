@@ -14,7 +14,7 @@ namespace Project.Api.Controllers
 
         [HttpPost]
         public async Task<ActionResult<GetEquipmentTypeDTO>> AddEquipmentType(AddEquipmentTypeDTO addEquipmentTypeDTO){
-            var newEquipmentType = await _service.AddEquipmentType(addEquipmentTypeDTO);
+            var newEquipmentType = await _service.Create(addEquipmentTypeDTO);
             return Ok(newEquipmentType);
         }
     }
