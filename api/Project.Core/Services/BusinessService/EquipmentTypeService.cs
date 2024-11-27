@@ -7,7 +7,13 @@ using Project.Core.Interfaces.IServices.IOtherServices;
 
 namespace Project.Core.Services.BusinessService
 {
-    public class EquipmentTypeService : BaseCrudService<GetEquipmentTypeDTO, AddEquipmentTypeDTO, EquipmentType, IEquipmentTypeRepository>, IEquipmentTypeService
+    public class EquipmentTypeService : BaseCrudService<
+    GetEquipmentTypeDTO, 
+    AddEquipmentTypeDTO, 
+    UpdateEquipmentTypeDTO,  
+    EquipmentType, 
+    IEquipmentTypeRepository>, 
+    IEquipmentTypeService
     {
         private readonly IFileService _fileService;
         public EquipmentTypeService(IEquipmentTypeRepository repository, IBaseMapper<AddEquipmentTypeDTO, EquipmentType> toModelMapper, IBaseMapper<EquipmentType, GetEquipmentTypeDTO> toDTOMapper, IFileService fileService) : base(repository, toModelMapper, toDTOMapper)
@@ -23,5 +29,10 @@ namespace Project.Core.Services.BusinessService
             var addedEquipmentType = await _repository.Create(newEquipmentType);
             return _toDTOMapper.MapToModel(addedEquipmentType);
         }
+
+        // public override async Task<GetEquipmentTypeDTO> Update(UpdateEquipmentTypeDTO updateEquipmentTypeDTO)
+        // {
+
+        // }
     }
 }
