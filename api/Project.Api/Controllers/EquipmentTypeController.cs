@@ -32,5 +32,10 @@ namespace Project.Api.Controllers
             return Ok(updatedData);
         }
 
+        [HttpGet]
+        public async Task<ActionResult<GetEquipmentTypeDTO>> GetAllEquipment(){
+            return Ok(await _service.GetAll());
+        }
+
     }
 }
