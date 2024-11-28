@@ -13,6 +13,9 @@ namespace Project.Core.Entities
         [Required]
         public int PricePerPerson { get; set; }
         [Required]
+        public int Quantity { get; set; }
+        [Required]
         public string PhotoUrl { get; set; }
+        public IEnumerable<Reservation> Reservations { get; set; } = [];
     }
 }

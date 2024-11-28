@@ -187,24 +187,6 @@ namespace Project.Infrastructure.Migrations
                     b.ToTable("Discounts");
                 });
 
-            modelBuilder.Entity("Project.Core.Entities.Equipment", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(36)
-                        .HasColumnType("character varying(36)");
-
-                    b.Property<string>("EquipmentTypeId")
-                        .IsRequired()
-                        .HasColumnType("character varying(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EquipmentTypeId");
-
-                    b.ToTable("Equipment");
-                });
-
             modelBuilder.Entity("Project.Core.Entities.EquipmentType", b =>
                 {
                     b.Property<string>("Id")
@@ -223,6 +205,9 @@ namespace Project.Infrastructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("PricePerPerson")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<string>("TypeName")
@@ -303,9 +288,12 @@ namespace Project.Infrastructure.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("character varying(36)");
 
-                    b.Property<string>("EquipmentId")
+                    b.Property<string>("EquipmentTypeId")
                         .IsRequired()
                         .HasColumnType("character varying(36)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ReservationId")
                         .IsRequired()
@@ -313,7 +301,7 @@ namespace Project.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipmentId");
+                    b.HasIndex("EquipmentTypeId");
 
                     b.HasIndex("ReservationId");
 
@@ -468,17 +456,6 @@ namespace Project.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Project.Core.Entities.Equipment", b =>
-                {
-                    b.HasOne("Project.Core.Entities.EquipmentType", "EquipmentType")
-                        .WithMany()
-                        .HasForeignKey("EquipmentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EquipmentType");
-                });
-
             modelBuilder.Entity("Project.Core.Entities.Payment", b =>
                 {
                     b.HasOne("Project.Core.Entities.Reservation", "Reservation")
@@ -492,9 +469,9 @@ namespace Project.Infrastructure.Migrations
 
             modelBuilder.Entity("Project.Core.Entities.ReservationEquipment", b =>
                 {
-                    b.HasOne("Project.Core.Entities.Equipment", "Equipment")
-                        .WithMany("ReservationEquipment")
-                        .HasForeignKey("EquipmentId")
+                    b.HasOne("Project.Core.Entities.EquipmentType", "EquipmentType")
+                        .WithMany()
+                        .HasForeignKey("EquipmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -504,14 +481,9 @@ namespace Project.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Equipment");
+                    b.Navigation("EquipmentType");
 
                     b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("Project.Core.Entities.Equipment", b =>
-                {
-                    b.Navigation("ReservationEquipment");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.Reservation", b =>

@@ -18,7 +18,6 @@ namespace Project.Infrastructure.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options){}
 
         public DbSet<Discount> Discounts { get; set; }
-        public DbSet<Equipment> Equipment { get; set; }
         public DbSet<EquipmentType> EquipmentTypes { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Reservation> Reservations { get; set; }

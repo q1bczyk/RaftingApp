@@ -7,10 +7,10 @@ namespace Project.Infrastructure.Data
     {
         public static void Config(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Equipment>(entity =>
+            modelBuilder.Entity<EquipmentType>(entity =>
             {
                 entity.HasMany(e => e.Reservations)
-                .WithMany(e => e.Equipments)
+                .WithMany(e => e.EquipmentType)
                 .UsingEntity<ReservationEquipment>();
             });
         }

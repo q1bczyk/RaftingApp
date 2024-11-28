@@ -15,6 +15,9 @@ namespace Project.Core.DTO.EquipmentDTO
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Cena na osobę musi być liczbą nieujemną.")]
         public int PricePerPerson { get; set; }
+        [Required]
+        [Range(0, double.MaxValue, ErrorMessage = "Ilość danego sprzętu nie może być ujemna")]
+        public int Quantity { get; set; }
 
     }
 }

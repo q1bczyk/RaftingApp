@@ -64,6 +64,7 @@ namespace Project.Core.Services.BusinessService
             dataToEdit.MaxParticipants = updateEquipmentTypeDTO.MaxParticipants;
             dataToEdit.MinParticipants = updateEquipmentTypeDTO.MinParticipants;
             dataToEdit.PricePerPerson = updateEquipmentTypeDTO.PricePerPerson;
+            dataToEdit.Quantity = updateEquipmentTypeDTO.Quantity;
 
             return dataToEdit;
         }

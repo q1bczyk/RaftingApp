@@ -12,8 +12,8 @@ using Project.Infrastructure.Data;
 namespace Project.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241113203552_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20241128183949_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,22 +157,37 @@ namespace Project.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Project.Core.Entities.Equipment", b =>
+            modelBuilder.Entity("Project.Core.Entities.Discount", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(36)
                         .HasColumnType("character varying(36)");
 
-                    b.Property<string>("EquipmentTypeId")
+                    b.Property<string>("DicountType")
                         .IsRequired()
-                        .HasColumnType("character varying(36)");
+                        .HasColumnType("text");
+
+                    b.Property<string>("DiscountDescription")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DiscountName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("DiscountValue")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MaxCondition")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("MinCondition")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipmentTypeId");
-
-                    b.ToTable("Equipment");
+                    b.ToTable("Discounts");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.EquipmentType", b =>
@@ -195,13 +210,16 @@ namespace Project.Infrastructure.Migrations
                     b.Property<int>("PricePerPerson")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
                     b.Property<string>("TypeName")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("EquipmentType");
+                    b.ToTable("EquipmentTypes");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.Payment", b =>
@@ -228,7 +246,7 @@ namespace Project.Infrastructure.Migrations
                     b.HasIndex("ReservationId")
                         .IsUnique();
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.Reservation", b =>
@@ -263,7 +281,7 @@ namespace Project.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Reservation");
+                    b.ToTable("Reservations");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.ReservationEquipment", b =>
@@ -273,9 +291,12 @@ namespace Project.Infrastructure.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("character varying(36)");
 
-                    b.Property<string>("EquipmentId")
+                    b.Property<string>("EquipmentTypeId")
                         .IsRequired()
                         .HasColumnType("character varying(36)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ReservationId")
                         .IsRequired()
@@ -283,11 +304,44 @@ namespace Project.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EquipmentId");
+                    b.HasIndex("EquipmentTypeId");
 
                     b.HasIndex("ReservationId");
 
-                    b.ToTable("ReservationEquipment");
+                    b.ToTable("ReservationsEquipment");
+                });
+
+            modelBuilder.Entity("Project.Core.Entities.Settings", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36)
+                        .HasColumnType("character varying(36)");
+
+                    b.Property<DateTime>("CloseTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("DayEarliestBookingTime")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DayLatestBookingTime")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("HoursRentalTime")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("OpeningTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("SeasonEndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("SeasonStartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.User", b =>
@@ -405,17 +459,6 @@ namespace Project.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Project.Core.Entities.Equipment", b =>
-                {
-                    b.HasOne("Project.Core.Entities.EquipmentType", "EquipmentType")
-                        .WithMany()
-                        .HasForeignKey("EquipmentTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("EquipmentType");
-                });
-
             modelBuilder.Entity("Project.Core.Entities.Payment", b =>
                 {
                     b.HasOne("Project.Core.Entities.Reservation", "Reservation")
@@ -429,9 +472,9 @@ namespace Project.Infrastructure.Migrations
 
             modelBuilder.Entity("Project.Core.Entities.ReservationEquipment", b =>
                 {
-                    b.HasOne("Project.Core.Entities.Equipment", "Equipment")
-                        .WithMany("ReservationEquipment")
-                        .HasForeignKey("EquipmentId")
+                    b.HasOne("Project.Core.Entities.EquipmentType", "EquipmentType")
+                        .WithMany()
+                        .HasForeignKey("EquipmentTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -441,14 +484,9 @@ namespace Project.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Equipment");
+                    b.Navigation("EquipmentType");
 
                     b.Navigation("Reservation");
-                });
-
-            modelBuilder.Entity("Project.Core.Entities.Equipment", b =>
-                {
-                    b.Navigation("ReservationEquipment");
                 });
 
             modelBuilder.Entity("Project.Core.Entities.Reservation", b =>

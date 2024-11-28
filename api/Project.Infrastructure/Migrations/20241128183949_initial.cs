@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Project.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -52,7 +52,24 @@ namespace Project.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EquipmentType",
+                name: "Discounts",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
+                    DiscountName = table.Column<string>(type: "text", nullable: false),
+                    DiscountDescription = table.Column<string>(type: "text", nullable: false),
+                    DicountType = table.Column<string>(type: "text", nullable: false),
+                    DiscountValue = table.Column<int>(type: "integer", nullable: false),
+                    MinCondition = table.Column<int>(type: "integer", nullable: true),
+                    MaxCondition = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Discounts", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EquipmentTypes",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
@@ -60,15 +77,16 @@ namespace Project.Infrastructure.Migrations
                     MinParticipants = table.Column<int>(type: "integer", nullable: false),
                     MaxParticipants = table.Column<int>(type: "integer", nullable: false),
                     PricePerPerson = table.Column<int>(type: "integer", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
                     PhotoUrl = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EquipmentType", x => x.Id);
+                    table.PrimaryKey("PK_EquipmentTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reservation",
+                name: "Reservations",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
@@ -82,7 +100,25 @@ namespace Project.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reservation", x => x.Id);
+                    table.PrimaryKey("PK_Reservations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Settings",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
+                    HoursRentalTime = table.Column<int>(type: "integer", nullable: false),
+                    SeasonStartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    SeasonEndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DayEarliestBookingTime = table.Column<int>(type: "integer", nullable: false),
+                    DayLatestBookingTime = table.Column<int>(type: "integer", nullable: false),
+                    OpeningTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CloseTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Settings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,25 +228,7 @@ namespace Project.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Equipment",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
-                    EquipmentTypeId = table.Column<string>(type: "character varying(36)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Equipment", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Equipment_EquipmentType_EquipmentTypeId",
-                        column: x => x.EquipmentTypeId,
-                        principalTable: "EquipmentType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Payment",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
@@ -220,36 +238,37 @@ namespace Project.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.PrimaryKey("PK_Payments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Payment_Reservation_ReservationId",
+                        name: "FK_Payments_Reservations_ReservationId",
                         column: x => x.ReservationId,
-                        principalTable: "Reservation",
+                        principalTable: "Reservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReservationEquipment",
+                name: "ReservationsEquipment",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "character varying(36)", maxLength: 36, nullable: false),
-                    EquipmentId = table.Column<string>(type: "character varying(36)", nullable: false),
-                    ReservationId = table.Column<string>(type: "character varying(36)", nullable: false)
+                    EquipmentTypeId = table.Column<string>(type: "character varying(36)", nullable: false),
+                    ReservationId = table.Column<string>(type: "character varying(36)", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservationEquipment", x => x.Id);
+                    table.PrimaryKey("PK_ReservationsEquipment", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReservationEquipment_Equipment_EquipmentId",
-                        column: x => x.EquipmentId,
-                        principalTable: "Equipment",
+                        name: "FK_ReservationsEquipment_EquipmentTypes_EquipmentTypeId",
+                        column: x => x.EquipmentTypeId,
+                        principalTable: "EquipmentTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ReservationEquipment_Reservation_ReservationId",
+                        name: "FK_ReservationsEquipment_Reservations_ReservationId",
                         column: x => x.ReservationId,
-                        principalTable: "Reservation",
+                        principalTable: "Reservations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -292,24 +311,19 @@ namespace Project.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Equipment_EquipmentTypeId",
-                table: "Equipment",
-                column: "EquipmentTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Payment_ReservationId",
-                table: "Payment",
+                name: "IX_Payments_ReservationId",
+                table: "Payments",
                 column: "ReservationId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReservationEquipment_EquipmentId",
-                table: "ReservationEquipment",
-                column: "EquipmentId");
+                name: "IX_ReservationsEquipment_EquipmentTypeId",
+                table: "ReservationsEquipment",
+                column: "EquipmentTypeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReservationEquipment_ReservationId",
-                table: "ReservationEquipment",
+                name: "IX_ReservationsEquipment_ReservationId",
+                table: "ReservationsEquipment",
                 column: "ReservationId");
         }
 
@@ -332,10 +346,16 @@ namespace Project.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Payment");
+                name: "Discounts");
 
             migrationBuilder.DropTable(
-                name: "ReservationEquipment");
+                name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "ReservationsEquipment");
+
+            migrationBuilder.DropTable(
+                name: "Settings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -344,13 +364,10 @@ namespace Project.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Equipment");
+                name: "EquipmentTypes");
 
             migrationBuilder.DropTable(
-                name: "Reservation");
-
-            migrationBuilder.DropTable(
-                name: "EquipmentType");
+                name: "Reservations");
         }
     }
 }
