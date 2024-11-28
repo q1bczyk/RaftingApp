@@ -14,7 +14,20 @@ namespace Project.Core.Services.BusinessService
     IReservationRepository
     >, IReservationService
     {
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper) : base(repository, toModelMapper, toDTOMapper)
-        {}
+        private readonly IReservationEquipmentService _reservationEquipmentService;
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService) : base(repository, toModelMapper, toDTOMapper)
+        {
+            _reservationEquipmentService = reservationEquipmentService;
+        }
+
+        public async override Task<GetReservationDTO> Create(AddReservationDTO createDTO)
+        {
+
+            var reservationModel = _toModelMapper.MapToModel(createDTO);
+            var addedModel = await _repository.Create(reservationModel);
+            await _reservationEquipmentService.AddMany(createDTO.ReservationEquipment, addedModel.Id);
+            
+            return _toDTOMapper.MapToModel(reservationModel);
+        }
     }
 }

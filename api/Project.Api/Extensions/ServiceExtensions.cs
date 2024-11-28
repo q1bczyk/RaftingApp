@@ -28,10 +28,12 @@ namespace Project.Api.Extensions
             //business services
             services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
             services.AddScoped<IReservationService, ReservationService>();
+            services.AddScoped<IReservationEquipmentService, ReservationEquipmentService>();
 
             //repositories
             services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
+            services.AddScoped<IReservationEquipmentRepository, ReservationEquipmentRepository>();
 
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<RegisterDTO, User>();

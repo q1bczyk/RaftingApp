@@ -26,7 +26,7 @@ namespace Project.Core.Entities
         // [Required]
         // public Payment? Payment { get; set; }
         public IEnumerable<EquipmentType> EquipmentType { get; set; } = [];
-        public IEnumerable<ReservationEquipment> ReservationEquipment { get; } = [];
+        public IEnumerable<ReservationEquipment> ReservationEquipment { get; set; } = new List<ReservationEquipment>();
 
     }
 }

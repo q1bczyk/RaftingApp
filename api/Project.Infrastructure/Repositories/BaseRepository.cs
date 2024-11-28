@@ -20,6 +20,11 @@ namespace Project.Infrastructure.Repositories
             return model;
         }
 
+         public async Task CreateRange(IEnumerable<T> model)
+        {
+            await _context.Set<T>().AddRangeAsync(model);
+            await _context.SaveChangesAsync();
+        }
         public async Task<T> Delete(T model)
         {
             _context.Set<T>().Remove(model);
