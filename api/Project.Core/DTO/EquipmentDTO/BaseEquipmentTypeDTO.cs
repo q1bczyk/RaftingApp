@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Project.Core.DTO.EquipmentDTO
 {
     [ParticipantsValidation]
-    public class BaseEquipmentDTO
+    public class BaseEquipmentTypeDTO
     {
         private string _typeName;
         [Required, MinLength(2)]
