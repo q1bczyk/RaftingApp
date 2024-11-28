@@ -9,8 +9,8 @@ namespace Project.Core.DTO.ReservationsDTO
         [Required, MinLength(2)]
         public string BookerName { get; set; }
         [Required, MinLength(2)]
-        public string BookerLastName { get; set; }
-        [Required, MinLength(2)]
+        public string BookerLastname { get; set; }
+        [Required]
         public int BookerPhoneNumber { get; set; }
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Cena nie może być ujemna")]

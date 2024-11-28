@@ -7,7 +7,7 @@ namespace Project.Infrastructure.Repositories
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly DataContext _context;
+        protected readonly DataContext _context;
         protected DbSet<T> DbSet => _context.Set<T>();
         public BaseRepository(DataContext context)
         {
@@ -27,7 +27,7 @@ namespace Project.Infrastructure.Repositories
             return model;
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }

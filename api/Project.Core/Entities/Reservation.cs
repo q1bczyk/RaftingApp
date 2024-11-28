@@ -6,8 +6,13 @@ namespace Project.Core.Entities
     {
         [Required]
         public DateTime ExecutionDate { get; set; }
+        private DateTime _reservationDate = DateTime.UtcNow;
         [Required]
-        public DateTime ReservationDate { get; set; }
+        public DateTime ReservationDate
+        {
+            get => _reservationDate;
+            set => _reservationDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
         [Required]
         public string BookerName { get; set; }
         [Required]
@@ -18,8 +23,8 @@ namespace Project.Core.Entities
         public int BookPrice { get; set; }
         [Required]
         public int ParticipantNumber { get; set; }
-        [Required]
-        public Payment Payment { get; set; }
+        // [Required]
+        // public Payment? Payment { get; set; }
         public IEnumerable<EquipmentType> EquipmentType { get; set; } = [];
         public IEnumerable<ReservationEquipment> ReservationEquipment { get; } = [];
 
