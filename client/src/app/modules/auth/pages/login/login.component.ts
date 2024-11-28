@@ -30,15 +30,18 @@ export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginTyp
 
   override onFormSubmit(form: FormGroup) : void {
     const mappedForm : LoginType = this.convertForm(form)
-    this.apiManager.exeApiRequest(this.authService.login(mappedForm), () => this.router.navigate(["/admin"]));
+    this.apiManager.exeApiRequest(this.authService.login(mappedForm), () => this.onLoginSuccess());
   }
 
   passwordResetNavigate(){
     this.router.navigate(["auth/password-reset"]);
   }
 
-  private onLoginSuccess() : void{
-    
+  private onLoginSuccess() : void {
+    const loggedUser = this.apiManager.data();
+
+    if (loggedUser && loggedUser.token) localStorage.setItem('token', loggedUser.token);
+    this.router.navigate(['/admin']);
   }
 
 

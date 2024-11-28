@@ -5,8 +5,9 @@ namespace Project.Core.DTO.EquipmentDTO
     [ParticipantsValidation]
     public class BaseEquipmentDTO
     {
+        private string _typeName;
         [Required, MinLength(2)]
-        public string TypeName { get; set; }
+        public string TypeName { get => _typeName; set => _typeName = value?.ToLower(); }
         [Required]
         public int MinParticipants { get; set; }
         [Required]
