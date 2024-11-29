@@ -10,15 +10,21 @@
     z-index: 1;
     background-color: white;
     border-right: 1px solid var(--surface-300);
-    // transform: translateX(-102%);
+
 
     .logo{
-        border-bottom: 1px solid var(--surface-100);
         width: 100%;
-        padding: 4px 20px;
+        padding: 20px 20px;
         display: flex;
-        justify-content: center;
         align-items: center;
+
+        i{
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: var(--orange-500);
+        }
     }
     
     ul{

@@ -1,6 +1,9 @@
-<div class="navigation shadow">
-  <div class="logo">
-    <app-logo/>
+<div class="navigation shadow" [ngStyle]="{ 'transform': navigationService.isMenuOpen() ? 'translateX(0)' : 'translateX(-102%)' }">
+  <div class="d-flex w-100 justify-content-between">
+    <div class="logo">
+      <app-logo/>
+      <i class="bi bi-list fs-3" (click)="navigationService.closeMenu()"></i>
+    </div>
   </div>
   <ul>
     @for (link of links; track $index) {

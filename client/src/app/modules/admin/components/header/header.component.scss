@@ -1,0 +1,21 @@
+.header{
+    width: 90%;;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-handler{
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i{
+        cursor: pointer;
+        right: 20px;
+        top: 20px;
+        color: var(--orange-500); 
+    }
+}
