@@ -14,6 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor{
         
         return next.handle(req).pipe(
             catchError( (e : ApiErrorResponse) => {
+                console.log(e)
                 switch(e.error.statusCode){
                     case 500:
                      this.router.navigate(["/server-error"]);

@@ -1,0 +1,5 @@
+<app-page-wrapper [title]="'Sprzęt'">
+    @for (item of apiManager.data(); track $index) {
+        {{item.id}}
+    }
+</app-page-wrapper>
