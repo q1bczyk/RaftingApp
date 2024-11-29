@@ -1,12 +1,12 @@
 <app-admin-nav/>
 <app-header/>
-<div class="admin-wrapper" 
-    [ngStyle]="{ 'width': (navigationService.isMenuOpen() && navigationService.getScreenWidth() >= 992) 
-    ? 'calc(100% - 220px)' 
-    : '100%' }"
+<div class="admin-wrapper admin-wrapper-standard" 
+[ngClass]="{
+    'admin-wrapper-standard': navigationService.isMenuOpen() && navigationService.getScreenWidth() >= 992,
+    'admin-wrapper-small': !navigationService.isMenuOpen() || navigationService.getScreenWidth() < 992
+  }"
 >
-    <div>
-        admin
+    <div class="container-fluid">
+        <router-outlet/>
     </div>
-    <router-outlet/>
 </div>

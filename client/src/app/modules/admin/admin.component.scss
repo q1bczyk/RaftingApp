@@ -5,10 +5,17 @@
     transition: all ease-in-out 0.3s;
     position: absolute;
     right: 0;
-    width: 20px;
-    // @include media-breakpoint-up(lg) {
-    //     width: calc(100% - 220px);
-    // }
+    display: flex;
+    justify-content: flex-end;
 }
 
+.admin-wrapper-standard{
+    width: calc(100% - 220px);
+    padding: 10px 5% 10px 40px;
+}
+
+.admin-wrapper-small{
+    width: 100%;
+    padding: 10px 5%;
+}
 
