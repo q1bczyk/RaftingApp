@@ -16,6 +16,6 @@ namespace Project.Core.Entities
         public int Quantity { get; set; }
         [Required]
         public string PhotoUrl { get; set; }
-        public IEnumerable<Reservation> Reservations { get; set; } = [];
+        public List<Reservation> Reservations { get; set; } = new List<Reservation>();
     }
 }

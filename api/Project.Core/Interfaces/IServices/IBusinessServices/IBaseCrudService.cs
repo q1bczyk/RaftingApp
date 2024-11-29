@@ -5,7 +5,7 @@ namespace Project.Core.Interfaces.IServices.IBusinessServices
     where TCreateDTO : class
     {
         Task<TGetDTO> GetById(string id);
-        Task<IEnumerable<TGetDTO>> GetAll();
+        Task<List<TGetDTO>> GetAll();
         Task<TGetDTO> Create(TCreateDTO createDTO);
         Task<TGetDTO> Update(TUpdateDTO updateDTO, string id);
         Task Delete(string id);

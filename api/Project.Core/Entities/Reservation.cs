@@ -25,8 +25,8 @@ namespace Project.Core.Entities
         public int ParticipantNumber { get; set; }
         // [Required]
         // public Payment? Payment { get; set; }
-        public IEnumerable<EquipmentType> EquipmentType { get; set; } = [];
-        public IEnumerable<ReservationEquipment> ReservationEquipment { get; set; } = new List<ReservationEquipment>();
+        public List<EquipmentType> EquipmentType { get; set; } = new List<EquipmentType>();
+        public List<ReservationEquipment> ReservationEquipment { get; set; } = new List<ReservationEquipment>();
 
     }
 }

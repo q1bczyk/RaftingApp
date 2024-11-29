@@ -12,7 +12,7 @@ namespace Project.Api.Controllers
             _service = service;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetReservationDTO>>> GetAllReservations()
+        public async Task<ActionResult<List<GetReservationDTO>>> GetAllReservations()
         {
             return Ok(await _service.GetAll());
         }

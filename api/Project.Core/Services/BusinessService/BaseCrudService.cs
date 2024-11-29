@@ -32,7 +32,7 @@ namespace Project.Core.Services.BusinessService
             await _repository.Delete(dataToDelete);
         }
 
-        public virtual async Task<IEnumerable<TGetDTO>> GetAll()
+        public virtual async Task<List<TGetDTO>> GetAll()
         {
             var fetchedData = await _repository.GetAllAsync();
             return _toDTOMapper.MapToList(fetchedData);

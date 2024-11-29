@@ -40,9 +40,11 @@ namespace Project.Api.Extensions
                 cfg.CreateMap<AddEquipmentTypeDTO, EquipmentType>();
                 cfg.CreateMap<EquipmentType, GetEquipmentTypeDTO>();
                 cfg.CreateMap<AddReservationDTO, Reservation>();
-                cfg.CreateMap<Reservation, GetReservationDTO>();
+                cfg.CreateMap<Reservation, GetReservationDTO>()
+                     .ForMember(dest => dest.ReservationEquipment, opt => opt.MapFrom(src => src.ReservationEquipment));
                 cfg.CreateMap<AddReservationEquipmentDTO, ReservationEquipment>();
-                cfg.CreateMap<ReservationEquipment, GetReservationEquipmentDTO>();
+                cfg.CreateMap<ReservationEquipment, GetReservationEquipmentDTO>()
+                    .ForMember(dest => dest.EquipmentType, opt => opt.MapFrom(src => src.EquipmentType));
             });
 
             IMapper mapper = config.CreateMapper();

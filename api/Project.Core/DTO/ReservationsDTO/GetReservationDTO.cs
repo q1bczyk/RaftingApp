@@ -6,6 +6,6 @@ namespace Project.Core.DTO.ReservationsDTO
     {
         public string Id { get; set; }
         public DateTime ReservationDate { get; set; } 
-        public GetReservationEquipmentDTO ReservationEquipment { get; set; }
+        public List<GetReservationEquipmentDTO> ReservationEquipment { get; set; }
     }
 }

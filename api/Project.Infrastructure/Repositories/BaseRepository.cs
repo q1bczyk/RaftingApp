@@ -20,7 +20,7 @@ namespace Project.Infrastructure.Repositories
             return model;
         }
 
-         public async Task CreateRange(IEnumerable<T> model)
+         public async Task CreateRange(List<T> model)
         {
             await _context.Set<T>().AddRangeAsync(model);
             await _context.SaveChangesAsync();
@@ -32,7 +32,7 @@ namespace Project.Infrastructure.Repositories
             return model;
         }
 
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        public virtual async Task<List<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }

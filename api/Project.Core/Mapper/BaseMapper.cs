@@ -13,9 +13,9 @@ namespace Project.Core.Mapper
             _mapper = mapper;
         }
 
-        public IEnumerable<TDestination> MapToList(IEnumerable<TSource> source)
+        public List<TDestination> MapToList(List<TSource> source)
         {
-            return _mapper.Map<IEnumerable<TDestination>>(source);
+            return _mapper.Map<List<TDestination>>(source);
         }
 
         public TDestination MapToModel(TSource source)

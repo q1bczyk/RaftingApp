@@ -2,9 +2,9 @@ using Project.Core.DTO.EquipmentDTO;
 
 namespace Project.Core.DTO.ReservationEquipmentDTO
 {
-    public class GetReservationEquipmentDTO : AddReservationEquipmentDTO
+    public class GetReservationEquipmentDTO 
     {
-        public string Id { get; set; }
         public GetEquipmentTypeDTO EquipmentType { get; set; }
+        public int Quantity{ get; set; }
     }
 }
