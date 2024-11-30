@@ -2,6 +2,9 @@
    @if(errorService.getError.isMoadlOpen){
       <app-error-modal/>
    }
+   @if(confirmationModalService.isModalOpen()){
+      <app-confirmation-modal/>
+   }
    <router-outlet/>
 </main>
 

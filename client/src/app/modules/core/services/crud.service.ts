@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
-import { environment } from "../../../../../env/environment.prod";
 import { BaseApiService } from "./base-api.service";
 import { ICrudService } from "../interfaces/crud-service.interface";
 import { Observable, map } from "rxjs";
+import { ApiSuccessResponse } from "../types/api-success-response.type";
 
 @Injectable({
     providedIn: 'root'
@@ -22,5 +22,14 @@ export class CrudService<TGet, TPost, TPut> extends BaseApiService implements IC
                     return res;
                 })
             )
+    }
+
+    delete(id : string) : Observable<ApiSuccessResponse>{
+        return this.http.delete<ApiSuccessResponse>(`${this.url}/${id}`)
+        .pipe(
+            map(res => {
+                return res;
+            })
+        )
     }
 }

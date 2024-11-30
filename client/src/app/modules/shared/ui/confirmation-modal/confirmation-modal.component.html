@@ -1,0 +1,17 @@
+<div class="modal-wrapper" (click)="confirmationModalService.closeModal()">
+    <div class="modal-card shadow-lg rounded overflow-hidden">
+        <div class="body d-flex flex-column">
+            <p class="p-3 fs-3 border-bottom">Potwierdzenie</p>
+        </div>
+        <div class="footer d-flex flex-column justify-content-center align-items-center px-3">
+            <p class="fs-6">Jesteś pewny, że chcesz usunąc dane zasoby. Potwierdź lub anuluj wykonanie operacji.</p>
+            <div class="w-100 d-flex justify-content-end">
+                <button class="btn btn-outline-danger mb-3 text-uppercase"
+                    (click)="confirmationModalService.confirmModal()">
+                    Usuń
+                </button>
+                <button class="btn btn-outline-primary mb-3 text-uppercase ms-2">Anuluj</button>
+            </div>
+        </div>
+    </div>
+</div>

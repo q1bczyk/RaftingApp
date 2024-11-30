@@ -1,4 +1,6 @@
 <div class="w-100">
- <p class="fs-3">{{title}}</p>
+ <div>
+    <p class="fs-3"><i [class]="navItems[activePageIndex].icon" class="me-3"></i>{{navItems[activePageIndex].label}}</p>
+ </div>
  <ng-content></ng-content>
 </div>

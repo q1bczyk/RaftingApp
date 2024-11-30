@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GetEquipmentType } from '../../types/api/equipment-types/get-equipment.type';
 import { DataViewModule} from 'primeng/dataview';
 import { ButtonModule } from 'primeng/button';
@@ -16,12 +16,17 @@ export class EquipmentItemComponent {
 
   @Input() equipmentItem! : GetEquipmentType;
   @Input() index! : number;
+  @Output() deleteEvent : EventEmitter<string> = new EventEmitter<string>
 
   displayParticipants() : string{
     if(this.equipmentItem.maxParticipants === this.equipmentItem.minParticipants)
       return this.equipmentItem.minParticipants.toString();
 
     return this.equipmentItem.minParticipants + ' - ' + this.equipmentItem.maxParticipants;
+  }
+
+  onDeleteIconClick(itemId : string) : void{
+    this.deleteEvent.emit(itemId);
   }
 
 }

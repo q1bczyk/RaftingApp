@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { NavItemType } from '../../types/ui/nav-item.type';
+import { navItems } from '../admin-nav/nav-items/nav-item';
 
 @Component({
   selector: 'app-page-wrapper',
@@ -8,5 +10,8 @@ import { Component, Input } from '@angular/core';
   styleUrl: './page-wrapper.component.scss'
 })
 export class PageWrapperComponent {
-  @Input() title : string = '';
+  @Input() activePageIndex! : number;
+  navItems : NavItemType[] = navItems;
+
+ 
 }

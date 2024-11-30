@@ -1,10 +1,10 @@
-<app-page-wrapper [title]="'Sprzęt'">
+<app-page-wrapper [activePageIndex]="2">
     <div class="bg-white shadow rounded overflow-hidden">
-        <button class="btn btn-primary m-2">Dodaj</button>
         @for (item of apiManager.data(); track $index) {
             <app-equipment-item 
                 [equipmentItem]="item"
-                [index]="$index"/>
+                [index]="$index"
+                (deleteEvent)="onDeleteEvent($event)"/>
         }
     </div>
 </app-page-wrapper>
