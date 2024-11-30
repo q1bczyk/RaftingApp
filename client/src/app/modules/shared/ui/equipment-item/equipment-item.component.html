@@ -1,0 +1,47 @@
+<div class="row no-gutters px-5">
+    <div class="col-12" [ngClass]="{ 'border-top': index > 0 }">
+        <div class="d-flex flex-column flex-md-row align-items-md-center p-4 gap-3">
+            <div>
+                <div class="img-box">
+                    <img src="https://sklep.pontony.net.pl/userdata/public/gfx/34f3f9bf8284639275eec952415a76f0.jpg"
+                        alt="{{ equipmentItem.typeName }}" />
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center flex-grow-1 gap-4">
+                <div class="d-flex flex-row flex-md-column justify-content-between align-items-start gap-2">
+                    <div>
+                        <span class="fw-medium text-secondary small">
+                            <i class="bi bi-person-check"></i>
+                            {{displayParticipants()}}
+                        </span>
+                        <div class="fs-5 fw-medium text-dark mt-2">{{ equipmentItem.typeName }}</div>
+                    </div>
+                    <div class="bg-light p-1 rounded-pill">
+                        <div
+                            class="equipment-quantity d-flex align-items-center gap-2 justify-content-center py-1 px-4 rounded-pill">
+                            <span class="text-dark fw-medium small">{{ equipmentItem.quantity }} sztuk</span>
+                            <i class="pi pi-star-fill text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column align-items-md-end gap-5">
+                    <div class="d-flex flex-column align-items-md-center">
+                        <span class="fs-4 fw-semibold text-dark">{{ equipmentItem.pricePerPerson + 'PLN'}}</span>
+                        <span class="fw-medium text-secondary small">
+                            / osoba
+                        </span>
+                    </div>
+                    <div class="d-flex flex-row-reverse flex-md-row gap-2">
+                        <button class="btn btn-outline-primary">
+                            <i class="bi bi-pencil-square"></i>
+                            Edytuj
+                        </button>
+                        <button class="btn btn-outline-danger">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

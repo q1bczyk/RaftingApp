@@ -1,0 +1,16 @@
+.img-box{
+    max-height: 180px;
+    overflow: hidden;
+
+    img{
+        object-fit: cover;
+        object-position: center;
+        width: 100%;
+        max-width: 180px;
+    }
+}
+
+
+.equipment-quantity{
+    border:1px solid var(--orange-500);
+}

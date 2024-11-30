@@ -45,6 +45,16 @@ ul{
     }
 }
 
+.btn-outline-primary{
+    border: 1px solid var(--orange-500) !important;
+    color: var(--orange-500) !important;
+
+    &:hover{
+        background-color: var(--orange-500) !important;
+        color: white !important;
+    }
+}
+
 .btn-primary:disabled{
     background-color: var(--surface-200) !important;
     color: var(--surface-500) !important;

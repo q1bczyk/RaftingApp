@@ -2,7 +2,7 @@ import { NavItemType } from "../../../types/ui/nav-item.type";
 
 export const navItems : NavItemType[] = [
     {
-        icon : 'bi bi-columns-gap',
+        icon : 'bi bi-bar-chart-line',
         label : 'Dashboard',
         path : '/admin',
     },
@@ -32,7 +32,7 @@ export const navItems : NavItemType[] = [
         path : 'users',
     },
     {
-        icon : 'bi bi-gear',
+        icon : 'bi bi-sliders2',
         label : 'Ustawienia',
         path : 'settings',
     },

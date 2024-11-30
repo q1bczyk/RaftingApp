@@ -1,5 +1,10 @@
 <app-page-wrapper [title]="'Sprzęt'">
-    @for (item of apiManager.data(); track $index) {
-        {{item.id}}
-    }
+    <div class="bg-white shadow rounded overflow-hidden">
+        <button class="btn btn-primary m-2">Dodaj</button>
+        @for (item of apiManager.data(); track $index) {
+            <app-equipment-item 
+                [equipmentItem]="item"
+                [index]="$index"/>
+        }
+    </div>
 </app-page-wrapper>
