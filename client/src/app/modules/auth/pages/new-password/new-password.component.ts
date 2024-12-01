@@ -23,12 +23,12 @@ export class NewPasswordComponent extends BaseAuthComponent<ApiSuccessResponse, 
   private token : string = '';
   private userId : string = '';
   constructor(
-    private http: HttpClient,
     private loadingService: LoadingService,
     private route : ActivatedRoute,
     private router : Router,
+    authService : AuthService
   ){
-    super(new AuthService(http), new ApiManager<ApiSuccessResponse>(loadingService), newPasswordForm);
+    super(authService, new ApiManager<ApiSuccessResponse>(loadingService), newPasswordForm);
   }
 
   ngOnInit(): void {

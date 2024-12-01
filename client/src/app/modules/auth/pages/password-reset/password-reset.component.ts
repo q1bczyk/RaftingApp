@@ -19,10 +19,10 @@ import { AuthFormComponent } from '../../components/auth-form/auth-form.componen
 })
 export class PasswordResetComponent extends BaseAuthComponent<ApiSuccessResponse, BaseAuthType>{
   constructor(
-    private http: HttpClient,
     private loadingService: LoadingService,
+    authService : AuthService
   ){
-    super(new AuthService(http), new ApiManager<ApiSuccessResponse>(loadingService), passwordResetForm);
+    super(authService, new ApiManager<ApiSuccessResponse>(loadingService), passwordResetForm);
   }
 
   override onFormSubmit(form: FormGroup) : void {

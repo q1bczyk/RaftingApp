@@ -14,4 +14,5 @@ export interface AuthServiceInterface{
     passwordReset(data : BaseAuthType) : Observable<ApiSuccessResponse>
     resendConfirmationToken(data : BaseAuthType) : Observable<ApiSuccessResponse>
     setNewPassword(data : NewPasswordType) : Observable<ApiSuccessResponse> 
+    isAuthenticated(): boolean 
 }

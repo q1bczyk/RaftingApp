@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AdminGuard } from './modules/admin/guard/admin.guard';
 
 export const routes: Routes = [
     {
@@ -12,7 +13,7 @@ export const routes: Routes = [
     },
     {
         path: 'admin', 
-        loadChildren: () => import('./modules/admin/admin.routes').then(m => m.adminRoutes)
+        loadChildren: () => import('./modules/admin/admin.routes').then(m => m.adminRoutes), 
     },
     {
         path: 'not-found', 

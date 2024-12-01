@@ -10,23 +10,24 @@ import { ApiManager } from '../../../core/api/api-manager';
 import { HttpClient } from '@angular/common/http';
 import { LoadingService } from '../../../shared/services/loading.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [AuthFormComponent],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  styleUrl: './login.component.scss',
 })
 export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginType> {
  
   constructor(
-    private http: HttpClient,
     private loadingService: LoadingService,
     private router : Router,
-    private cookiesServcie : CookiesService;
-  ){
-    super(new AuthService(http), new ApiManager<LoggedInUserType>(loadingService), loginForm);
+    authService : AuthService,
+    private cookiesService : CookieService
+    ){
+    super(authService, new ApiManager<LoggedInUserType>(loadingService), loginForm);
   }
 
   override onFormSubmit(form: FormGroup) : void {
@@ -41,7 +42,7 @@ export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginTyp
   private onLoginSuccess() : void {
     const loggedUser = this.apiManager.data();
 
-    if (loggedUser && loggedUser.token) cool.setItem('token', loggedUser.token);
+    if (loggedUser && loggedUser.token) this.cookiesService.set('token', loggedUser.token);
     this.router.navigate(['/admin']);
   }
 

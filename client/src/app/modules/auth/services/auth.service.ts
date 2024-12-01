@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Inject, Injectable, PLATFORM_ID } from "@angular/core";
 import { BaseApiService } from "../../core/services/base-api.service";
 import { HttpClient } from "@angular/common/http";
 import { AuthServiceInterface } from "../interfaces/auth-service.interface";
@@ -10,6 +10,9 @@ import { LoggedInUserType } from "../types/logged-in-user.type";
 import { LoginType } from "../types/login.type";
 import { NewPasswordType } from "../types/new-password.type";
 import { RegisterType } from "../types/register.type";
+import { isPlatformBrowser } from "@angular/common";
+import { CookieService } from "ngx-cookie-service";
+import { isTokenExpired } from "../helpers/tokenValidator";
 
 @Injectable({
     providedIn: 'root'
@@ -17,7 +20,11 @@ import { RegisterType } from "../types/register.type";
 
 export class AuthService extends BaseApiService implements AuthServiceInterface
 {
-    constructor(http : HttpClient)
+    constructor(
+        http : HttpClient,
+        private cookiesService: CookieService,    
+        @Inject(PLATFORM_ID) private platformId: Object
+    )
     {
         super(http, 'auth');
     }
@@ -57,4 +64,14 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
             })
         )
     }
+
+    isAuthenticated(): boolean 
+    {
+        if (isPlatformBrowser(this.platformId)) {
+            const token = this.cookiesService.get('token');
+            return !!token && !isTokenExpired(token);
+        }
+        return false;
+    }
+
 }
