@@ -1,9 +1,12 @@
-<main class="main">
+<main class="main p-relative">
    @if(errorService.getError.isMoadlOpen){
       <app-error-modal/>
    }
    @if(confirmationModalService.isModalOpen()){
       <app-confirmation-modal/>
+   }
+   @if(toastService.getToastState()?.message){
+      <app-toasts/>
    }
    <router-outlet/>
 </main>

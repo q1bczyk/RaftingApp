@@ -1,0 +1,9 @@
+<div class="toasts d-flex justify-content-between" 
+    [class]="toastService.getToastState()?.messageType">
+    <div class="d-flex align-items-center">
+        <i [class]="renderIcon()"></i>
+        <div>{{toastService.getToastState()?.message}}
+        </div>
+    </div>
+    <i class="bi bi-x-lg close-icon" (click)="closeToast()"></i>
+</div>

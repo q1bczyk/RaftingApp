@@ -23,7 +23,8 @@ export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginTyp
   constructor(
     private http: HttpClient,
     private loadingService: LoadingService,
-    private router : Router
+    private router : Router,
+    private cookiesServcie : CookiesService;
   ){
     super(new AuthService(http), new ApiManager<LoggedInUserType>(loadingService), loginForm);
   }
@@ -40,7 +41,7 @@ export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginTyp
   private onLoginSuccess() : void {
     const loggedUser = this.apiManager.data();
 
-    if (loggedUser && loggedUser.token) localStorage.setItem('token', loggedUser.token);
+    if (loggedUser && loggedUser.token) cool.setItem('token', loggedUser.token);
     this.router.navigate(['/admin']);
   }
 

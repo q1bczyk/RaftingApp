@@ -7,6 +7,7 @@ import { ApiManager } from '../../../core/api/api-manager';
 import { EquipmentItemComponent } from '../../../shared/ui/equipment-item/equipment-item.component';
 import { ConfirmationModalService } from '../../../shared/services/confiramtion-modal.service';
 import { ApiSuccessResponse } from '../../../core/types/api-success-response.type';
+import { ToastService } from '../../../shared/services/ui/toasts/toast.service';
 
 @Component({
   selector: 'app-equipment-page',
@@ -20,8 +21,9 @@ export class EquipmentPageComponent extends BaseReadDirective<GetEquipmentType, 
     service : EquipmentService, 
     apiManager : ApiManager<GetEquipmentType[]>, 
     confirmationModalService : ConfirmationModalService,
-    protected apiDeletemanager : ApiManager<ApiSuccessResponse>){
-    super(service, apiManager, confirmationModalService, apiDeletemanager);
+    protected apiDeletemanager : ApiManager<ApiSuccessResponse>,
+    toastService : ToastService){
+    super(service, apiManager, confirmationModalService, apiDeletemanager, toastService);
   }
 
   onDeleteEvent(equipmentId : string) : void{
