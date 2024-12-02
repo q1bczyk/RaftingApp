@@ -1,4 +1,7 @@
 <app-page-wrapper [activePageIndex]="2">
+    <div class="w-100 d-flex justify-content-end">
+        <button class="btn btn-primary mb-3" (click)="openModal()"><i class="bi bi-plus-circle me-2"></i>Dodaj</button>
+    </div>
     <div class="bg-white shadow rounded overflow-hidden">
         @for (item of apiManager.data(); track $index) {
             <app-equipment-item 
@@ -7,4 +10,9 @@
                 (deleteEvent)="onDeleteEvent($event)"/>
         }
     </div>
+    @if(modalFormService.isModalOpen() === true){
+        <app-form-modal>
+            <app-add-equipment/>
+        </app-form-modal>
+    }
 </app-page-wrapper>

@@ -4,6 +4,7 @@ import { ApiManager } from '../api/api-manager';
 import { ApiSuccessResponse } from '../types/api-success-response.type';
 import { ConfirmationModalService } from '../../shared/services/confiramtion-modal.service';
 import { ToastService } from '../../shared/services/ui/toasts/toast.service';
+import { ModalFormService } from '../../admin/services/ui/modal-form.service';
 
 @Directive({
   standalone: true
@@ -11,6 +12,7 @@ import { ToastService } from '../../shared/services/ui/toasts/toast.service';
 export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any>> implements OnInit
 {
   constructor(
+    public modalFormService : ModalFormService,
     protected service : TService, 
     public apiManager : ApiManager<TGet[]>, 
     public confirmationModalService : ConfirmationModalService,
@@ -30,6 +32,9 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
   private onSuccessDelete() : void {
     this.apiManager.exeApiRequest(this.service.fetchAll());
     this.toastService.showToast('Pomyślnie usunięto dane', 'success');
+  }
 
+  openModal() : void{
+    this.modalFormService.openModal();
   }
 }

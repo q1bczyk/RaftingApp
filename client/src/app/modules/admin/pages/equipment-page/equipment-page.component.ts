@@ -8,22 +8,27 @@ import { EquipmentItemComponent } from '../../../shared/ui/equipment-item/equipm
 import { ConfirmationModalService } from '../../../shared/services/confiramtion-modal.service';
 import { ApiSuccessResponse } from '../../../core/types/api-success-response.type';
 import { ToastService } from '../../../shared/services/ui/toasts/toast.service';
+import { FormModalComponent } from '../../components/form-modal/form-modal.component';
+import { FormComponent } from "../../../shared/ui/form/form.component";
+import { AddEquipmentComponent } from "./components/add-equipment/add-equipment.component";
+import { ModalFormService } from '../../services/ui/modal-form.service';
 
 @Component({
   selector: 'app-equipment-page',
   standalone: true,
-  imports: [PageWrapperComponent, EquipmentItemComponent],
+  imports: [PageWrapperComponent, EquipmentItemComponent, FormModalComponent, FormComponent, AddEquipmentComponent],
   templateUrl: './equipment-page.component.html',
   styleUrl: './equipment-page.component.scss'
 })
 export class EquipmentPageComponent extends BaseReadDirective<GetEquipmentType, EquipmentService>{
   constructor(
+    modalFormSerivce : ModalFormService,
     service : EquipmentService, 
     apiManager : ApiManager<GetEquipmentType[]>, 
     confirmationModalService : ConfirmationModalService,
     protected apiDeletemanager : ApiManager<ApiSuccessResponse>,
     toastService : ToastService){
-    super(service, apiManager, confirmationModalService, apiDeletemanager, toastService);
+    super(modalFormSerivce, service, apiManager, confirmationModalService, apiDeletemanager, toastService);
   }
 
   onDeleteEvent(equipmentId : string) : void{

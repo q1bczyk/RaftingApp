@@ -2,14 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { FormSettingType } from '../../types/ui/form.type';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { LoadingService } from '../../services/loading.service';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [InputTextModule, ButtonModule, ReactiveFormsModule],
+  imports: [InputTextModule, ButtonModule, ReactiveFormsModule, FormsModule, InputNumberModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
@@ -30,14 +31,16 @@ export class FormComponent {
     this.formSubmitEvent.emit(this.formSettings.formGroup);
   }
 
-  isFormInvalid(): boolean 
-  {
+  isFormInvalid(): boolean {
     const controls = this.formSettings.formGroup.controls;
+
     for (let control in controls) {
-      if (controls[control].invalid) {
+      if (controls[control]?.invalid) {
         return true;
       }
     }
+    if (this.formSettings.formGroup.errors) return true;
+  
     return false;
   }
 

@@ -1,9 +1,9 @@
 <form 
-    class="d-flex flex-column gap-2"
+    class="d-flex flex-column gap-2 w-100"
     [formGroup]="formSettings.formGroup"
     (ngSubmit)="onFormSubmit()">
    @for (control of controls; track $index){
-    <label for="control">{{formSettings.fields[control].label}}</label>
+    <label class="w-100" for="control">{{formSettings.fields[control].label}}</label>
     @if (formSettings.fields[control].fieldType === 'password' || 
         formSettings.fields[control].fieldType === 'text' || 
         formSettings.fields[control].fieldType === 'textarea'){
@@ -27,7 +27,44 @@
         </small>
         }
     }
-   }
+     @if(formSettings.fields[control].fieldType === 'number'){
+        <p-inputNumber
+            class="test"
+            [formControlName]="control"
+            [showButtons]="true"
+            buttonLayout="horizontal"
+            inputId="horizontal"
+            spinnerMode="horizontal"
+            [step]="1"
+            [decrementButtonClass]="
+            (formSettings.formGroup.get(control)?.value || 0) <= (formSettings.fields[control]?.extraNumberFields?.minValue || 0) 
+            ? 'btn-disabled' 
+            : 'btn-primary'"
+                incrementButtonClass="btn-primary"
+            incrementButtonIcon="bi bi-plus"
+            decrementButtonIcon="bi bi-dash"
+            [min]="formSettings.fields[control]?.extraNumberFields?.minValue"
+            [mode]="formSettings.fields[control]?.extraNumberFields?.currency ? 'currency' : 'decimal'"
+            [currency]="formSettings.fields[control]?.extraNumberFields?.currency ? 'PLN' : 'PLN'">
+        </p-inputNumber>
+
+    @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched && control !== 'confirmPassword' ){
+        <small 
+            id="username-help" 
+            class="text-danger">
+                <i class="bi bi-info-circle-fill me-2"></i> 
+                {{formSettings.fields[control].validationMessage}}
+       </small>
+    }
+    
+    @if (control === 'maxParticipants' && formSettings.formGroup.errors?.['minGreaterThanMax'] && formSettings.formGroup.touched){
+        <small class="text-danger">
+             <i class="bi bi-info-circle-fill me-2"></i>
+             Maksymalna liczba osób nie może być mniejsza od minimalnej.
+        </small>
+       }
+    }
+}
     <button 
         [disabled]="isFormInvalid() || loadingService.isLoading()"
         class="btn btn-primary rounded mt-2 p-2"

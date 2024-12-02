@@ -82,9 +82,9 @@ ul{
     background-color: #00000056;
     cursor: pointer;
 
-    i{
-        font-size: 64px;
-    }
+    // i{
+    //     font-size: 64px;
+    // }
 }
 
 .modal-card
@@ -96,4 +96,16 @@ ul{
 .modal-header{
     height: 80px;
 }
+
+.btn-disabled{
+    background-color: #d1d1d1;
+    cursor: not-allowed;
+    color: white;
+    border: 0;
+}
+
+.p-inputnumber{
+    width: 100%;
+}
+
 

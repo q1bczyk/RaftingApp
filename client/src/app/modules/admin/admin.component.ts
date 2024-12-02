@@ -4,6 +4,7 @@ import { AdminNavComponent } from './components/admin-nav/admin-nav.component';
 import { HeaderComponent } from "./components/header/header.component";
 import { NavigationService } from './services/ui/navigation.service';
 import { CommonModule } from '@angular/common';
+import { FormModalComponent } from "./components/form-modal/form-modal.component";
 
 @Component({
   selector: 'app-admin',
