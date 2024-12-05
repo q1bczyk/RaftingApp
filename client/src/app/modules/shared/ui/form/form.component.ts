@@ -6,6 +6,7 @@ import { FormGroup, FormsModule } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
 import { LoadingService } from '../../services/loading.service';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { FileUploadEvent } from 'primeng/fileupload';
 
 @Component({
   selector: 'app-form',
@@ -14,9 +15,12 @@ import { InputNumberModule } from 'primeng/inputnumber';
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
+
 export class FormComponent {
   @Input() formSettings : FormSettingType = { formGroup : new FormGroup({}), fields : {}, buttonLabel : ''}
   @Output() formSubmitEvent : EventEmitter<FormGroup> = new EventEmitter<FormGroup>();  
+
+  uploadedFile: File | undefined = undefined;
 
   constructor(public loadingService : LoadingService){}
 
@@ -42,6 +46,15 @@ export class FormComponent {
     if (this.formSettings.formGroup.errors) return true;
   
     return false;
+  }
+
+  onUpload(event : Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+        const file = input.files[0];
+        this.uploadedFile = file;
+        this.formSettings.formGroup.patchValue({ file: file });
+    }
   }
 
 }

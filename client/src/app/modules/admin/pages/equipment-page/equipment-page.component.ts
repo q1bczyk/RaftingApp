@@ -34,4 +34,5 @@ export class EquipmentPageComponent extends BaseReadDirective<GetEquipmentType, 
   onDeleteEvent(equipmentId : string) : void{
     this.confirmationModalService.openModal(() => this.deleteApiRequest(equipmentId));
   }
+
 }

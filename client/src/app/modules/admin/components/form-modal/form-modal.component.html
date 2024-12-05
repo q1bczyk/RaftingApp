@@ -1,5 +1,5 @@
-<div class="modal-wrapper">
-    <div class="w-50 bg-white rounded form-modal">
+<div class="modal-wrapper" (click)="modalService.closeModal()">
+    <div class="w-50 bg-white rounded form-modal" (click)="onFormModalClick($event)">
         <ng-content/>
     </div>
 </div>

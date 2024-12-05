@@ -37,4 +37,10 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
   openModal() : void{
     this.modalFormService.openModal();
   }
+
+  onSuccessEquipmentAdd(data : TGet) : void{
+    this.apiManager.exeApiRequest(this.service.fetchAll());
+    this.toastService.showToast('Pomyślnie dodano sprzęt', 'success');
+    this.modalFormService.closeModal();
+  }
 }

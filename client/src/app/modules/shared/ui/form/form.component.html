@@ -64,6 +64,12 @@
         </small>
        }
     }
+
+    @if(control === 'file'){
+        <div class="mb-3">
+            <input [formControlName]="control" class="form-control" type="file" id="formFileMultiple" multiple (change)="onUpload($event)">
+        </div>
+    }
 }
     <button 
         [disabled]="isFormInvalid() || loadingService.isLoading()"

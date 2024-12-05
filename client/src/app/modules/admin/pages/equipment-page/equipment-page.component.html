@@ -12,7 +12,8 @@
     </div>
     @if(modalFormService.isModalOpen() === true){
         <app-form-modal>
-            <app-add-equipment/>
+            <app-add-equipment 
+                (createdDataEvent)="onSuccessEquipmentAdd($event)"/>
         </app-form-modal>
     }
 </app-page-wrapper>

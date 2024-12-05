@@ -7,6 +7,9 @@ import { ApiManager } from '../../../../../core/api/api-manager';
 import { addEquipmentForm } from '../../../../forms/add-qeuipment-form';
 import { ModalFormService } from '../../../../services/ui/modal-form.service';
 import { FormComponent } from "../../../../../shared/ui/form/form.component";
+import { FormGroup } from '@angular/forms';
+import { createFormData } from '../../../../../core/utils/formData/createFormData';
+import { ToastService } from '../../../../../shared/services/ui/toasts/toast.service';
 
 @Component({
   selector: 'app-add-equipment',
@@ -23,5 +26,10 @@ export class AddEquipmentComponent extends BaseCreateComponent<GetEquipmentType,
     service : EquipmentService){
     super(modalFormService, service, apiManager, addEquipmentForm);
   }
+
+  override onFormSubmit(form : FormGroup) : void{
+    const mappedData : FormData = createFormData(form);
+    this.apiManager.exeApiRequest(this.service.create(mappedData), () => this.onSuccess())
+};
 
 }
