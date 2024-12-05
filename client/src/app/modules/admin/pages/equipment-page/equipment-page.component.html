@@ -3,11 +3,19 @@
         <button class="btn btn-primary mb-3" (click)="openModal()"><i class="bi bi-plus-circle me-2"></i>Dodaj</button>
     </div>
     <div class="bg-white shadow rounded overflow-hidden">
-        @for (item of apiManager.data(); track $index) {
-            <app-equipment-item 
-                [equipmentItem]="item"
-                [index]="$index"
-                (deleteEvent)="onDeleteEvent($event)"/>
+        @if(loadingService.isLoading()){
+            <app-loader/>
+        }
+        @else if(!loadingService.isLoading() && apiManager.data()?.length === 0){
+            <app-no-data/>
+        }
+        @else{
+            @for (item of apiManager.data(); track $index) {
+                <app-equipment-item 
+                    [equipmentItem]="item"
+                    [index]="$index"
+                    (deleteEvent)="onDeleteEvent($event)"/>
+            }
         }
     </div>
     @if(modalFormService.isModalOpen() === true){

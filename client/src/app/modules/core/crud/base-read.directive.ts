@@ -4,6 +4,7 @@ import { ApiManager } from '../api/api-manager';
 import { ApiSuccessResponse } from '../types/api-success-response.type';
 import { ConfirmationModalService } from '../../shared/services/confiramtion-modal.service';
 import { ToastService } from '../../shared/services/ui/toasts/toast.service';
+import { LoadingService } from '../../shared/services/loading.service';
 import { ModalFormService } from '../../admin/services/ui/modal-form.service';
 
 @Directive({
@@ -17,7 +18,8 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
     public apiManager : ApiManager<TGet[]>, 
     public confirmationModalService : ConfirmationModalService,
     protected apiDeleteManager : ApiManager<ApiSuccessResponse>,
-    private toastService : ToastService
+    private toastService : ToastService,
+    public loadingService : LoadingService
     )
     {}
 
