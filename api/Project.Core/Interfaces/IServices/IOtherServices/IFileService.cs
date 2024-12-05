@@ -6,6 +6,6 @@ namespace Project.Core.Interfaces.IServices.IOtherServices
     {
         Task<string> Upload(IFormFile file, string fileName);
         Task Delete(string imgUrl);
-        Task<string> GetString(string imgUrl);
+        Task<string> GeneratePublicLink(string imgUrl);
     }
 }

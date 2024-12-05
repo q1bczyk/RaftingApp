@@ -20,6 +20,16 @@ namespace Project.Core.Services.BusinessService
         {
             _fileService = fileService;
         }
+
+        public override async Task<List<GetEquipmentTypeDTO>> GetAll()
+        {
+            var equipmentTypes = await _repository.GetAllAsync();
+            foreach(var equipmentType in equipmentTypes){
+                equipmentType.PhotoUrl = await _fileService.GeneratePublicLink(equipmentType.PhotoUrl);
+            }
+
+            return _toDTOMapper.MapToList(equipmentTypes);
+        }
         public override async Task<GetEquipmentTypeDTO> Create(AddEquipmentTypeDTO addEquipmentTypeDTO)
         {
             var newEquipmentType = await UploadFileAndMap(addEquipmentTypeDTO);

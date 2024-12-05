@@ -1,6 +1,7 @@
 using api;
 using Azure.Storage;
 using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Project.Core.Helpers;
@@ -23,9 +24,23 @@ namespace Project.Core.Services.OtherServices
             await blobClient.DeleteIfExistsAsync();
         }
 
-        public Task<string> GetString(string imgUrl)
+        public async Task<string> GeneratePublicLink(string imgUrl)
         {
-            throw new NotImplementedException();
+            var blobClient = new BlobClient(new Uri(imgUrl), new StorageSharedKeyCredential(_blobConfig.AccountName, _blobConfig.Key));
+
+            var sasBuilder = new BlobSasBuilder
+            {
+                StartsOn = DateTimeOffset.UtcNow,
+                ExpiresOn = DateTimeOffset.UtcNow.AddHours(1),
+                Resource = "b"
+            };
+
+            sasBuilder.SetPermissions("rw");
+
+            var sasToken = blobClient.GenerateSasUri(sasBuilder);
+            var publicUrl = sasToken.ToString();
+
+            return publicUrl;
         }
 
         public async Task<string> Upload(IFormFile file, string fileName)
