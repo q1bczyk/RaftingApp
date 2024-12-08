@@ -24,9 +24,4 @@ export class EquipmentItemComponent {
 
     return this.equipmentItem.minParticipants + ' - ' + this.equipmentItem.maxParticipants;
   }
-
-  onDeleteIconClick(itemId : string) : void{
-    this.deleteEvent.emit(itemId);
-  }
-
 }

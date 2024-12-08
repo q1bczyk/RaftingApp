@@ -13,8 +13,17 @@
             @for (item of apiManager.data(); track $index) {
                 <app-equipment-item 
                     [equipmentItem]="item"
-                    [index]="$index"
-                    (deleteEvent)="onDeleteEvent($event)"/>
+                    [index]="$index">
+                    <div class="d-flex flex-row-reverse flex-md-row gap-2">
+                        <button class="btn btn-outline-primary" (click)="onEdit(item.id)">
+                            <i class="bi bi-pencil-square"></i>
+                            Edytuj
+                        </button>
+                        <button class="btn btn-outline-danger" (click)="deleteData(item.id)">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </div>
+                </app-equipment-item>
             }
         }
     </div>
@@ -22,6 +31,13 @@
         <app-form-modal>
             <app-add-equipment 
                 (createdDataEvent)="onSuccessEquipmentAdd($event)"/>
+        </app-form-modal>
+    }
+    @if(editedDataId){
+        <app-form-modal>
+            <app-edit-equipment
+                [id]="editedDataId"
+            />
         </app-form-modal>
     }
 </app-page-wrapper>

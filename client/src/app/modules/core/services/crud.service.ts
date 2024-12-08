@@ -15,6 +15,15 @@ export class CrudService<TGet, TPost, TPut> extends BaseApiService implements IC
         super(http, controller);
     }
 
+    fetchSingle(id: string): Observable<TGet> {
+        return this.http.get<TGet>(`${this.url}/${id}`)
+            .pipe(
+                map(res => {
+                    return res;
+                })
+            )
+    }
+
     create(data : TPost): Observable<TGet> {
         return this.http.post<TGet>(this.url, data)
             .pipe(

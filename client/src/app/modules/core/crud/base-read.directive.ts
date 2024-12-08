@@ -12,6 +12,8 @@ import { ModalFormService } from '../../admin/services/ui/modal-form.service';
 })
 export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any>> implements OnInit
 {
+  editedDataId : string | null = null;
+
   constructor(
     public modalFormService : ModalFormService,
     protected service : TService, 
@@ -44,5 +46,9 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
     this.apiManager.exeApiRequest(this.service.fetchAll());
     this.toastService.showToast('Pomyślnie dodano sprzęt', 'success');
     this.modalFormService.closeModal();
+  }
+
+  onEdit(id : string) : void{
+    this.editedDataId = id;
   }
 }

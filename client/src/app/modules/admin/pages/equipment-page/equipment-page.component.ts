@@ -15,11 +15,12 @@ import { ModalFormService } from '../../services/ui/modal-form.service';
 import { LoaderComponent } from "../../../shared/ui/loader/loader.component";
 import { LoadingService } from '../../../shared/services/loading.service';
 import { NoDataComponent } from "../../../shared/ui/no-data/no-data.component";
+import { EditEquipmentComponent } from "./components/edit-equipment/edit-equipment.component";
 
 @Component({
   selector: 'app-equipment-page',
   standalone: true,
-  imports: [PageWrapperComponent, EquipmentItemComponent, FormModalComponent, FormComponent, AddEquipmentComponent, LoaderComponent, NoDataComponent],
+  imports: [PageWrapperComponent, EquipmentItemComponent, FormModalComponent, FormComponent, AddEquipmentComponent, LoaderComponent, NoDataComponent, EditEquipmentComponent],
   templateUrl: './equipment-page.component.html',
   styleUrl: './equipment-page.component.scss'
 })
@@ -35,7 +36,7 @@ export class EquipmentPageComponent extends BaseReadDirective<GetEquipmentType, 
     super(modalFormSerivce, service, apiManager, confirmationModalService, apiDeletemanager, toastService, loadingService);
   }
 
-  onDeleteEvent(equipmentId : string) : void{
+  deleteData(equipmentId : string) : void{
     this.confirmationModalService.openModal(() => this.deleteApiRequest(equipmentId));
   }
 
