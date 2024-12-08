@@ -46,7 +46,7 @@ namespace Project.Core.Services.BusinessService
 
         public virtual async Task<TGetDTO> Update(TUpdateDTO updateDTO, string id)
         {
-            var dataToUpdate = await _repository.GetById(id);
+            var dataToUpdate = await _repository.GetById(id); /// tutaj jest blad trzeba dodac dto do update 
             var updatedData = await _repository.Update(dataToUpdate);
             return _toDTOMapper.MapToModel(updatedData);
         }

@@ -3,6 +3,7 @@ using Project.Core.DTO.Auth;
 using Project.Core.DTO.EquipmentDTO;
 using Project.Core.DTO.ReservationEquipmentDTO;
 using Project.Core.DTO.ReservationsDTO;
+using Project.Core.DTO.SettingsDTO;
 using Project.Core.Entities;
 using Project.Core.Interfaces.IMapper;
 using Project.Core.Interfaces.IRepositories;
@@ -29,11 +30,13 @@ namespace Project.Api.Extensions
             services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IReservationEquipmentService, ReservationEquipmentService>();
+            services.AddScoped<ISettingsService, SettingsService>();
 
             //repositories
             services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IReservationEquipmentRepository, ReservationEquipmentRepository>();
+            services.AddScoped<ISettingsRepository, SettingsRepository>();
 
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<RegisterDTO, User>();
@@ -45,6 +48,8 @@ namespace Project.Api.Extensions
                 cfg.CreateMap<AddReservationEquipmentDTO, ReservationEquipment>();
                 cfg.CreateMap<ReservationEquipment, GetReservationEquipmentDTO>()
                     .ForMember(dest => dest.EquipmentType, opt => opt.MapFrom(src => src.EquipmentType));
+                cfg.CreateMap<BaseSettingsDTO, Settings>();
+                cfg.CreateMap<Settings, GetSettingsDTO>();    
             });
 
             IMapper mapper = config.CreateMapper();
@@ -54,12 +59,13 @@ namespace Project.Api.Extensions
             services.AddSingleton<IBaseMapper<AddEquipmentTypeDTO, EquipmentType>>(new BaseMapper<AddEquipmentTypeDTO, EquipmentType>(mapper));
             services.AddSingleton<IBaseMapper<AddReservationDTO, Reservation>>(new BaseMapper<AddReservationDTO, Reservation>(mapper));
             services.AddSingleton<IBaseMapper<AddReservationEquipmentDTO, ReservationEquipment>>(new BaseMapper<AddReservationEquipmentDTO, ReservationEquipment>(mapper));
+            services.AddSingleton<IBaseMapper<BaseSettingsDTO, Settings>>(new BaseMapper<BaseSettingsDTO, Settings>(mapper));
 
             //mapper to dto
             services.AddSingleton<IBaseMapper<EquipmentType, GetEquipmentTypeDTO>>(new BaseMapper<EquipmentType, GetEquipmentTypeDTO>(mapper));
             services.AddSingleton<IBaseMapper<Reservation, GetReservationDTO>>(new BaseMapper<Reservation, GetReservationDTO>(mapper));
             services.AddSingleton<IBaseMapper<ReservationEquipment, GetReservationEquipmentDTO>>(new BaseMapper<ReservationEquipment, GetReservationEquipmentDTO>(mapper));
-
+            services.AddSingleton<IBaseMapper<Settings, GetSettingsDTO>>(new BaseMapper<Settings, GetSettingsDTO>(mapper));
 
             return services;
         }
