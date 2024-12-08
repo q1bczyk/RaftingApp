@@ -37,5 +37,10 @@ namespace Project.Api.Controllers
             return Ok(await _service.GetAll());
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetEquipmentTypeDTO>> GetSingle(string id){
+            return Ok(await _service.GetById(id));
+        }
+
     }
 }

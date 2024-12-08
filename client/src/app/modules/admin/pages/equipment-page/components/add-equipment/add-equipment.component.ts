@@ -30,6 +30,6 @@ export class AddEquipmentComponent extends BaseCreateComponent<GetEquipmentType,
   override onFormSubmit(form : FormGroup) : void{
     const mappedData : FormData = createFormData(form);
     this.apiManager.exeApiRequest(this.service.create(mappedData), () => this.onSuccess())
-};
+  };
 
 }

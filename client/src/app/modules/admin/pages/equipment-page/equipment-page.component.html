@@ -6,9 +6,6 @@
         @if(loadingService.isLoading()){
             <app-loader/>
         }
-        @else if(!loadingService.isLoading() && apiManager.data()?.length === 0){
-            <app-no-data/>
-        }
         @else{
             @for (item of apiManager.data(); track $index) {
                 <app-equipment-item 
@@ -25,18 +22,22 @@
                     </div>
                 </app-equipment-item>
             }
+            @empty {
+                <app-no-data/>
+            }
         }
     </div>
-    @if(modalFormService.isModalOpen() === true){
+    @if(modalFormService.isModalOpen() === true && !editedDataId){
         <app-form-modal>
             <app-add-equipment 
                 (createdDataEvent)="onSuccessEquipmentAdd($event)"/>
         </app-form-modal>
     }
-    @if(editedDataId){
+    @if(editedDataId && modalFormService.isModalOpen()){
         <app-form-modal>
             <app-edit-equipment
                 [id]="editedDataId"
+                (editedDataEvent)="onSuccessEdit()"
             />
         </app-form-modal>
     }

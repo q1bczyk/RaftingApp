@@ -8,7 +8,7 @@ import { LoadingService } from '../../shared/services/loading.service';
 import { ModalFormService } from '../../admin/services/ui/modal-form.service';
 
 @Directive({
-  standalone: true
+  standalone: true,
 })
 export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any>> implements OnInit
 {
@@ -39,6 +39,7 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
   }
 
   openModal() : void{
+    this.editedDataId = null;
     this.modalFormService.openModal();
   }
 
@@ -49,6 +50,15 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
   }
 
   onEdit(id : string) : void{
+    this.modalFormService.openModal();
     this.editedDataId = id;
   }
+
+  onSuccessEdit() : void{
+    this.apiManager.exeApiRequest(this.service.fetchAll());
+    this.toastService.showToast('Pomyślnie edytowano sprzęt', 'success');
+    this.editedDataId = null;
+    this.modalFormService.closeModal();
+  }
+
 }

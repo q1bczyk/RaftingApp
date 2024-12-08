@@ -22,7 +22,8 @@ import { EditEquipmentComponent } from "./components/edit-equipment/edit-equipme
   standalone: true,
   imports: [PageWrapperComponent, EquipmentItemComponent, FormModalComponent, FormComponent, AddEquipmentComponent, LoaderComponent, NoDataComponent, EditEquipmentComponent],
   templateUrl: './equipment-page.component.html',
-  styleUrl: './equipment-page.component.scss'
+  styleUrl: './equipment-page.component.scss',
+  providers: [ApiManager],
 })
 export class EquipmentPageComponent extends BaseReadDirective<GetEquipmentType, EquipmentService>{
   constructor(

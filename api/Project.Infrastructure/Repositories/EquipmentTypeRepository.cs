@@ -15,5 +15,7 @@ namespace Project.Infrastructure.Repositories
             .OrderBy(e => e.MinParticipants)
             .ToListAsync();
         }
+
+        
     }
 }

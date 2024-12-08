@@ -37,7 +37,7 @@ namespace Project.Infrastructure.Repositories
             return await _context.Set<T>().ToListAsync();
         }
 
-        public async Task<T> GetById<Tid>(Tid id)
+        public virtual async Task<T> GetById<Tid>(Tid id)
         {
             var data = await _context.Set<T>().FindAsync(id);
             if(data == null)

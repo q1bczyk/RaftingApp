@@ -8,3 +8,12 @@ export function mapFormToModel<ModelType>(form : FormGroup) : ModelType{
         });
     return model as ModelType;
 }
+
+export function mapModelToForm(model : any, form : FormGroup) : FormGroup{
+    Object.keys(form.controls).forEach(key => {
+        if(model.hasOwnProperty(key))
+            form.controls[key].setValue((model as any)[key]);
+    })
+
+    return form;
+}

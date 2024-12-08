@@ -14,6 +14,14 @@ export class CrudService<TGet, TPost, TPut> extends BaseApiService implements IC
     constructor(protected override http : HttpClient, @Inject(String) controller : string){
         super(http, controller);
     }
+    update(id: string, data: TPut): Observable<TGet> {
+        return this.http.put<TGet>(`${this.url}/${id}`, data)
+            .pipe(
+                map(res => {
+                    return res;
+                })
+            )
+    }
 
     fetchSingle(id: string): Observable<TGet> {
         return this.http.get<TGet>(`${this.url}/${id}`)

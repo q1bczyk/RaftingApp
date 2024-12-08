@@ -14,7 +14,7 @@ const addEquipmentFormGroup: FormGroup = new FormGroup(
     { validators: minMaxParticipantsValidator() }
   );
 
-const addEquipmentFormFields: FormFieldType = {
+export const addEquipmentFormFields: FormFieldType = {
     typeName: {
       label: "Nazwa",
       fieldType: 'text',

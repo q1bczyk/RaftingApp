@@ -6,4 +6,5 @@ export interface ICrudService<TGet, TPost, TPut>{
     fetchAll() : Observable<TGet[]>
     delete(id : string) : Observable<ApiSuccessResponse>
     fetchSingle(id : string) : Observable<TGet>
+    update(id : string, data : TPut) : Observable<TGet>
 }

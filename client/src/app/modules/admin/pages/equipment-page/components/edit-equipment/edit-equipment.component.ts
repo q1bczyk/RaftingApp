@@ -1,31 +1,38 @@
 import { Component } from '@angular/core';
-import { BaseReadSingleComponent } from '../../../../../core/crud/base-read-single.directive';
 import { GetEquipmentType } from '../../../../../shared/types/api/equipment-types/get-equipment.type';
 import { CreateEquipmentType } from '../../../../../shared/types/api/equipment-types/create-equipment.type';
 import { EquipmentService } from '../../../../../shared/services/api/equipment.service';
-import { ModalFormService } from '../../../../services/ui/modal-form.service';
 import { ApiManager } from '../../../../../core/api/api-manager';
-import { ConfirmationModalService } from '../../../../../shared/services/confiramtion-modal.service';
-import { ToastService } from '../../../../../shared/services/ui/toasts/toast.service';
 import { LoadingService } from '../../../../../shared/services/loading.service';
+import { BaseUpdateComponent } from '../../../../../core/crud/base-update.directive';
+import { ToastService } from '../../../../../shared/services/ui/toasts/toast.service';
+import { FormComponent } from "../../../../../shared/ui/form/form.component";
+import { editEquipmentForm } from '../../../../forms/edit-equipment-form';
+import { UpdateEquipmentType } from '../../../../../shared/types/api/equipment-types/update-equipment.type';
+import { createFormData } from '../../../../../core/utils/formData/createFormData';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-equipment',
   standalone: true,
-  imports: [],
+  imports: [FormComponent],
   templateUrl: './edit-equipment.component.html',
-  styleUrl: './edit-equipment.component.scss'
+  styleUrl: './edit-equipment.component.scss',
+  providers: [ApiManager],
 })
-export class EditEquipmentComponent extends BaseReadSingleComponent<GetEquipmentType, CreateEquipmentType, EquipmentService>{
-
+export class EditEquipmentComponent extends BaseUpdateComponent<GetEquipmentType, UpdateEquipmentType, EquipmentService>{
   constructor(
-    modalFormSerice : ModalFormService,
-    service : EquipmentService,
-    apiMenager : ApiManager<GetEquipmentType>,
-    confirmationModal : ConfirmationModalService,
-    loadingService : LoadingService,
+        apiManager : ApiManager<GetEquipmentType>, 
+        updateApiManager : ApiManager<GetEquipmentType>,
+        service : EquipmentService,
+        toastService : ToastService,
+        loadingService : LoadingService,
   ){
-    super(modalFormSerice, service, apiMenager, confirmationModal, loadingService);
+    super(apiManager, updateApiManager, service, toastService, loadingService, editEquipmentForm)
   }
 
+  override onFormSubmit(form : FormGroup) : void{
+    const mappedData : FormData = createFormData(form);
+    this.apiManager.exeApiRequest(this.service.update(this.id, mappedData), () => this.onSuccessEdit())
+  };
 }
