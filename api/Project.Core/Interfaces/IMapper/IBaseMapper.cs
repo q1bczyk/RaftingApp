@@ -6,5 +6,6 @@ namespace Project.Core.Interfaces.IMapper
     {
         TDestination MapToModel(TSource source);
         List<TDestination> MapToList(List<TSource> source);
+        void UpdateModel(TSource source, TDestination destination);
     }
 }

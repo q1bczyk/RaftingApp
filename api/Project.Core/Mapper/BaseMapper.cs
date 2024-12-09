@@ -22,5 +22,10 @@ namespace Project.Core.Mapper
         {
             return _mapper.Map<TDestination>(source);
         }
+
+        public void UpdateModel(TSource source, TDestination destination)
+        {
+            _mapper.Map(source, destination); 
+        }
     }
 }

@@ -1,6 +1,7 @@
 using Project.Core.Interfaces.IRepositories;
 using Project.Core.Interfaces.IServices.IBusinessServices;
 using Project.Core.Interfaces.IMapper;
+using Project.Core.Entities;
 
 namespace Project.Core.Services.BusinessService
 {
@@ -8,7 +9,7 @@ namespace Project.Core.Services.BusinessService
     where TGetDTO : class
     where TCreateDTO : class
     where TUpdateDTO : class
-    where TModel : class
+    where TModel : BaseEntity
     where TRepository : IBaseRepository<TModel>
     {
         protected readonly TRepository _repository;
@@ -44,9 +45,10 @@ namespace Project.Core.Services.BusinessService
             return _toDTOMapper.MapToModel(fetchedData);
         }
 
-        public virtual async Task<TGetDTO> Update(TUpdateDTO updateDTO, string id)
+        public virtual async Task<TGetDTO> Update(TCreateDTO updateDTO, string id)
         {
-            var dataToUpdate = await _repository.GetById(id); /// tutaj jest blad trzeba dodac dto do update 
+            var dataToUpdate = await _repository.GetById(id);
+            _toModelMapper.UpdateModel(updateDTO, dataToUpdate); 
             var updatedData = await _repository.Update(dataToUpdate);
             return _toDTOMapper.MapToModel(updatedData);
         }

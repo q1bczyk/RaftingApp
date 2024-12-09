@@ -7,7 +7,7 @@ namespace Project.Core.Interfaces.IServices.IBusinessServices
         Task<TGetDTO> GetById(string id);
         Task<List<TGetDTO>> GetAll();
         Task<TGetDTO> Create(TCreateDTO createDTO);
-        Task<TGetDTO> Update(TUpdateDTO updateDTO, string id);
+        Task<TGetDTO> Update(TCreateDTO updateDTO, string id);
         Task Delete(string id);
     }
 }
