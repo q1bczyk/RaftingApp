@@ -1,1 +1,44 @@
-<p>date-settings works!</p>
+<div class="row">
+	<div class="col-6 d-flex flex-column justify-content-center p-3">
+		<div class="py-3 d-flex align-items-center"><i class="bi bi-calendar-check text-primary fs-5 mx-2"></i> Otwarte od: </div>
+		<div class="input-group">
+			<input
+				class="form-control"
+				placeholder="yyyy-mm-dd"
+				name="dp"
+				ngbDatepicker
+				#d="ngbDatepicker"
+			/>
+			<button class="btn btn-primary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+		</div>
+	</div>
+	<div class="col-6 d-flex flex-column justify-content-center p-3">
+		<div class="py-3 d-flex align-items-center"><i class="bi bi-calendar-check text-primary fs-5 mx-2"></i> Otwarte do: </div>
+		<div class="input-group">
+			<input
+				class="form-control"
+				placeholder="yyyy-mm-dd"
+				name="dp"
+				ngbDatepicker
+				#d="ngbDatepicker"
+			/>
+			<button class="btn btn-primary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+		</div>
+	</div>
+	<div class="col-6 d-flex flex-column justify-content-center align-items-center p-3">
+		<div class="py-3 d-flex align-items-center"><i class="bi bi-clock text-primary fs-5 mx-2"></i> Otwarte od: </div>
+		<ngb-timepicker
+		[(ngModel)]="time"
+		[hourStep]="1"
+		[minuteStep]="15"
+		/>
+	</div>
+	<div class="col-6 d-flex flex-column justify-content-center align-items-center p-3">
+		<div class="py-3 d-flex align-items-center"><i class="bi bi-clock text-primary fs-5 mx-2"></i> Otwarte do: </div>
+		<ngb-timepicker
+		[(ngModel)]="time"
+		[hourStep]="1"
+		[minuteStep]="15"
+		/>
+	</div>
+</div>
