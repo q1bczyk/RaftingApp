@@ -28,7 +28,7 @@
 	<div class="col-6 d-flex flex-column justify-content-center align-items-center p-3">
 		<div class="py-3 d-flex align-items-center"><i class="bi bi-clock text-primary fs-5 mx-2"></i> Otwarte od: </div>
 		<ngb-timepicker
-		[(ngModel)]="time"
+		[(ngModel)]="openTime"
 		[hourStep]="1"
 		[minuteStep]="15"
 		/>
@@ -36,7 +36,7 @@
 	<div class="col-6 d-flex flex-column justify-content-center align-items-center p-3">
 		<div class="py-3 d-flex align-items-center"><i class="bi bi-clock text-primary fs-5 mx-2"></i> Otwarte do: </div>
 		<ngb-timepicker
-		[(ngModel)]="time"
+		[(ngModel)]="closeTime"
 		[hourStep]="1"
 		[minuteStep]="15"
 		/>

@@ -12,8 +12,7 @@ export class SystemSettingsHandlerService{
     }
 
     getSystemSettings() : GetSystemSettingsType | undefined{
-        const settings = this.systemSettings();
-        return settings;
+        return this.systemSettings();
     }
 
 }
