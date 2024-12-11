@@ -99,7 +99,7 @@
         transition: color ease-in-out 0.2s;
     }
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(xl) {
         transform: translateX(0);
     }
 }

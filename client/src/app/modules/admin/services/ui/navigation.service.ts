@@ -35,7 +35,7 @@ export class NavigationService{
         const onResize = () => {
           const width = window.innerWidth;
           this.screenWidth.set(width);
-          if (width < 992) 
+          if (width < 1400) 
             this.closeMenu(); 
             else this.openMenu();
         };

@@ -1,44 +1,51 @@
 <div class="row">
-	<div class="col-6 d-flex flex-column justify-content-center p-3">
-		<div class="py-3 d-flex align-items-center"><i class="bi bi-calendar-check text-primary fs-5 mx-2"></i> Otwarte od: </div>
-		<div class="input-group">
-			<input
-				class="form-control"
-				placeholder="yyyy-mm-dd"
-				name="dp"
-				ngbDatepicker
-				#d="ngbDatepicker"
-			/>
-			<button class="btn btn-primary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
-		</div>
-	</div>
-	<div class="col-6 d-flex flex-column justify-content-center p-3">
-		<div class="py-3 d-flex align-items-center"><i class="bi bi-calendar-check text-primary fs-5 mx-2"></i> Otwarte do: </div>
-		<div class="input-group">
-			<input
-				class="form-control"
-				placeholder="yyyy-mm-dd"
-				name="dp"
-				ngbDatepicker
-				#d="ngbDatepicker"
-			/>
-			<button class="btn btn-primary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
-		</div>
-	</div>
-	<div class="col-6 d-flex flex-column justify-content-center align-items-center p-3">
-		<div class="py-3 d-flex align-items-center"><i class="bi bi-clock text-primary fs-5 mx-2"></i> Otwarte od: </div>
+    <div class="col-12 d-flex flex-column justify-content-center">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-calendar-check text-primary fs-5 mx-2"></i> Otwarte od: 
+        </div>
+       <div class="w-100 d-flex align-items-center justify-content-between">
+		<div class="input-group w-75 me-3">
+            <input
+				id="start"
+                class="form-control"
+                name="startDate"
+                ngbDatepicker
+                #d1="ngbDatepicker" 
+                [ngModel]="dateSettings.openDate"
+            />
+            <button class="btn btn-primary bi bi-calendar3" (click)="d1.toggle()" type="button"></button>
+        </div>
 		<ngb-timepicker
-		[(ngModel)]="openTime"
-		[hourStep]="1"
-		[minuteStep]="15"
+			[(ngModel)]="dateSettings.openTime"
+			[hourStep]="1"
+			[minuteStep]="15"
 		/>
-	</div>
-	<div class="col-6 d-flex flex-column justify-content-center align-items-center p-3">
-		<div class="py-3 d-flex align-items-center"><i class="bi bi-clock text-primary fs-5 mx-2"></i> Otwarte do: </div>
+	   </div>
+    </div>
+	<div class="col-12 d-flex flex-column justify-content-center">
+        <div class="d-flex align-items-center">
+            <i class="bi bi-calendar-check text-primary fs-5 mx-2"></i> Otwarte do: 
+        </div>
+       <div class="w-100 d-flex align-items-center justify-content-between">
+		<div class="input-group w-75 me-3">
+            <input
+				id="start"
+                class="form-control"
+                name="startDate"
+                ngbDatepicker
+                #d2="ngbDatepicker" 
+                [ngModel]="dateSettings.closeDate"  
+            />
+            <button class="btn btn-primary bi bi-calendar3" (click)="d2.toggle()" type="button"></button>
+        </div>
 		<ngb-timepicker
-		[(ngModel)]="closeTime"
-		[hourStep]="1"
-		[minuteStep]="15"
+			[(ngModel)]="dateSettings.closeTime"
+			[hourStep]="1"
+			[minuteStep]="15"
 		/>
-	</div>
+	   </div>
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="onUpdate()">Zapisz</button>
+    </div>
 </div>

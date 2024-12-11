@@ -1,10 +1,11 @@
 import { JsonPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgbDatepickerModule, NgbTimepickerModule, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { SystemSettingsHandlerService } from '../../../../../shared/services/others/system-settings-handler.service';
-import { convertTime } from '../../helpers/dateConventer';
-import { GetSystemSettingsType } from '../../../../../shared/types/api/system-settings-types/get-system-settings.type';
+import { convertTime, dateToNgbStruct, dateToString, structToDate } from '../../helpers/dateConventer';
+import { dateFormat } from '../../../../../core/date-format/date-format';
+import { DateSettingsType, dateSettingsInit } from '../types/dateSettingsType';
 
 @Component({
   selector: 'app-date-settings',
@@ -14,16 +15,23 @@ import { GetSystemSettingsType } from '../../../../../shared/types/api/system-se
   styleUrl: './date-settings.component.scss'
 })
 export class DateSettingsComponent {
-  systemSettings : GetSystemSettingsType | undefined;
-  openTime: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
-  closeTime: NgbTimeStruct = { hour: 13, minute: 30, second: 0 };
-  
-  constructor(systemSettingsService : SystemSettingsHandlerService){
-      this.systemSettings = systemSettingsService.getSystemSettings();
-      if(this.systemSettings){
-        this.openTime = convertTime(new Date(this.systemSettings.openingTime));
-        this.closeTime = convertTime(new Date(this.systemSettings.closeTime));
-      }
+  dateFormat: string = dateFormat;
+  dateSettings: DateSettingsType = dateSettingsInit();
+
+  constructor(private systemSettingsService: SystemSettingsHandlerService) {
+    const systemSettings = systemSettingsService.getSystemSettings();
+    if (systemSettings) {
+      this.dateSettings.openTime = convertTime(new Date(systemSettings.seasonStartDate));
+      this.dateSettings.closeTime = convertTime(new Date(systemSettings.seasonEndDate));
+      this.dateSettings.openDate = dateToNgbStruct(new Date(systemSettings.seasonStartDate));
+      this.dateSettings.closeDate = dateToNgbStruct(new Date(systemSettings.seasonEndDate));
+    }
+  }
+
+  onUpdate() : void{
+    const formatedOpenDate = structToDate(this.dateSettings.openDate, this.dateSettings.openTime);
+    const formatedCloseDate = structToDate(this.dateSettings.closeDate, this.dateSettings.closeTime);
+    this.systemSettingsService.updateDate(formatedOpenDate, formatedCloseDate);
   }
 
 }
