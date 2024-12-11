@@ -16,10 +16,6 @@ namespace Project.Core.Entities
         [Required]
         public int DayLatestBookingTime { get; set; }
         [Required]
-        public DateTime OpeningTime { get; set; }
-        [Required]
-        public DateTime CloseTime { get; set; }
-        [Required]
         public int PhoneNumber { get; set; }
         [Required, EmailAddress]
         public string Email { get; set; }

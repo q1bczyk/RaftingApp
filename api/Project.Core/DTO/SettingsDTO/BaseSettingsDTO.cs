@@ -3,7 +3,6 @@ using Project.Core.Validation;
 
 namespace Project.Core.DTO.SettingsDTO
 {
-    [OpeningHoursValidator]
     [SeasonActiveValidator]
     [BookingValidator]
     public class BaseSettingsDTO
@@ -19,10 +18,6 @@ namespace Project.Core.DTO.SettingsDTO
         public int DayEarliestBookingTime { get; set; }
         [Required]
         public int DayLatestBookingTime { get; set; }
-        [Required]
-        public DateTime OpeningTime { get; set; }
-        [Required]
-        public DateTime CloseTime { get; set; }
         [Required, PhoneNumber] 
         public int PhoneNumber { get; set; }
         [Required, EmailAddress]
