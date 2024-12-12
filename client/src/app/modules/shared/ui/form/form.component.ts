@@ -7,17 +7,19 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { LoadingService } from '../../services/loading.service';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FileUploadEvent } from 'primeng/fileupload';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form',
   standalone: true,
-  imports: [InputTextModule, ButtonModule, ReactiveFormsModule, FormsModule, InputNumberModule],
+  imports: [InputTextModule, ButtonModule, ReactiveFormsModule, FormsModule, InputNumberModule, CommonModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss'
 })
 
 export class FormComponent {
   @Input() formSettings : FormSettingType = { formGroup : new FormGroup({}), fields : {}, buttonLabel : ''}
+  @Input() fullWidth : boolean | null = null;
   @Output() formSubmitEvent : EventEmitter<FormGroup> = new EventEmitter<FormGroup>();  
 
   uploadedFile: File | undefined = undefined;

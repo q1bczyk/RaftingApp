@@ -11,8 +11,9 @@ namespace Project.Core.Validation
             if (value is not BaseSettingsDTO settings)
                 return new ValidationResult("Invalid object type for validation.");
 
-            if (settings.SeasonStartDate >= settings.SeasonEndDate)
-                return new ValidationResult("SeasonStartDate must be earlier than SeasonEndDate.");
+            var differenceInDays = (settings.SeasonEndDate - settings.SeasonStartDate).TotalDays;
+            if (differenceInDays < 1)
+                return new ValidationResult("The difference between SeasonStartDate and SeasonEndDate must be at least one full day.");
 
             return ValidationResult.Success;
         }

@@ -6,6 +6,7 @@ import { SystemSettingsHandlerService } from '../../../../../shared/services/oth
 import { convertTime, dateToNgbStruct, dateToString, structToDate } from '../../helpers/dateConventer';
 import { dateFormat } from '../../../../../core/date-format/date-format';
 import { DateSettingsType, dateSettingsInit } from '../types/dateSettingsType';
+import { ToastService } from '../../../../../shared/services/ui/toasts/toast.service';
 
 @Component({
   selector: 'app-date-settings',
@@ -18,7 +19,7 @@ export class DateSettingsComponent {
   dateFormat: string = dateFormat;
   dateSettings: DateSettingsType = dateSettingsInit();
 
-  constructor(private systemSettingsService: SystemSettingsHandlerService) {
+  constructor(private systemSettingsService: SystemSettingsHandlerService, private toastService : ToastService) {
     const systemSettings = systemSettingsService.getSystemSettings();
     if (systemSettings) {
       this.dateSettings.openTime = convertTime(new Date(systemSettings.seasonStartDate));
@@ -31,7 +32,16 @@ export class DateSettingsComponent {
   onUpdate() : void{
     const formatedOpenDate = structToDate(this.dateSettings.openDate, this.dateSettings.openTime);
     const formatedCloseDate = structToDate(this.dateSettings.closeDate, this.dateSettings.closeTime);
+    if(!this.dateValid(formatedOpenDate, formatedCloseDate)) return;
     this.systemSettingsService.updateDate(formatedOpenDate, formatedCloseDate);
+  }
+
+  dateValid(openDate : Date, closeDate : Date) : boolean{
+    const oneDayInMs = 24 * 60 * 60 * 1000; 
+    const differenceInDays = (closeDate.getTime() - openDate.getTime()) / oneDayInMs;
+    if (differenceInDays >= 1) return true;
+    this.toastService.showToast('Różnica między datami musi wynosić minimum 1 dzień', 'error');
+    return false;
   }
 
 }

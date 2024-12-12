@@ -11,7 +11,7 @@
                 name="startDate"
                 ngbDatepicker
                 #d1="ngbDatepicker" 
-                [ngModel]="dateSettings.openDate"
+                [(ngModel)]="dateSettings.openDate"
             />
             <button class="btn btn-primary bi bi-calendar3" (click)="d1.toggle()" type="button"></button>
         </div>
@@ -34,7 +34,7 @@
                 name="startDate"
                 ngbDatepicker
                 #d2="ngbDatepicker" 
-                [ngModel]="dateSettings.closeDate"  
+                [(ngModel)]="dateSettings.closeDate"  
             />
             <button class="btn btn-primary bi bi-calendar3" (click)="d2.toggle()" type="button"></button>
         </div>
@@ -46,6 +46,8 @@
 	   </div>
     </div>
     <div>
-        <button class="btn btn-primary" (click)="onUpdate()">Zapisz</button>
+        <button class="btn btn-primary p-2 px-5" (click)="onUpdate()">
+            Zapisz
+        </button>
     </div>
 </div>

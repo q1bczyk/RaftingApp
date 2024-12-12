@@ -1,9 +1,19 @@
 <app-page-wrapper [activePageIndex]="6">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 col-lg-6">
+        <div class="row h-100">
+            <div class="col-12 col-lg-6 col-xl-4 mb-4 h-100">
                 <app-settings-card [title]="'Dostępność spływu'">
                     <app-date-settings/>
+                </app-settings-card>
+            </div>
+            <div class="col-12 col-md-6 col-xl-4  mb-4">
+                <app-settings-card [title]="'Warunki rezerwacji'">
+                    <app-reservation-terms/>
+                </app-settings-card>
+            </div>
+            <div class="col-12 col-md-6 col-lg-12 col-xl-4 mb-4">
+                <app-settings-card [title]="'Dane kontaktowe'">
+                    <app-contact-settings/>
                 </app-settings-card>
             </div>
         </div>

@@ -4,11 +4,13 @@ import { GetSystemSettingsType } from '../../../shared/types/api/system-settings
 import { SystemSettingsHandlerService } from '../../../shared/services/others/system-settings-handler.service';
 import { SettingsCardComponent } from "./components/settings-card/settings-card.component";
 import { DateSettingsComponent } from "./components/date-settings/date-settings.component";
+import { ContactSettingsComponent } from "./components/contact-settings/contact-settings.component";
+import { ReservationTermsComponent } from "./components/reservation-terms/reservation-terms.component";
 
 @Component({
   selector: 'app-system-settings-page',
   standalone: true,
-  imports: [PageWrapperComponent, SettingsCardComponent, DateSettingsComponent],
+  imports: [PageWrapperComponent, SettingsCardComponent, DateSettingsComponent, ContactSettingsComponent, ReservationTermsComponent],
   templateUrl: './system-settings-page.component.html',
   styleUrl: './system-settings-page.component.scss'
 })
