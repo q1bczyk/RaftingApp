@@ -1,4 +1,7 @@
+using api;
+using Project.Core.DTO.EquipmentDTO;
 using Project.Core.DTO.ReservationEquipmentDTO;
+using Project.Core.DTO.ReservationsDTO;
 using Project.Core.Entities;
 using Project.Core.Interfaces.IMapper;
 using Project.Core.Interfaces.IRepositories;
@@ -9,12 +12,12 @@ namespace Project.Core.Services.BusinessService
     public class ReservationEquipmentService : IReservationEquipmentService
     {
         private readonly IReservationEquipmentRepository _repository;
-        private readonly IBaseMapper<AddReservationEquipmentDTO, ReservationEquipment> _toModelMapper;
+        private readonly IBaseMapper<EquipmentType, GetEquipmentTypeDTO> _equipmentTypeMapper;
 
-        public ReservationEquipmentService(IReservationEquipmentRepository repository, IBaseMapper<AddReservationEquipmentDTO, ReservationEquipment> toModelMapper)
+        public ReservationEquipmentService(IReservationEquipmentRepository repository, IBaseMapper<EquipmentType, GetEquipmentTypeDTO> equipmentTypeMapper)
         {
             _repository = repository;
-            _toModelMapper = toModelMapper;
+            _equipmentTypeMapper = equipmentTypeMapper;
         }
 
         public async Task AddMany(List<AddReservationEquipmentDTO> addReservationEquipmentDTOs, string reservationId)
@@ -39,6 +42,12 @@ namespace Project.Core.Services.BusinessService
         public async Task DeleteSingle(string reservationId, string equipmentId)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<GetEquipmentTypeDTO>> FetchAvaiableEquipment(ReservationDetailsDTO reservationDetailsDTO)
+        {
+            var avaiableEquipment = await _repository.GetAvaiableEquipmentAsync(reservationDetailsDTO);
+            return _equipmentTypeMapper.MapToList(avaiableEquipment);
         }
     }
 }
