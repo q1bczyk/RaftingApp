@@ -1,3 +1,4 @@
+using api;
 using Microsoft.EntityFrameworkCore;
 using Project.Core.DTO.ReservationsDTO;
 using Project.Core.Entities;
@@ -31,8 +32,26 @@ namespace Project.Infrastructure.Repositories
                 if (availableQuantities.ContainsKey(reservation.EquipmentTypeId))
                     availableQuantities[reservation.EquipmentTypeId] -= reservation.Quantity;
 
+            int maxParticipants = 0;
+            int minParticipants = 1;
+
             foreach (var equipmentType in allEquipment)
+            {
                 equipmentType.Quantity = availableQuantities[equipmentType.Id];
+                maxParticipants += equipmentType.Quantity * equipmentType.MaxParticipants;
+                if(equipmentType.Quantity > 0 && minParticipants > equipmentType.MinParticipants)
+                    minParticipants = equipmentType.MinParticipants;
+            }
+
+            Console.WriteLine("Dostepny miejsca: " + maxParticipants);
+            Console.WriteLine("Min: " + minParticipants);
+
+            if(reservationDetailsDTO.Participants > maxParticipants) 
+                throw new ApiControlledException("Brak dostępnego sprzętu we wskazanym terminie.", 409, "Spróbuj w innym terminie");
+
+            if(reservationDetailsDTO.Participants < minParticipants) 
+                throw new ApiControlledException("Brak dostępnego sprzętu we wskazanym terminie.", 409, "Spróbuj w innym terminie");
+
 
             return allEquipment;
         }

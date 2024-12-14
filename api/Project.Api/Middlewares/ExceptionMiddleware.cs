@@ -56,6 +56,9 @@ public class ExceptionMiddleware
 
             else if (ex.StatusCode == 401)
                 context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+            
+            else if (ex.StatusCode == 409)
+                context.Response.StatusCode = (int)HttpStatusCode.Conflict;
 
             var response = new ApiExceptionResponse(context.Response.StatusCode, ex.Message, ex.Details);
 
