@@ -1,0 +1,25 @@
+.steps-wrapper
+{
+    position: relative;
+    >div
+    {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 0;
+    }
+
+    >span{
+        width: 94%;
+        left: 3%;
+        right: 3%;
+        top: 25px;
+        height: 1px;
+        background-color: gainsboro;
+        position: absolute;
+        z-index: -1;
+    }
+}
+
+
+

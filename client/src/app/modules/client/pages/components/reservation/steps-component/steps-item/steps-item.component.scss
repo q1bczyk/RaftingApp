@@ -1,0 +1,29 @@
+.step-wrapper
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: gainsboro;
+}
+
+.step-number
+{
+    width: 50px;
+    height: 50px;
+    border: 1px solid gainsboro;
+    border-radius: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 20px 0;
+    font-size: 20px;
+    background-color: white;
+}
+
+.active{
+    color: black;
+    .step-number{
+        border: 1px solid var(--orange-500);
+    }
+}

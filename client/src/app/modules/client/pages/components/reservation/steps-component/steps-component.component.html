@@ -1,0 +1,10 @@
+<div class="w-100">
+    <div class="steps-wrapper">
+        <div>
+            @for(step of steps; track step.stepsLabel){
+                <app-steps-item [step]="step"/>
+            }
+        </div>
+        <span class="line"></span>
+    </div>
+</div>

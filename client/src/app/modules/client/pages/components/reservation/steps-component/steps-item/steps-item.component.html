@@ -1,0 +1,4 @@
+<div class="step-wrapper" [ngClass]="{ 'active': getCurrentStep() === step.stepsOrder}">
+    <div class="step-number">{{step.stepsOrder}}</div>
+    <p>{{step.stepsLabel}}</p>
+</div>
