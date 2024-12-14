@@ -5,7 +5,6 @@ import { Injectable, WritableSignal, signal } from "@angular/core";
 })
 export class ReservationStateService{
     private currentStep : WritableSignal<number> = signal(1);
-    private confirmCallback?: () => void;
 
     getCurrentStep() : number{
         return this.currentStep();

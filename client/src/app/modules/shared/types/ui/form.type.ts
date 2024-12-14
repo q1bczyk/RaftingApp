@@ -10,11 +10,13 @@ export interface FormFieldType{
     [key : string ] : { 
         label: string, 
         fieldType : string, 
-        validationMessage? : string
+        validationMessage? : string,
+        extraDateFields? :{
+            minDate : string,
+        },
         extraNumberFields? : {
             currency? : string | null, 
             minValue : number | null, 
             maxValue? : number | null
-        }}
-    
+        }},
 }

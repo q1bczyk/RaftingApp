@@ -1,88 +1,90 @@
-<form 
-    class="d-flex flex-column gap-2 w-100"
-    [formGroup]="formSettings.formGroup"
-    (ngSubmit)="onFormSubmit()">
-   @for (control of controls; track $index){
+<form class="d-flex flex-column gap-2 w-100" [formGroup]="formSettings.formGroup" (ngSubmit)="onFormSubmit()">
+    @for (control of controls; track $index){
     <label class="w-100" for="control">{{formSettings.fields[control].label}}</label>
-    @if (formSettings.fields[control].fieldType === 'password' || 
-        formSettings.fields[control].fieldType === 'text' || 
-        formSettings.fields[control].fieldType === 'textarea'){
-        <input 
-        pInputText 
-        [id]="control"
-        [type]="formSettings.fields[control].fieldType"
-        [placeholder]="formSettings.fields[control].label"
-        [formControlName]="control"
-        />
-        @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched && control !== 'confirmPassword' ){
-            <small id="username-help" class="text-danger">
-                <i class="bi bi-info-circle-fill me-2"></i> 
-                {{formSettings.fields[control].validationMessage}}
-           </small>
-       }
-       @if(control === 'confirmPassword' && formSettings.formGroup.errors?.['passwordMismatch'] && formSettings.formGroup.get(control)?.touched){
-        <small id="password-mismatch-help" class="text-danger">
-            <i class="bi bi-info-circle-fill me-2"></i> 
-            Hasła muszą być takie same.
-        </small>
-        }
+    @if (formSettings.fields[control].fieldType === 'password' ||
+    formSettings.fields[control].fieldType === 'text' ||
+    formSettings.fields[control].fieldType === 'textarea'){
+    <input pInputText [id]="control" [type]="formSettings.fields[control].fieldType"
+        [placeholder]="formSettings.fields[control].label" [formControlName]="control" />
+    @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched && control !==
+    'confirmPassword' ){
+    <small id="username-help" class="text-danger">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        {{formSettings.fields[control].validationMessage}}
+    </small>
     }
-     @if(formSettings.fields[control].fieldType === 'number'){
-        <p-inputNumber
-            class="test"
-            [formControlName]="control"
-            [showButtons]="true"
-            buttonLayout="horizontal"
-            inputId="horizontal"
-            spinnerMode="horizontal"
-            [step]="1"
-            [decrementButtonClass]="
+    @if(control === 'confirmPassword' && formSettings.formGroup.errors?.['passwordMismatch'] &&
+    formSettings.formGroup.get(control)?.touched){
+    <small id="password-mismatch-help" class="text-danger">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        Hasła muszą być takie same.
+    </small>
+    }
+    }
+    @if(formSettings.fields[control].fieldType === 'number'){
+    <p-inputNumber class="test number-field" [formControlName]="control" [showButtons]="true" buttonLayout="horizontal"
+        inputId="horizontal" spinnerMode="horizontal" [step]="1" [decrementButtonClass]="
             (formSettings.formGroup.get(control)?.value || 0) <= (formSettings.fields[control]?.extraNumberFields?.minValue || 0) 
             ? 'btn-disabled' 
-            : 'btn-primary'"
-                incrementButtonClass="btn-primary"
-            incrementButtonIcon="bi bi-plus"
-            decrementButtonIcon="bi bi-dash"
-            [min]="formSettings.fields[control]?.extraNumberFields?.minValue"
-            [mode]="formSettings.fields[control]?.extraNumberFields?.currency ? 'currency' : 'decimal'"
-            [currency]="formSettings.fields[control]?.extraNumberFields?.currency ? 'PLN' : 'PLN'">
-        </p-inputNumber>
+            : 'btn-primary'" incrementButtonClass="btn-primary" incrementButtonIcon="bi bi-plus"
+        decrementButtonIcon="bi bi-dash" [min]="formSettings.fields[control]?.extraNumberFields?.minValue"
+        [mode]="formSettings.fields[control]?.extraNumberFields?.currency ? 'currency' : 'decimal'"
+        [currency]="formSettings.fields[control]?.extraNumberFields?.currency ? 'PLN' : 'PLN'">
+    </p-inputNumber>
 
-    @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched && control !== 'confirmPassword' ){
-        <small 
-            id="username-help" 
-            class="text-danger">
-                <i class="bi bi-info-circle-fill me-2"></i> 
-                {{formSettings.fields[control].validationMessage}}
-       </small>
+    @if (formSettings.formGroup.get(control)?.invalid && formSettings.formGroup.get(control)?.touched && control !==
+    'confirmPassword' ){
+    <small id="username-help" class="text-danger">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        {{formSettings.fields[control].validationMessage}}
+    </small>
     }
-    
-    @if (control === 'maxParticipants' && formSettings.formGroup.errors?.['minGreaterThanMax'] && formSettings.formGroup.touched){
-        <small class="text-danger">
-             <i class="bi bi-info-circle-fill me-2"></i>
-             Maksymalna liczba osób nie może być mniejsza od minimalnej.
-        </small>
-       }
+
+    @if (control === 'maxParticipants' && formSettings.formGroup.errors?.['minGreaterThanMax'] &&
+    formSettings.formGroup.touched){
+    <small class="text-danger">
+        <i class="bi bi-info-circle-fill me-2"></i>
+        Maksymalna liczba osób nie może być mniejsza od minimalnej.
+    </small>
+    }
     }
 
     @if(control === 'file'){
-        <div class="mb-3">
-            <input [formControlName]="control" class="form-control" type="file" id="formFileMultiple" multiple (change)="onUpload($event)">
-        </div>
+    <div class="mb-3">
+        <input [formControlName]="control" class="form-control" type="file" id="formFileMultiple" multiple
+            (change)="onUpload($event)">
+    </div>
     }
-}
-    <button 
-        [disabled]="isFormInvalid() || loadingService.isLoading()"
-        [ngClass]="{'btn btn-primary rounded mt-2 p-2 px-5': true, 'fit-content-button': !fullWidth}"
-        type="submit"
-        >
+
+    @if(control === 'date'){
+        <div class="input-group date-field">
+            <input
+                placeholder="yyyy-mm-dd"
+                id="start"
+                class="form-control"
+                name="startDate"
+                ngbDatepicker
+                #d2="ngbDatepicker" 
+                [formControlName]="'date'"
+            />
+            <button class="btn btn-primary bi bi-calendar3" (click)="d2.toggle()" type="button"></button>
+        </div>
+    <small *ngIf="formSettings.formGroup.get('date')?.hasError('minDate')" class="text-danger">
+        {{ formSettings.fields['date'].validationMessage }}
+    </small>
+
+    }
+
+    }
+    <button [disabled]="isFormInvalid() || loadingService.isLoading()"
+        [ngClass]="{'btn btn-primary rounded mt-2 p-2 px-5': true, 'fit-content-button': !fullWidth}" type="submit">
         @if (loadingService.isLoading()){
-            <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
-                <span class="sr-only"></span>
-            </div>
+        <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
+            <span class="sr-only"></span>
+        </div>
         }
         @else {
-            {{formSettings.buttonLabel}}
+        {{formSettings.buttonLabel}}
         }
     </button>
 </form>
