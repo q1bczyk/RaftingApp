@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-logo',
@@ -8,5 +8,7 @@ import { Component, OnInit } from '@angular/core';
   imports: []
 })
 export class LogoComponent {
-
+  @Input() size : number | undefined = undefined;
+  @Input() fontSize : number | undefined = undefined;
+  @Input() fontColor : string | undefined = undefined;
 }
