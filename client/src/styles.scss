@@ -55,6 +55,12 @@ ul{
     }
 }
 
+.btn-outline-primary:disabled{
+    background-color: var(--surface-200) !important;
+    color: var(--surface-500) !important;
+    border: none !important;
+}
+
 .btn-primary:disabled{
     background-color: var(--surface-200) !important;
     color: var(--surface-500) !important;

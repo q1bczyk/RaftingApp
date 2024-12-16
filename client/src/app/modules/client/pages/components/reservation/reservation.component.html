@@ -1,4 +1,9 @@
 <main class="container py-5 d-flex flex-column justify-content-center reservation">
-    <app-date-selection/>
+    @if(getCurrentStep() === 1){
+        <app-date-selection/>
+    }
+    @if(getCurrentStep() === 2){
+        <app-equipment-selection/>
+    }
     <app-steps-component/>
 </main>

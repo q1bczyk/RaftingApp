@@ -1,0 +1,39 @@
+<app-reservation-form-card>
+    <div class="w-100 d-flex justify-content-between align-items-center border-bottom">
+        <button class="btn btn-outline-primary ms-3">Wróć</button>
+        <div class="d-flex flex-row align-items-center">
+            <span class="fw-medium text-secondary fs-5 my-3">
+                <i class="bi bi-person-fill-check"></i>
+                {{participantsLeft}} / {{participants}} 
+            </span>
+            <button class="btn btn-outline-primary ms-3" [disabled]="participantsLeft > 0">Zatwierdź</button>
+        </div>
+    </div>
+    @for (item of equipment; track $index) {
+        @if(!limitNotMet(item.minParticipants)){
+            <app-equipment-item 
+            [equipmentItem]="item"
+            [index]="$index">
+            <div class="d-flex flex-md-row gap-2 align-items-center">
+                @if (item.minParticipants !== item.maxParticipants) {
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-fill-up text-secondary fs-5 me-2"></i>
+                        <select 
+                            id="participantSelect-{{item.id}}" 
+                            class="form-select" 
+                            (ngModel)="selectedParticipants[item.id]" 
+                            (change)="onParticipantsChange(item.id)">
+                            <option *ngFor="let p of generateRange(item.minParticipants, item.maxParticipants)" [value]="p">
+                                {{p}}
+                            </option>
+                        </select>
+                    </div>
+                }
+                <button class="btn btn-outline-primary" (click)="onSelect(item.id)">
+                    <i class="bi bi-cart-check-fill"></i> Koszyk
+                </button>
+            </div>
+        </app-equipment-item>
+        }
+    }
+</app-reservation-form-card>
