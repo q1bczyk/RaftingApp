@@ -31,4 +31,12 @@ export class SelectedEquipmentComponent implements OnInit{
     }, 200)
   }
 
+  getSelectedEqName(eqId : string) : string{
+    return this.reservationStateService.getSelectedEqName(eqId);
+  }
+
+  onUncheck(eqIndex : number) : void{
+    console.log(eqIndex);
+  }
+
 }

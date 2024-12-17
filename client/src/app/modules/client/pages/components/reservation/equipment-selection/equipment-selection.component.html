@@ -2,25 +2,25 @@
     <div class="w-100 d-flex justify-content-between align-items-center border-bottom p-relative">
         <div class="d-flex align-items-center">
             <button class="btn btn-outline-primary ms-3">Wróć</button>
-            @if(participantsLeft < getParticipants()){
+            @if(getParticipants().participantsLeft < getParticipants().participantsNumber){
                 <i class="bi bi-list fs-2 ms-3 burger" (click)="openMenu()"></i>
             }
         </div>
         <div class="d-flex flex-row align-items-center">
             <span class="fw-medium text-secondary fs-5 my-3">
                 <i class="bi bi-person-fill-check"></i>
-                {{participantsLeft}} / {{getParticipants()}} 
+                {{getParticipants().participantsLeft}} / {{getParticipants().participantsNumber}} 
             </span>
-            <button class="btn btn-outline-primary ms-3" [disabled]="participantsLeft > 0">Zatwierdź</button>
+            <button class="btn btn-outline-primary ms-3" [disabled]="getParticipants().participantsLeft > 0">Zatwierdź</button>
         </div>
     </div>
     <div class="px-4 equipment-wrapper">
-        @for (item of equipment; track $index) {
+        @for (item of getAvaiableEquipment(); track $index) {
             <app-equipment-item 
             [equipmentItem]="item"
             [index]="$index">
             <div class="d-flex flex-md-row gap-2 align-items-center">
-                @if (item.minParticipants !== item.maxParticipants && participantsLeft >= item.minParticipants) {
+                @if (item.minParticipants !== item.maxParticipants && getParticipants().participantsLeft >= item.minParticipants) {
                     <div class="d-flex align-items-center">
                         <i class="bi bi-person-fill-up text-secondary fs-5 me-2"></i>
                         <select 
