@@ -57,6 +57,8 @@ export class ReservationStateService {
             reservationEquipment: updatedReservationEquipment,
         });
 
+        this.setParticipantLeft(-paraticipants)
+
     }
 
     getSelectedEquipment(): ReservationEquipmentType[] {
@@ -79,6 +81,11 @@ export class ReservationStateService {
     setParticipantLeft(value : number) : void{
         const updatedParticipants : number = this.participantsLeft() - value;
         this.participantsLeft.set(updatedParticipants); 
+    }
+
+    toFirstStep() : void{
+        this.reservationData.set(reservationInitialState);
+        this.currentStep.set(1);
     }
 
 }

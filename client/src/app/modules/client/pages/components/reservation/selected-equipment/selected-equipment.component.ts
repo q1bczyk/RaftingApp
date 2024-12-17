@@ -12,11 +12,8 @@ import { ReservationEquipmentType } from '../../../../../shared/types/api/reserv
 })
 export class SelectedEquipmentComponent implements OnInit{
   isMenuOpen : boolean = false
-  selectedEquipment : ReservationEquipmentType[]
 
-  constructor(private reservationStateService : ReservationStateService){
-    this.selectedEquipment = reservationStateService.getSelectedEquipment();
-  }
+  constructor(private reservationStateService : ReservationStateService){}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -31,12 +28,17 @@ export class SelectedEquipmentComponent implements OnInit{
     }, 200)
   }
 
+  getSelectedEquipment() : ReservationEquipmentType[]{
+    return this.reservationStateService.getSelectedEquipment();
+  }
+
   getSelectedEqName(eqId : string) : string{
     return this.reservationStateService.getSelectedEqName(eqId);
   }
 
-  onUncheck(eqIndex : number) : void{
-    console.log(eqIndex);
+  onUncheck(eqIndex : number, eqId : string, participants : number) : void{
+    this.reservationStateService.uncheckEquipment(participants, eqId, eqIndex)
+    if(this.getSelectedEquipment().length === 0) this.closeMenu();
   }
 
 }

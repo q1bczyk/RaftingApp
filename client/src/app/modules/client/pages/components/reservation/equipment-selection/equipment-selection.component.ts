@@ -57,6 +57,10 @@ export class EquipmentSelectionComponent {
     return this.reservationStateService.getAvaiableEquipment();
   }
 
+  stepBack() : void{
+    this.reservationStateService.toFirstStep();
+  }
+
   private initializeSelectedParticipants(): void {
     this.getAvaiableEquipment().forEach(item => {
       this.selectedParticipants[item.id] = item.minParticipants;

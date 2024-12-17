@@ -1,7 +1,7 @@
 <app-reservation-form-card>
     <div class="w-100 d-flex justify-content-between align-items-center border-bottom p-relative">
         <div class="d-flex align-items-center">
-            <button class="btn btn-outline-primary ms-3">Wróć</button>
+            <button class="btn btn-outline-primary ms-3" (click)="stepBack()">Wróć</button>
             @if(getParticipants().participantsLeft < getParticipants().participantsNumber){
                 <i class="bi bi-list fs-2 ms-3 burger" (click)="openMenu()"></i>
             }
