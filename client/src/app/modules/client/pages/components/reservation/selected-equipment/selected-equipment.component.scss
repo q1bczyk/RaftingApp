@@ -1,0 +1,66 @@
+.selected-equipment{
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-color: #00000000;
+    background-color: #00000036;
+    transition: all ease-in-out 0.2s;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    overflow: hidden;
+    
+    *::-webkit-scrollbar {
+        height: 10px;
+        width: 10px;
+      }
+      *::-webkit-scrollbar-track {
+        border-radius: 5px;
+        background-color: #DFE9EB;
+      }
+      
+      *::-webkit-scrollbar-track:hover {
+        background-color: #B8C0C2;
+      }
+      
+      *::-webkit-scrollbar-track:active {
+        background-color: #B8C0C2;
+      }
+      
+      *::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: #c5c5c5;
+      }
+      
+      *::-webkit-scrollbar-thumb:hover {
+        background-color: #62A34B;
+      }
+      
+      *::-webkit-scrollbar-thumb:active {
+        background-color: #62A34B;
+      }
+
+    >div{
+        width: 300px;
+        height: 100%;
+        background-color: white;
+        transition: all ease-in-out 0.2s;
+        transform: translateX(-100%);
+        position: relative;
+        overflow-y: auto;
+
+        >i{
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: gray;
+            transition: all ease-in-out 0.3s;
+            cursor: pointer;
+            font-size: 20px;
+
+            &:hover{
+                color: var(--orange-500);
+            }
+        }
+    }
+}

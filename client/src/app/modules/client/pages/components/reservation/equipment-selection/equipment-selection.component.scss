@@ -1,0 +1,44 @@
+.equipment-wrapper{
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+*::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #DFE9EB;
+  }
+  
+  *::-webkit-scrollbar-track:hover {
+    background-color: #B8C0C2;
+  }
+  
+  *::-webkit-scrollbar-track:active {
+    background-color: #B8C0C2;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #c5c5c5;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #62A34B;
+  }
+  
+  *::-webkit-scrollbar-thumb:active {
+    background-color: #62A34B;
+  }
+
+  .burger{
+    cursor: pointer;
+    transition: all ease-in-out 0.2s;
+    color: gray;
+
+    &:hover{
+      color: var(--orange-500);
+    }
+  }

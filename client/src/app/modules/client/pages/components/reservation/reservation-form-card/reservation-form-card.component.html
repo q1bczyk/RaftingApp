@@ -1,3 +1,6 @@
-<div class="container w-100 shadow rounded mb-5 py-4 px-5">
+<div class="container w-100 shadow rounded mb-5 py-4 px-5 reservation-form-card-wrapper">
+   @if(getCurrentStep() === 2 && isMenuOpen()){
+      <app-selected-equipment/>
+   }
    <ng-content/>
 </div>
