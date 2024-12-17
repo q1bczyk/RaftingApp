@@ -29,7 +29,7 @@ export class DateSelectionComponent{
     const mappedData: ReservationDetailsType = mapFormToModel(form);
     this.service.fetchAvaiableEquipment(mappedData)
       .subscribe(res => {
-        this.reservationStateService.submitFirstStep(mappedData.participants, res);
+        this.reservationStateService.submitFirstStep(mappedData.participants, res, mappedData.date);
       })
   };
 

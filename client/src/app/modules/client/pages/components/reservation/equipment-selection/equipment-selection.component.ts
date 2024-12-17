@@ -5,30 +5,25 @@ import { ReservationStateService } from '../../../services/states/reservation-st
 import { GetEquipmentType } from '../../../../../shared/types/api/equipment-types/get-equipment.type';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-equipment-selection',
   standalone: true,
-  imports: [ReservationFormCardComponent, EquipmentItemComponent, InputNumberModule, CommonModule],
+  imports: [ReservationFormCardComponent, EquipmentItemComponent, InputNumberModule, CommonModule, FormsModule],
   templateUrl: './equipment-selection.component.html',
   styleUrl: './equipment-selection.component.scss'
 })
 export class EquipmentSelectionComponent {
 
   equipment: GetEquipmentType[];
-  participants: number;
   participantsLeft: number;
   selectedParticipants: { [key: string]: number } = {};
 
   constructor(private reservationStateService: ReservationStateService) {
     this.equipment = reservationStateService.getAvaiableEquipment();
-    this.participants = reservationStateService.getParticipants();
     this.participantsLeft = reservationStateService.getParticipants();
     this.initializeSelectedParticipants();
-  }
-
-  onSelect(equipmentId: string): void {
-
   }
 
   limitNotMet(equipmentMin: number): boolean {
@@ -36,7 +31,7 @@ export class EquipmentSelectionComponent {
   }
 
   onParticipantsChange(equipmentId : string) : void{
-
+    console.log(equipmentId + ' : ' + this.selectedParticipants[equipmentId] )
   }
 
   generateRange(min: number, max: number): number[] {
@@ -44,6 +39,14 @@ export class EquipmentSelectionComponent {
     for (let i = min; i <= max; i++)
       if(i <= this.participantsLeft) range.push(i);
     return range;
+  }
+
+  getParticipants() : number{
+    return this.reservationStateService.getParticipants();
+  }
+
+  onEquipmentSelect(equipment : GetEquipmentType) : void{
+    this.participantsLeft -= Number(this.selectedParticipants[equipment.id])
   }
 
   private initializeSelectedParticipants(): void {

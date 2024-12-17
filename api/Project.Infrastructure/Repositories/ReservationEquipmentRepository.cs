@@ -19,6 +19,7 @@ namespace Project.Infrastructure.Repositories
             var reservationDateUtc = reservationDetailsDTO.Date.ToUniversalTime();
 
             var allEquipment = await _context.EquipmentTypes
+                .OrderBy(eq => eq.MinParticipants)
                 .ToListAsync();
 
             var reservations = await _context.ReservationsEquipment
@@ -42,9 +43,6 @@ namespace Project.Infrastructure.Repositories
                 if(equipmentType.Quantity > 0 && minParticipants > equipmentType.MinParticipants)
                     minParticipants = equipmentType.MinParticipants;
             }
-
-            Console.WriteLine("Dostepny miejsca: " + maxParticipants);
-            Console.WriteLine("Min: " + minParticipants);
 
             if(reservationDetailsDTO.Participants > maxParticipants) 
                 throw new ApiControlledException("Brak dostępnego sprzętu we wskazanym terminie.", 409, "Spróbuj w innym terminie");
