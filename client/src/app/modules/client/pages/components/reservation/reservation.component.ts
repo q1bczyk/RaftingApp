@@ -7,11 +7,12 @@ import { ReservationStateService } from '../../services/states/reservation-state
 import { EquipmentSelectionComponent } from "./equipment-selection/equipment-selection.component";
 import { SelectedEquipmentComponent } from "./selected-equipment/selected-equipment.component";
 import { ReservationSummaryComponent } from "./reservation-summary/reservation-summary.component";
+import { PaymentMethodComponent } from "./payment-method/payment-method.component";
 
 @Component({
   selector: 'app-reservation',
   standalone: true,
-  imports: [StepsModule, StepsComponentComponent, DateSelectionComponent, EquipmentSelectionComponent, SelectedEquipmentComponent, ReservationSummaryComponent],
+  imports: [StepsModule, StepsComponentComponent, DateSelectionComponent, EquipmentSelectionComponent, SelectedEquipmentComponent, ReservationSummaryComponent, PaymentMethodComponent],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss'
 })
