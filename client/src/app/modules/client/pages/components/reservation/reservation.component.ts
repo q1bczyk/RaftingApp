@@ -6,11 +6,12 @@ import { DateSelectionComponent } from "./date-selection/date-selection.componen
 import { ReservationStateService } from '../../services/states/reservation-state.service';
 import { EquipmentSelectionComponent } from "./equipment-selection/equipment-selection.component";
 import { SelectedEquipmentComponent } from "./selected-equipment/selected-equipment.component";
+import { ReservationSummaryComponent } from "./reservation-summary/reservation-summary.component";
 
 @Component({
   selector: 'app-reservation',
   standalone: true,
-  imports: [StepsModule, StepsComponentComponent, DateSelectionComponent, EquipmentSelectionComponent, SelectedEquipmentComponent],
+  imports: [StepsModule, StepsComponentComponent, DateSelectionComponent, EquipmentSelectionComponent, SelectedEquipmentComponent, ReservationSummaryComponent],
   templateUrl: './reservation.component.html',
   styleUrl: './reservation.component.scss'
 })

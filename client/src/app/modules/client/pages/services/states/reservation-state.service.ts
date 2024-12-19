@@ -2,6 +2,7 @@ import { Injectable, WritableSignal, signal } from "@angular/core";
 import { GetEquipmentType } from "../../../../shared/types/api/equipment-types/get-equipment.type";
 import { MakeReservationType, ReservationEquipmentType } from "../../../../shared/types/api/reservation-types/make-reservation.type";
 import { reservationInitialState } from "./reservation-initial-state";
+import { BookerType } from "../../../types/ui/booker-type";
 
 @Injectable({
     providedIn: 'root',
@@ -36,8 +37,8 @@ export class ReservationStateService {
         this.participantsLeft.set(participants);
     }
 
-    submitStep(step : number) : void{
-        this.currentStep.set(3);
+    setStep(step : number) : void{
+        this.currentStep.set(step);
     }
 
     selectEquipment(equipment: ReservationEquipmentType, bookingPrice : number): void {
@@ -97,6 +98,20 @@ export class ReservationStateService {
 
     getBookingPrice() : number{
         return this.reservationData().bookPrice;
+    }
+
+    getReservationDetails() : MakeReservationType{
+        return this.reservationData();
+    }
+
+    makeReservation(bookerData : BookerType, updatedEquipment : ReservationEquipmentType[]){
+        this.reservationData.set({
+            ...this.reservationData(),
+            bookerName: bookerData.bookerName,
+            bookerLastname : bookerData.bookerLastname,
+            bookerPhoneNumber : Number(bookerData.bookerPhoneNumber),
+            reservationEquipment : updatedEquipment
+        })
     }
 
 }

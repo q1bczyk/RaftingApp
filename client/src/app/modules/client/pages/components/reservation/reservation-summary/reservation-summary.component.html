@@ -1,0 +1,48 @@
+<app-reservation-form-card>
+    <div class="row">
+       <div class="col-12 col-md-6 h-100 p-4 py-md-0">
+        <div class="w-100 d-flex justify-content-start"><button class="mb-3 btn btn-primary" (click)="back()">Wróć</button></div>
+        <div class="selected-equipment">
+            @for (equipment of getSelectedEquipment(); track $index) {
+                <div class="d-flex justify-content-between align-items-center py-3 border-top" [class.border-top-0]="$index === 0">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">{{equipment.quantity}}x</div>
+                        {{getSelectedEqName(equipment.equipmentTypeId)}} 
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex text-secondary align-items-center fs-5 me-3">
+                            <i class="bi bi-person-check me-1"></i>
+                            {{equipment.participants}}
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="border-top py-3">
+            <div class="summary-item text-secondary mb-1">
+                <div>Data spływu: </div>
+                <span>{{getSummary().date}}</span>
+            </div>
+            <div class="summary-item text-secondary mt-1">
+                <div>Całkowita liczba osób: </div>
+                <span>{{getSummary().totalParticipants}}x</span>
+            </div>
+            <div class="summary-item text-secondary mt-1">
+                <div>Łączna liczba sprzętu: </div>
+                <span>{{getSummary().totalEq}}x</span>
+            </div>
+            <div class="summary-item mt-4">
+                <h5>Łączna cena: </h5>
+                <h5>{{getSummary().totalPrice}} PLN</h5>
+            </div>
+        </div>
+       </div>
+       <div class="col-12 col-md-6 h-100 p-4 py-md-0">
+        <h5 class="mb-3">Dane klienta</h5>
+        <app-form
+            [formSettings]="form"
+            (formSubmitEvent)="onFormSubmit($event)"
+        />
+   </div>
+    </div>
+</app-reservation-form-card>

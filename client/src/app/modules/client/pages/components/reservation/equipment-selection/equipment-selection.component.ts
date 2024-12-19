@@ -67,7 +67,7 @@ export class EquipmentSelectionComponent {
   }
 
   submit() : void{
-    this.reservationStateService.submitStep(3);
+    this.reservationStateService.setStep(3);
   }
 
   private initializeSelectedParticipants(): void {

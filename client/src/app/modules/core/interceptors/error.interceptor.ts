@@ -19,8 +19,6 @@ export class ErrorInterceptor implements HttpInterceptor{
                     case 500:
                      this.router.navigate(["/server-error"]);
                      break;
-                    default:
-                        this.errorService.setError(e.error.statusCode, e.error.message, true);
                 }
                 this.loadingService.loadingOff();
                 throw e;
