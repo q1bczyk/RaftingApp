@@ -3,6 +3,7 @@ using Project.Core.Entities;
 using Project.Core.Interfaces.IMapper;
 using Project.Core.Interfaces.IRepositories;
 using Project.Core.Interfaces.IServices.IBusinessServices;
+using Project.Core.Interfaces.IServices.IOtherServices;
 
 namespace Project.Core.Services.BusinessService
 {
@@ -15,9 +16,11 @@ namespace Project.Core.Services.BusinessService
     >, IReservationService
     {
         private readonly IReservationEquipmentService _reservationEquipmentService;
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService) : base(repository, toModelMapper, toDTOMapper)
+        private readonly IMailService _mailService;
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService) : base(repository, toModelMapper, toDTOMapper)
         {
             _reservationEquipmentService = reservationEquipmentService;
+            _mailService = mailService;
         }
 
         public async override Task<GetReservationDTO> Create(AddReservationDTO createDTO)
@@ -26,7 +29,10 @@ namespace Project.Core.Services.BusinessService
             var reservationModel = _toModelMapper.MapToModel(createDTO);
             var addedModel = await _repository.Create(reservationModel);
             await _reservationEquipmentService.AddMany(createDTO.ReservationEquipment, addedModel.Id);
-            
+
+            string formattedDate = createDTO.ExecutionDate.ToString("yyyy-MM-dd");
+            await _mailService.SendBookingConfirmation(createDTO.BookerEmail, formattedDate, createDTO.ParticipantNumber, addedModel.Id);
+
             return _toDTOMapper.MapToModel(reservationModel);
         }
     }

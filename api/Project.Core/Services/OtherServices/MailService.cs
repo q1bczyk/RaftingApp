@@ -22,9 +22,14 @@ namespace Project.Core.Services.OtherServices
                 EnableSsl = true
             };
         }
-        public Task SendBookingConfirmation(string addressee)
+        public async Task SendBookingConfirmation(string addressee, string reservationDate, int participantCount, string reservationId)
         {
-            throw new NotImplementedException();
+            string emailTemplate = LoadEmailTemplate("Templates/reservationConfirmTemplate.html");
+            string emailBody = emailTemplate
+                .Replace("{{reservationDate}}", reservationDate) 
+                .Replace("{{participantCount}}", participantCount.ToString()) 
+                .Replace("{{ReservationDetailsLink}}", $"{_emailConfig.Value.ClientUrl}/reservation/{reservationId}"); 
+                await SendEmail(addressee, "RaftingApp - Potwierdzenie rezerwacji", emailBody);
         }
 
         public async Task SendConfirmToken(string addressee, string token, string userId)

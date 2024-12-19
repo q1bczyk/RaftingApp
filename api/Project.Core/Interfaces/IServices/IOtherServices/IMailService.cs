@@ -4,6 +4,6 @@ namespace Project.Core.Interfaces.IServices.IOtherServices
     {
         Task SendConfirmToken(string addressee, string token, string userId);
         Task SendPasswordResetToken(string addressee, string token, string userId);
-        Task SendBookingConfirmation(string addressee);
+        Task SendBookingConfirmation(string addressee, string reservationDate, int participantCount, string reservationId);
     }
 }
