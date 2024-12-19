@@ -36,11 +36,16 @@ export class ReservationStateService {
         this.participantsLeft.set(participants);
     }
 
-    selectEquipment(equipment: ReservationEquipmentType): void {
+    submitStep(step : number) : void{
+        this.currentStep.set(3);
+    }
+
+    selectEquipment(equipment: ReservationEquipmentType, bookingPrice : number): void {
         const updatedReservationEquipment: ReservationEquipmentType[] = [...this.reservationData().reservationEquipment, equipment];
         this.reservationData.set({
             ...this.reservationData(),
             reservationEquipment: updatedReservationEquipment,
+            bookPrice : this.reservationData().bookPrice + bookingPrice
         });
         const avaiableEquipmentIndex = this.avaiableEquipment().findIndex(eq => eq.id === equipment.equipmentTypeId)
         this.avaiableEquipment()[avaiableEquipmentIndex].quantity -= 1;
@@ -48,13 +53,15 @@ export class ReservationStateService {
     }
 
     uncheckEquipment(paraticipants: number, eqId: string, eqIndex: number): void {
-        const avaiableEquipmentIndex = this.avaiableEquipment().findIndex(eq => eq.id === eqId)
+        const avaiableEquipmentIndex = this.avaiableEquipment().findIndex(eq => eq.id === eqId);
         this.avaiableEquipment()[avaiableEquipmentIndex].quantity += 1;
+        const bookingPrice = this.avaiableEquipment()[avaiableEquipmentIndex].pricePerPerson * this.reservationData().reservationEquipment[eqIndex].participants;
 
         const updatedReservationEquipment = this.reservationData().reservationEquipment.filter((_, index) => index !== eqIndex);
         this.reservationData.set({
             ...this.reservationData(),
             reservationEquipment: updatedReservationEquipment,
+            bookPrice : this.reservationData().bookPrice - bookingPrice
         });
 
         this.setParticipantLeft(-paraticipants)
@@ -86,6 +93,10 @@ export class ReservationStateService {
     toFirstStep() : void{
         this.reservationData.set(reservationInitialState);
         this.currentStep.set(1);
+    }
+
+    getBookingPrice() : number{
+        return this.reservationData().bookPrice;
     }
 
 }

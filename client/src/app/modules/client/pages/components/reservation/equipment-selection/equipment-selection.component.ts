@@ -46,7 +46,8 @@ export class EquipmentSelectionComponent {
       participants : Number(this.selectedParticipants[equipment.id]),
       quantity : 1
     }
-    this.reservationStateService.selectEquipment(selectedEquipment);
+    const price : number = equipment.pricePerPerson * Number(this.selectedParticipants[equipment.id])
+    this.reservationStateService.selectEquipment(selectedEquipment, price);
   }
 
   openMenu() : void{
@@ -59,6 +60,14 @@ export class EquipmentSelectionComponent {
 
   stepBack() : void{
     this.reservationStateService.toFirstStep();
+  }
+
+  getSelectedEquipment() : number{
+    return this.reservationStateService.getSelectedEquipment().length
+  }
+
+  submit() : void{
+    this.reservationStateService.submitStep(3);
   }
 
   private initializeSelectedParticipants(): void {

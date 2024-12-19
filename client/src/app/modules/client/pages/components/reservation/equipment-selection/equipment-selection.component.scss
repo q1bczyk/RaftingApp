@@ -42,3 +42,23 @@
       color: var(--orange-500);
     }
   }
+
+  .cart-box{
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    background-color: var(--orange-500);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+
+    p{
+      position: absolute;
+      right: 0;
+      bottom: -20px;
+    }
+  }

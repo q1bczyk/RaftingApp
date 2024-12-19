@@ -3,15 +3,18 @@
         <div class="d-flex align-items-center">
             <button class="btn btn-outline-primary ms-3" (click)="stepBack()">Wróć</button>
             @if(getParticipants().participantsLeft < getParticipants().participantsNumber){
-                <i class="bi bi-list fs-2 ms-3 burger" (click)="openMenu()"></i>
+                <div class="cart-box" (click)="openMenu()">
+                    <i class="bi bi-cart fs-5 burger text-secondary"></i>
+                    <p class="text-dark">{{getSelectedEquipment()}}</p>
+                </div>
             }
         </div>
         <div class="d-flex flex-row align-items-center">
-            <span class="fw-medium text-secondary fs-5 my-3">
+            <span class="fw-medium text-secondary fs-3 my-3">
                 <i class="bi bi-person-fill-check"></i>
                 {{getParticipants().participantsLeft}} / {{getParticipants().participantsNumber}} 
             </span>
-            <button class="btn btn-outline-primary ms-3" [disabled]="getParticipants().participantsLeft > 0">Zatwierdź</button>
+            <button class="btn btn-outline-primary ms-3" [disabled]="getParticipants().participantsLeft > 0" (click)="submit()">Zatwierdź</button>
         </div>
     </div>
     <div class="px-4 equipment-wrapper">

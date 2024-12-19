@@ -41,4 +41,8 @@ export class SelectedEquipmentComponent implements OnInit{
     if(this.getSelectedEquipment().length === 0) this.closeMenu();
   }
 
+  displayPrice() : number{
+    return this.reservationStateService.getBookingPrice();
+  }
+
 }
