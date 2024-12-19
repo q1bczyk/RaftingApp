@@ -31,6 +31,7 @@ namespace Project.Core.Services.BusinessService
                     ReservationId = reservationId,
                     EquipmentTypeId = reservation.EquipmentTypeId,
                     Quantity = reservation.Quantity,
+                    Participants = reservation.Participants,
                 };
 
                 await _repository.Create(dataToAdd);

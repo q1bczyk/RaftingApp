@@ -10,6 +10,8 @@ namespace Project.Core.Entities
         public string ReservationId { get; set; }
         [Required]
         public int Quantity { get; set; }
+        [Required]
+        public int Participants { get; set; }
         public EquipmentType EquipmentType { get; set; } = null!;
         public Reservation Reservation { get; set; } = null!;
     }

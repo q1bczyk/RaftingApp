@@ -6,6 +6,7 @@ export const reservationInitialState : MakeReservationType = {
     bookerLastname : '',
     bookPrice : 0,
     bookerPhoneNumber : 0,
-    participantsNumber : 0,
+    bookerEmail : '',
+    participantNumber : 0,
     reservationEquipment : []
 }

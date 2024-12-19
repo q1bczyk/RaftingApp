@@ -20,6 +20,8 @@ namespace Project.Core.Entities
         [Required]
         public int BookerPhoneNumber { get; set; }
         [Required]
+        public string BookerEmail { get; set; }
+        [Required]
         public int BookPrice { get; set; }
         [Required]
         public int ParticipantNumber { get; set; }

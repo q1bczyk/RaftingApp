@@ -8,7 +8,7 @@ import { BookerType } from "../../../types/ui/booker-type";
     providedIn: 'root',
 })
 export class ReservationStateService {
-    private currentStep: WritableSignal<number> = signal(4);
+    private currentStep: WritableSignal<number> = signal(1);
     private avaiableEquipment: WritableSignal<GetEquipmentType[]> = signal([]);
     private reservationData: WritableSignal<MakeReservationType> = signal(reservationInitialState);
     private isMenuOpen: WritableSignal<boolean> = signal(false);
@@ -23,7 +23,7 @@ export class ReservationStateService {
     }
 
     getParticipants(): {participantsNumber : number, participantsLeft : number} {
-        return {participantsNumber: this.reservationData().participantsNumber, participantsLeft : this.participantsLeft()}
+        return {participantsNumber: this.reservationData().participantNumber, participantsLeft : this.participantsLeft()}
     }
 
     submitFirstStep(participants: number, equipment: GetEquipmentType[], date: Date) {
@@ -31,7 +31,7 @@ export class ReservationStateService {
         this.avaiableEquipment.set(equipment);
         this.reservationData.set({
             ...this.reservationData(),
-            participantsNumber: participants,
+            participantNumber: participants,
             executionDate: date,
         })
         this.participantsLeft.set(participants);
@@ -110,6 +110,7 @@ export class ReservationStateService {
             bookerName: bookerData.bookerName,
             bookerLastname : bookerData.bookerLastname,
             bookerPhoneNumber : Number(bookerData.bookerPhoneNumber),
+            bookerEmail : bookerData.bookerEmail,
             reservationEquipment : updatedEquipment
         })
     }

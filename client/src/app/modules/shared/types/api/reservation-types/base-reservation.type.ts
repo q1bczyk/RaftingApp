@@ -4,6 +4,7 @@ export interface BaseReservationType{
     bookerLastname : string,
     bookPrice : number,
     bookerPhoneNumber : number,
-    participantsNumber : number,
+    bookerEmail : string,
+    participantNumber : number,
 }
 

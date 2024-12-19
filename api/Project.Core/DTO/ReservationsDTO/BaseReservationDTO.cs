@@ -12,6 +12,8 @@ namespace Project.Core.DTO.ReservationsDTO
         public string BookerLastname { get; set; }
         [Required]
         public int BookerPhoneNumber { get; set; }
+        [Required, EmailAddress]
+        public string BookerEmail { get; set; }
         [Required]
         [Range(0, double.MaxValue, ErrorMessage = "Cena nie może być ujemna")]
         public int BookPrice { get; set; }
