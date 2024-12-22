@@ -5,6 +5,7 @@ import { ReservationService } from '../../../../../shared/services/api/reservati
 import { ApiManager } from '../../../../../core/api/api-manager';
 import { MakeReservationType } from '../../../../../shared/types/api/reservation-types/make-reservation.type';
 import { LoadingService } from '../../../../../shared/services/loading.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-method',
@@ -20,13 +21,13 @@ export class PaymentMethodComponent {
     private reservationStateService : ReservationStateService, 
     private service : ReservationService,
     private apiManager : ApiManager<any>, 
-    private loadingService : LoadingService 
+    private router : Router,
     ){}
 
     onSubmit() : void{
       const reservationDetails : MakeReservationType = this.reservationStateService.getReservationDetails();
       console.log(reservationDetails);
-      this.apiManager.exeApiRequest(this.service.makeReservation(reservationDetails), () => console.log(this.apiManager.data()))
+      this.apiManager.exeApiRequest(this.service.makeReservation(reservationDetails), () => this.router.navigate(['/reservation/1']))
     }
 
     isLoading() : boolean{

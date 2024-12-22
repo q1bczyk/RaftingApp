@@ -1,33 +1,24 @@
 <app-reservation-form-card>
-    <div class="row">
-        <div class="col-12 col-md-6">
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" value="online" id="onlinePayment"
-                    (ngModel)="paymentMethod">
-                <label class="form-check-label" for="onlinePayment">
-                    Płatność online
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="paymentMethod" value="onSite" id="onSitePayment"
-                    (ngModel)="paymentMethod">
-                <label class="form-check-label" for="onSitePayment">
-                    Płatność na miejscu
-                </label>
-            </div>
-            <button [disabled]="isLoading()" class="btn btn-primary" (click)="onSubmit()">
-                @if (isLoading()){
-                <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
-                    <span class="sr-only"></span>
-                </div>
-                }
-                @else {
-                    Reserwuj
-                }
-            </button>
-        </div>
-        <div class="col-12 col-md-6">
-            online
-        </div>
-    </div>
+    <main>
+        <h1>Payment</h1>
+  
+        <p>Enable more payment method types <a
+          href="https://dashboard.stripe.com/settings/payment_methods" target="_blank">in your
+          dashboard</a>.</p>
+  
+        <form id="payment-form">
+          <div id="link-authentication-element">
+            <!-- Elements will create authentication element here -->
+          </div>
+          <div id="payment-element">
+            <!-- Elements will create form elements here -->
+          </div>
+          <button id="submit">Pay now</button>
+          <div id="error-message">
+            <!-- Display error message to your customers here -->
+          </div>
+        </form>
+  
+        <div id="messages" role="alert" style="display: none;"></div>
+      </main>
 </app-reservation-form-card>

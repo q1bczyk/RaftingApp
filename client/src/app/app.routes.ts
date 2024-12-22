@@ -13,6 +13,10 @@ export const routes: Routes = [
                 loadComponent: () => import('./modules/client/pages/home-page/home-page.component').then(m => m.HomePageComponent),
             },
             {
+                path: 'reservation/:id',
+                loadComponent: () => import('./modules/client/pages/reservation-details-page/reservation-details-page.component').then(m => m.ReservationDetailsPageComponent),
+            },
+            {
                 path: 'auth',
                 loadChildren: () => import('./modules/auth/auth.routes').then(m => m.authRoutes),
             },
