@@ -4,18 +4,20 @@ import { ReservationStateService } from '../../../services/states/reservation-st
 import { ReservationService } from '../../../../../shared/services/api/reservation.service';
 import { ApiManager } from '../../../../../core/api/api-manager';
 import { MakeReservationType } from '../../../../../shared/types/api/reservation-types/make-reservation.type';
-import { LoadingService } from '../../../../../shared/services/loading.service';
 import { Router } from '@angular/router';
+import { NgxStripeModule } from 'ngx-stripe';
+import { PaymentTabsComponent } from "./components/payment-tabs/payment-tabs.component";
+import { BlikComponent } from "./components/blik/blik.component";
 
 @Component({
   selector: 'app-payment-method',
   standalone: true,
-  imports: [ReservationFormCardComponent],
+  imports: [ReservationFormCardComponent, NgxStripeModule, PaymentTabsComponent, BlikComponent],
   templateUrl: './payment-method.component.html',
   styleUrl: './payment-method.component.scss'
 })
 export class PaymentMethodComponent {
-  paymentMethod: string = 'online';
+  paymentMethod: number = 1;
 
   constructor(
     private reservationStateService : ReservationStateService, 
@@ -32,6 +34,10 @@ export class PaymentMethodComponent {
 
     isLoading() : boolean{
       return this.apiManager.loadingService.isLoading();
+    }
+
+    onMethodChange(methodId : number) : void {
+      this.paymentMethod = methodId;
     }
 
 }

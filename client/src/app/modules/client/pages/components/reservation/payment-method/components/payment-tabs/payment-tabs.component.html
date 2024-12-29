@@ -1,0 +1,10 @@
+<div class="d-flex">
+    <div class="payment-tab" [class.active-tab]="selectedMethod === 1" (click)="onMethodChange(1)">
+        <img src="https://seeklogo.com/images/B/blik-logo-A759DC4120-seeklogo.com.png" width="40">
+        <div>BLIK</div>
+    </div>
+    <div class="payment-tab ms-3" [class.active-tab]="selectedMethod === 2" (click)="onMethodChange(2)">
+        <img src="https://www.przelewy24.pl/themes/przelewy24/assets/img/base/przelewy24_logo_2022.svg" width="40">
+        <div>Przelewy24</div>
+    </div>
+</div>

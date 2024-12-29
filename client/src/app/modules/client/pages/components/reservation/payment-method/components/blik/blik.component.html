@@ -1,0 +1,36 @@
+<form [formGroup]="blikForm" (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="mb-3">
+      <label for="mail" class="form-label">Email</label>
+      <input 
+        type="email" 
+        id="mail" 
+        class="form-control" 
+        formControlName="mail" 
+        [class.is-invalid]="blikForm.get('mail')?.invalid && blikForm.get('mail')?.touched"
+        placeholder="Enter your email"
+      >
+      <div class="invalid-feedback">
+        Wprowadź poprawny email
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="blikCode" class="form-label">Kod BLIK</label>
+      <input 
+        type="text" 
+        id="blikCode" 
+        class="form-control" 
+        formControlName="blikCode" 
+        [class.is-invalid]="blikForm.get('blikCode')?.invalid && blikForm.get('blikCode')?.touched"
+        placeholder="Enter your BLIK code"
+      >
+      <div class="invalid-feedback">
+        Kod BLIK musi mieć 6 cyfr
+      </div>
+    </div>
+  
+    <button type="submit" class="btn btn-primary" [disabled]="blikForm.invalid">
+      Zatwierdź
+    </button>
+  </form>
+  
