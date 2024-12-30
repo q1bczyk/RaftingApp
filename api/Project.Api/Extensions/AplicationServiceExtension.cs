@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Project.Api.Helpers;
+using Project.Core.Config;
 using Project.Core.Helpers;
 using Project.Infrastructure.Data;
 
@@ -19,6 +20,7 @@ namespace Project.Api.Extensions
 
             services.Configure<EmailConfig>(config.GetSection("EmailConfig"));
             services.Configure<AzureBlobConfig>(config.GetSection("AzureBlobConfig"));
+            services.Configure<StripeConfig>(config.GetSection("StripeConfig"));
 
             return services;
         }

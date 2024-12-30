@@ -25,6 +25,7 @@ namespace Project.Api.Extensions
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IMailService, MailService>();
             services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IStripeService, StripeService>();
 
             //business services
             services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
