@@ -1,3 +1,4 @@
+using Project.Core.DTO.PaymentDTO;
 using Project.Core.DTO.ReservationsDTO;
 using Project.Core.Entities;
 using Project.Core.Interfaces.IMapper;
@@ -17,10 +18,14 @@ namespace Project.Core.Services.BusinessService
     {
         private readonly IReservationEquipmentService _reservationEquipmentService;
         private readonly IMailService _mailService;
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService) : base(repository, toModelMapper, toDTOMapper)
+        private readonly IPaymentRepository _paymentRepository;
+        private readonly IBaseMapper<PaymentConfirmationDTO, Payment> _paymentMapper;
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper) : base(repository, toModelMapper, toDTOMapper)
         {
             _reservationEquipmentService = reservationEquipmentService;
             _mailService = mailService;
+            _paymentRepository = paymentRepository;
+            _paymentMapper = paymentMapper;
         }
 
         public async override Task<GetReservationDTO> Create(AddReservationDTO createDTO)
@@ -28,6 +33,16 @@ namespace Project.Core.Services.BusinessService
 
             var reservationModel = _toModelMapper.MapToModel(createDTO);
             var addedModel = await _repository.Create(reservationModel);
+
+            var payment = new Payment{
+                Id = createDTO.Payment.Id,
+                Amount = createDTO.Payment.Amount,
+                Status = createDTO.Payment.Status,
+                Currency = createDTO.Payment.Currency,
+                ReservationId = addedModel.Id,
+            };
+            await _paymentRepository.Create(payment);
+
             await _reservationEquipmentService.AddMany(createDTO.ReservationEquipment, addedModel.Id);
 
             string formattedDate = createDTO.ExecutionDate.ToString("yyyy-MM-dd");

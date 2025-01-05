@@ -3,6 +3,7 @@ import { GetEquipmentType } from "../../../../shared/types/api/equipment-types/g
 import { MakeReservationType, ReservationEquipmentType } from "../../../../shared/types/api/reservation-types/make-reservation.type";
 import { reservationInitialState } from "./reservation-initial-state";
 import { BookerType } from "../../../types/ui/booker-type";
+import { ConfirmPaymentType } from "../../../../shared/types/api/payment-types/confirm-payment.type";
 
 @Injectable({
     providedIn: 'root',
@@ -112,6 +113,13 @@ export class ReservationStateService {
             bookerPhoneNumber : Number(bookerData.bookerPhoneNumber),
             bookerEmail : bookerData.bookerEmail,
             reservationEquipment : updatedEquipment
+        })
+    }
+
+    setPayment(paymentDetails : ConfirmPaymentType){
+        this.reservationData.set({
+            ...this.reservationData(),
+            payment : paymentDetails
         })
     }
 

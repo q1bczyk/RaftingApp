@@ -8,6 +8,9 @@ import { Stripe } from '@stripe/stripe-js';
 import { ReservationStateService } from '../../../../../services/states/reservation-state.service';
 import { MakeReservationType } from '../../../../../../../shared/types/api/reservation-types/make-reservation.type';
 import { BlikConfirmationComponent } from "./blik-confirmation/blik-confirmation.component";
+import { ConfirmPaymentType } from '../../../../../../../shared/types/api/payment-types/confirm-payment.type';
+import { ReservationService } from '../../../../../../../shared/services/api/reservation.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-blik',
@@ -19,8 +22,8 @@ import { BlikConfirmationComponent } from "./blik-confirmation/blik-confirmation
 export class BlikComponent {
 
   @Input() stripe!: Stripe | null;
-  isLoading : boolean = false;
-  blikConfirmation : boolean = false;
+  isLoading: boolean = false;
+  blikConfirmation: boolean = false;
 
   blikForm: FormGroup = new FormGroup({
     mail: new FormControl('', [Validators.required, Validators.email]),
@@ -30,10 +33,11 @@ export class BlikComponent {
   constructor(
     private apiManager: ApiManager<{ clientSecret: string }>,
     private paymentService: PaymentService,
-    private reservationStateService: ReservationStateService){ 
-      const reservationDetails : MakeReservationType = reservationStateService.getReservationDetails();
-      this.blikForm.get('mail')?.setValue(reservationDetails.bookerEmail);
-    }
+    private reservationStateService: ReservationStateService,
+    private reservationService: ReservationService) {
+    const reservationDetails: MakeReservationType = reservationStateService.getReservationDetails();
+    this.blikForm.get('mail')?.setValue(reservationDetails.bookerEmail);
+  }
 
   onSubmit(): void {
     this.isLoading = true;
@@ -54,12 +58,28 @@ export class BlikComponent {
       },
       payment_method_options: {
         blik: {
-          code : this.blikForm.get('blikCode')?.value,
+          code: this.blikForm.get('blikCode')?.value,
         },
       },
-      receipt_email : this.blikForm.get('mail')?.value,
+      receipt_email: this.blikForm.get('mail')?.value,
     });
     this.blikConfirmation = false;
-    console.log(result);
+
+    const paymentDetails: ConfirmPaymentType = {
+      id: result?.paymentIntent?.id || '',
+      amount: result?.paymentIntent?.amount || 0,
+      status: result?.paymentIntent?.status || '',
+      currency: result?.paymentIntent?.currency || '',
+    }
+
+    this.reservationStateService.setPayment(paymentDetails);
+
+    this.reservationService.makeReservation(this.reservationStateService.getReservationDetails())
+      .pipe(
+        take(1)
+      )
+      .subscribe((data: any) => {
+        console.log(data);
+      });
   }
 }

@@ -1,6 +1,7 @@
 using AutoMapper;
 using Project.Core.DTO.Auth;
 using Project.Core.DTO.EquipmentDTO;
+using Project.Core.DTO.PaymentDTO;
 using Project.Core.DTO.ReservationEquipmentDTO;
 using Project.Core.DTO.ReservationsDTO;
 using Project.Core.DTO.SettingsDTO;
@@ -38,6 +39,7 @@ namespace Project.Api.Extensions
             services.AddScoped<IReservationRepository, ReservationRepository>();
             services.AddScoped<IReservationEquipmentRepository, ReservationEquipmentRepository>();
             services.AddScoped<ISettingsRepository, SettingsRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<RegisterDTO, User>();
@@ -50,7 +52,8 @@ namespace Project.Api.Extensions
                 cfg.CreateMap<ReservationEquipment, GetReservationEquipmentDTO>()
                     .ForMember(dest => dest.EquipmentType, opt => opt.MapFrom(src => src.EquipmentType));
                 cfg.CreateMap<BaseSettingsDTO, Settings>();
-                cfg.CreateMap<Settings, GetSettingsDTO>();    
+                cfg.CreateMap<Settings, GetSettingsDTO>();
+                cfg.CreateMap<PaymentConfirmationDTO, Payment>();        
             });
 
             IMapper mapper = config.CreateMapper();
@@ -61,6 +64,7 @@ namespace Project.Api.Extensions
             services.AddSingleton<IBaseMapper<AddReservationDTO, Reservation>>(new BaseMapper<AddReservationDTO, Reservation>(mapper));
             services.AddSingleton<IBaseMapper<AddReservationEquipmentDTO, ReservationEquipment>>(new BaseMapper<AddReservationEquipmentDTO, ReservationEquipment>(mapper));
             services.AddSingleton<IBaseMapper<BaseSettingsDTO, Settings>>(new BaseMapper<BaseSettingsDTO, Settings>(mapper));
+            services.AddSingleton<IBaseMapper<PaymentConfirmationDTO, Payment>>(new BaseMapper<PaymentConfirmationDTO, Payment>(mapper));
 
             //mapper to dto
             services.AddSingleton<IBaseMapper<EquipmentType, GetEquipmentTypeDTO>>(new BaseMapper<EquipmentType, GetEquipmentTypeDTO>(mapper));
