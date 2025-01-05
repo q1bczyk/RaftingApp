@@ -25,8 +25,7 @@ namespace Project.Core.Entities
         public int BookPrice { get; set; }
         [Required]
         public int ParticipantNumber { get; set; }
-        // [Required]
-        // public Payment? Payment { get; set; }
+        public Payment? Payment { get; set; } = null!;
         public List<EquipmentType> EquipmentType { get; set; } = new List<EquipmentType>();
         public List<ReservationEquipment> ReservationEquipment { get; set; } = new List<ReservationEquipment>();
 

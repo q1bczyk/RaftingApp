@@ -1,11 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Project.Core.Entities
+namespace Project.Core.DTO.PaymentDTO
 {
-    public class Payment 
+    public class PaymentConfirmationDTO
     {
         [Required]
-        [Key]
         public string Id { get; set; }
         [Required]
         public string Status { get; set; }
@@ -13,9 +12,5 @@ namespace Project.Core.Entities
         public int Amount { get; set; }
         [Required]
         public string Currency { get; set; }
-        [Required]
-        public string ReservationId { get; set; }
-        [Required]
-        public Reservation Reservation { get; set; } = null!;
     }
 }

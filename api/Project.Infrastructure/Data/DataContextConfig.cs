@@ -13,6 +13,14 @@ namespace Project.Infrastructure.Data
                 .WithMany(e => e.EquipmentType)
                 .UsingEntity<ReservationEquipment>();
             });
+
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.HasOne(p => p.Reservation)
+                    .WithOne(r => r.Payment)
+                    .HasForeignKey<Payment>(p => p.ReservationId)
+                    .IsRequired(); 
+            });
         }
     }
 }
