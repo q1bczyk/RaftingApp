@@ -8,7 +8,7 @@ import { BookerType } from "../../../types/ui/booker-type";
     providedIn: 'root',
 })
 export class ReservationStateService {
-    private currentStep: WritableSignal<number> = signal(4);
+    private currentStep: WritableSignal<number> = signal(1);
     private avaiableEquipment: WritableSignal<GetEquipmentType[]> = signal([]);
     private reservationData: WritableSignal<MakeReservationType> = signal(reservationInitialState);
     private isMenuOpen: WritableSignal<boolean> = signal(false);

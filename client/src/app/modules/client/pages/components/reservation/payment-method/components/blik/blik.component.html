@@ -29,8 +29,18 @@
       </div>
     </div>
   
-    <button type="submit" class="btn btn-primary" [disabled]="blikForm.invalid">
-      Zatwierdź
+    <button type="submit" class="btn btn-primary blik-button" [disabled]="blikForm.invalid || isLoading">
+      @if (isLoading || blikConfirmation){
+        <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
+            <span class="sr-only"></span>
+        </div>
+        }
+        @else {
+        Zatwierdź
+        }
     </button>
+    @if(blikConfirmation){
+      <app-blik-confirmation/>
+    }
   </form>
   

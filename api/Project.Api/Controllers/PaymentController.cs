@@ -14,10 +14,10 @@ namespace Project.Api.Controllers
             _stripeService = stripeService;
         }
 
-        [HttpPost("PaymentInit")]
-        public async Task<ActionResult> CreatePaymentIntent(BasePaymentDTO basePaymentDTO)
+        [HttpPost("BlikPaymentInit")]
+        public async Task<ActionResult> CreatePaymentIntent(BlikPaymentDTO blikPaymentDTO)
         {
-            string clientSecret = await _stripeService.CreatePaymentIntent(basePaymentDTO);
+            string clientSecret = await _stripeService.CreatePaymentIntent(blikPaymentDTO);
             return Ok(new { ClientSecret = clientSecret});
         }
     }

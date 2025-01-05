@@ -4,6 +4,6 @@ namespace Project.Core.Interfaces.IServices.IOtherServices
 {
     public interface IStripeService
     {
-        Task<string> CreatePaymentIntent(BasePaymentDTO basePaymentDTO);
+        Task<string> CreatePaymentIntent(BlikPaymentDTO blikPaymentDTO);
     }
 }

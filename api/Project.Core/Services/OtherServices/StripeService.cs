@@ -8,27 +8,30 @@ namespace Project.Core.Services.OtherServices
 {
     public class StripeService : IStripeService
     {
-        private string _secretKey { get; set; } 
+        private string _secretKey { get; set; }
 
         public StripeService(IOptions<StripeConfig> stripeConfig)
         {
             _secretKey = stripeConfig.Value.SecretKey;
         }
 
-        public async Task<string> CreatePaymentIntent(BasePaymentDTO basePaymentDTO)
+        public async Task<string> CreatePaymentIntent(BlikPaymentDTO blikPaymentDTO)
         {
             StripeConfiguration.ApiKey = _secretKey;
-            
+
             var options = new PaymentIntentCreateOptions
             {
-                Amount = basePaymentDTO.Amount,
+                Amount = blikPaymentDTO.Amount,
                 Currency = "pln",
-                PaymentMethodTypes = new List<string>
+                PaymentMethodTypes = new List<string> { "blik" },
+                PaymentMethodData = new PaymentIntentPaymentMethodDataOptions
                 {
-                    "blik",
-                    "p24"
-                },
-                ReceiptEmail = basePaymentDTO.Email,
+                    Type = "blik",
+                    Metadata = new Dictionary<string, string>
+                    {
+                        { "blik_code", blikPaymentDTO.BlikCode } // Przekazanie kodu BLIK jako metadanych
+                    }
+                }
             };
 
             var service = new PaymentIntentService();
