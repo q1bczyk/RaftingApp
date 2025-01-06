@@ -10,10 +10,12 @@ namespace Project.Core.Services.OtherServices
     {
         private readonly ISettingsRepository _settingsRepository;
         private readonly IEquipmentTypeRepository _equipmentTypeRepository;
-        public ReservationValidationService(ISettingsRepository settingsRepository, IEquipmentTypeRepository equipmentTypeRepository)
+        private readonly IReservationEquipmentRepository _reservationEquipmentRepository;
+        public ReservationValidationService(ISettingsRepository settingsRepository, IEquipmentTypeRepository equipmentTypeRepository, IReservationEquipmentRepository reservationEquipmentRepository)
         {
             _settingsRepository = settingsRepository;
             _equipmentTypeRepository = equipmentTypeRepository;
+            _reservationEquipmentRepository = reservationEquipmentRepository;
         }
 
         public async Task ValidReservation(AddReservationDTO reservationDetails)
@@ -22,6 +24,7 @@ namespace Project.Core.Services.OtherServices
             IsDataCorrect(reservationDetails.ExecutionDate, systemSettings.SeasonStartDate, systemSettings.SeasonEndDate);
             IsOpeningHoursCorrect(reservationDetails.ExecutionDate, systemSettings.SeasonStartDate, systemSettings.SeasonEndDate);
             IsReservationInCorrectAdvance(systemSettings.DayEarliestBookingTime, systemSettings.DayLatestBookingTime, reservationDetails.ExecutionDate);
+            await IsEquipmentAvaiable(reservationDetails.ExecutionDate, reservationDetails.ParticipantNumber, reservationDetails.ReservationEquipment);
             await IsPersonLimitMet(reservationDetails.ReservationEquipment);
         }
         private void IsDataCorrect(DateTime executionDate, DateTime openingDate, DateTime closingDate)
@@ -68,6 +71,22 @@ namespace Project.Core.Services.OtherServices
 
             if (executionDate > today.AddDays(dayEarliest))
                 throw new ApiControlledException("Za wcześnie na dokonanie rezerwacji", 409, $"Minimalne wyprzedzenie z jaką można dokonać rezerwacji to: {dayEarliest} doby");
+        }
+
+        private async Task IsEquipmentAvaiable(DateTime executionDate, int totalParticipants, List<AddReservationEquipmentDTO> equipment){
+            ReservationDetailsDTO reservationDetails = new ReservationDetailsDTO{
+                Participants = totalParticipants,
+                Date = executionDate,
+            };
+
+            var availableEquipment = await _reservationEquipmentRepository.GetAvaiableEquipmentAsync(reservationDetails);
+
+            foreach (var equipmentItem in equipment)
+            {
+                var matchingEquipment = availableEquipment.FirstOrDefault(e => e.Id == equipmentItem.EquipmentTypeId);
+                if(equipmentItem.Quantity > matchingEquipment.Quantity)
+                    throw new ApiControlledException("Brak sprzętu", 409, $"Brak {matchingEquipment.TypeName} w podanym terminie.");
+            }
         }
 
     }

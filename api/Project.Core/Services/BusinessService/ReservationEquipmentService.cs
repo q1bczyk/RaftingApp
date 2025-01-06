@@ -25,17 +25,23 @@ namespace Project.Core.Services.BusinessService
 
         public async Task AddMany(List<AddReservationEquipmentDTO> addReservationEquipmentDTOs, string reservationId)
         {
+            var newReservations = new List<ReservationEquipment>();
+
             foreach (var reservation in addReservationEquipmentDTOs)
             {
-                var dataToAdd = new ReservationEquipment{
+                Console.WriteLine("RESERVATION: " + reservation.EquipmentTypeId);
+                var dataToAdd = new ReservationEquipment
+                {
                     ReservationId = reservationId,
                     EquipmentTypeId = reservation.EquipmentTypeId,
                     Quantity = reservation.Quantity,
                     Participants = reservation.Participants,
                 };
 
-                await _repository.Create(dataToAdd);
+                newReservations.Add(dataToAdd);
             }
+
+            await _repository.CreateRange(newReservations);
         }
 
         public async Task DeleteAll(string reservationId)
@@ -52,7 +58,8 @@ namespace Project.Core.Services.BusinessService
         {
             var avaiableEquipment = await _repository.GetAvaiableEquipmentAsync(reservationDetailsDTO);
             List<GetEquipmentTypeDTO> mappedData = _equipmentTypeMapper.MapToList(avaiableEquipment);
-            foreach(var equipmentType in mappedData){
+            foreach (var equipmentType in mappedData)
+            {
                 equipmentType.PhotoUrl = await _fileService.GeneratePublicLink(equipmentType.PhotoUrl);
             }
             return mappedData;

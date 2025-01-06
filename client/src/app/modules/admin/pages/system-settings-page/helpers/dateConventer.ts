@@ -4,9 +4,9 @@ import { format } from 'date-fns'
 
 export function convertTime(time: Date): NgbTimeStruct {
     const formatedTime: NgbTimeStruct = {
-        hour: time.getHours(),
-        minute: time.getMinutes(),
-        second: time.getSeconds()
+        hour: time.getUTCHours(),
+        minute: time.getUTCMinutes(),
+        second: time.getUTCSeconds()
     }
     return formatedTime;
 }
@@ -24,5 +24,5 @@ export function dateToNgbStruct(date: Date): NgbDateStruct {
 }
 
 export function structToDate(date : NgbDateStruct, time : NgbTimeStruct) : Date{
-    return new Date(date.year, date.month - 1, date.day, time.hour, time.minute, time.second);
+    return new Date(Date.UTC(date.year, date.month - 1, date.day, time.hour, time.minute, time.second));
 }
