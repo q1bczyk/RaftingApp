@@ -1,10 +1,12 @@
 using System.ComponentModel.DataAnnotations;
+using Project.Core.DTO.ReservationsDTO.Validator;
 
 namespace Project.Core.DTO.ReservationsDTO
 {
     public class BaseReservationDTO
     {
         [Required, DataType(DataType.DateTime)]
+        [PastDate]
         public DateTime ExecutionDate { get; set; }
         [Required, MinLength(2)]
         public string BookerName { get; set; }
