@@ -20,17 +20,19 @@ namespace Project.Core.Services.BusinessService
         private readonly IMailService _mailService;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IBaseMapper<PaymentConfirmationDTO, Payment> _paymentMapper;
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper) : base(repository, toModelMapper, toDTOMapper)
+        private readonly IReservationValidationService _reservationValidationService;
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService) : base(repository, toModelMapper, toDTOMapper)
         {
             _reservationEquipmentService = reservationEquipmentService;
             _mailService = mailService;
             _paymentRepository = paymentRepository;
             _paymentMapper = paymentMapper;
+            _reservationValidationService = reservationValidationService;
         }
 
         public async override Task<GetReservationDTO> Create(AddReservationDTO createDTO)
         {
-
+            await _reservationValidationService.ValidReservation(createDTO);
             var reservationModel = _toModelMapper.MapToModel(createDTO);
             var addedModel = await _repository.Create(reservationModel);
             
