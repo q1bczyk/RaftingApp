@@ -33,14 +33,9 @@ namespace Project.Core.Services.BusinessService
 
             var reservationModel = _toModelMapper.MapToModel(createDTO);
             var addedModel = await _repository.Create(reservationModel);
-
-            var payment = new Payment{
-                Id = createDTO.Payment.Id,
-                Amount = createDTO.Payment.Amount,
-                Status = createDTO.Payment.Status,
-                Currency = createDTO.Payment.Currency,
-                ReservationId = addedModel.Id,
-            };
+            
+            var payment = _paymentMapper.MapToModel(createDTO.Payment);
+            payment.ReservationId = addedModel.Id;
             await _paymentRepository.Create(payment);
 
             await _reservationEquipmentService.AddMany(createDTO.ReservationEquipment, addedModel.Id);

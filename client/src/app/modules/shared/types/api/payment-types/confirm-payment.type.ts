@@ -1,5 +1,5 @@
 export interface ConfirmPaymentType{
-    id : string,
+    stripeId : string,
     status : string,
     amount : number,
     currency : string

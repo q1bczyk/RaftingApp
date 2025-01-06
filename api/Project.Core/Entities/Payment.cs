@@ -2,11 +2,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Project.Core.Entities
 {
-    public class Payment 
+    public class Payment : BaseEntity 
     {
         [Required]
-        [Key]
-        public string Id { get; set; }
+        public string StripeId { get; set; }
         [Required]
         public string Status { get; set; }
         [Required]

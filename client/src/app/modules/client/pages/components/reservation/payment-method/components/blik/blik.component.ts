@@ -66,7 +66,7 @@ export class BlikComponent {
     this.blikConfirmation = false;
 
     const paymentDetails: ConfirmPaymentType = {
-      id: result?.paymentIntent?.id || '',
+      stripeId: result?.paymentIntent?.id || '',
       amount: result?.paymentIntent?.amount || 0,
       status: result?.paymentIntent?.status || '',
       currency: result?.paymentIntent?.currency || '',

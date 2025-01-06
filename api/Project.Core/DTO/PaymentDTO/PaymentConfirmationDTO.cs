@@ -5,7 +5,7 @@ namespace Project.Core.DTO.PaymentDTO
     public class PaymentConfirmationDTO
     {
         [Required]
-        public string Id { get; set; }
+        public string StripeId { get; set; }
         [Required]
         public string Status { get; set; }
         [Required]
