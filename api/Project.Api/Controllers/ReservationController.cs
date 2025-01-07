@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Project.Core.DTO.BaseDTO;
 using Project.Core.DTO.EquipmentDTO;
 using Project.Core.DTO.ReservationsDTO;
 using Project.Core.Interfaces.IServices.IBusinessServices;
@@ -28,9 +29,17 @@ namespace Project.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetReservationDTO>> GetReservation(string id){
+        public async Task<ActionResult<GetReservationDTO>> GetReservation(string id)
+        {
             var reservation = await _service.GetById(id);
             return Ok(reservation);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<SuccessResponseDTO>> DeleteReservation(string id)
+        {
+            await _service.Delete(id);
+            return Ok(new SuccessResponseDTO("Reserwacja anulowana pomyślnie"));
         }
     }
 }

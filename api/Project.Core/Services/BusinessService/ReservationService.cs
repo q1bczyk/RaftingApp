@@ -21,13 +21,16 @@ namespace Project.Core.Services.BusinessService
         private readonly IPaymentRepository _paymentRepository;
         private readonly IBaseMapper<PaymentConfirmationDTO, Payment> _paymentMapper;
         private readonly IReservationValidationService _reservationValidationService;
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService) : base(repository, toModelMapper, toDTOMapper)
+        private readonly IStripeService _paymentService;
+        
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService, IStripeService paymentService) : base(repository, toModelMapper, toDTOMapper)
         {
             _reservationEquipmentService = reservationEquipmentService;
             _mailService = mailService;
             _paymentRepository = paymentRepository;
             _paymentMapper = paymentMapper;
             _reservationValidationService = reservationValidationService;
+            _paymentService = paymentService;
         }
 
         public async override Task<GetReservationDTO> Create(AddReservationDTO createDTO)
@@ -46,6 +49,12 @@ namespace Project.Core.Services.BusinessService
             await _mailService.SendBookingConfirmation(createDTO.BookerEmail, formattedDate, createDTO.ParticipantNumber, addedModel.Id);
 
             return _toDTOMapper.MapToModel(reservationModel);
+        }
+
+        public async override Task Delete(string id){
+            var reservationDetails = await _repository.GetById(id);
+            await _paymentService.Refund(reservationDetails.Payment.StripeId, reservationDetails.Payment.Amount, reservationDetails.ExecutionDate);
+            await _repository.Delete(reservationDetails);
         }
     }
 }

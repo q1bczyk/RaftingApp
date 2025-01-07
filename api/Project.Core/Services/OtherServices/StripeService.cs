@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Options;
 using Project.Core.Config;
 using Project.Core.DTO.PaymentDTO;
+using Project.Core.Interfaces.IRepositories;
 using Project.Core.Interfaces.IServices.IOtherServices;
 using Stripe;
 
@@ -9,10 +10,12 @@ namespace Project.Core.Services.OtherServices
     public class StripeService : IStripeService
     {
         private string _secretKey { get; set; }
+        private ISettingsRepository _settingsRepository;
 
-        public StripeService(IOptions<StripeConfig> stripeConfig)
+        public StripeService(IOptions<StripeConfig> stripeConfig, ISettingsRepository settingsRepository)
         {
             _secretKey = stripeConfig.Value.SecretKey;
+            _settingsRepository = settingsRepository;
         }
 
         public async Task<string> CreatePaymentIntent(BlikPaymentDTO blikPaymentDTO)
@@ -38,6 +41,26 @@ namespace Project.Core.Services.OtherServices
             var paymentIntent = await service.CreateAsync(options);
 
             return paymentIntent.ClientSecret;
+        }
+
+        public async Task Refund(string paymentId, int amount, DateTime bookingDate)
+        {
+            StripeConfiguration.ApiKey = _secretKey;
+            
+            var systemSettings = await _settingsRepository.GetSettingsAsync();
+            DateTime today = DateTime.UtcNow.Date;
+            DateTime latestRefundDate = today.AddDays(-systemSettings.DayLatestBookingTime);
+
+            if(bookingDate > latestRefundDate) return;
+
+            var refoundOptions = new RefundCreateOptions
+            {
+                PaymentIntent = paymentId,
+                Amount = amount
+            };
+
+            var refundService = new RefundService();
+            Refund refund = await refundService.CreateAsync(refoundOptions);
         }
     }
 }
