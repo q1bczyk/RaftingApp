@@ -1,7 +1,9 @@
 <app-reservation-form-card>
   <main>
-    <h1>Płatność</h1>
-    <p>Wybierz metode płatności i dokończ rezerwację.</p>
+    <div class="mb-3 border-bottom">
+      <h1>Płatność</h1>
+      <p>Wybierz metode płatności i dokończ rezerwację.</p>
+    </div>
     <app-payment-tabs
       [selectedMethod]="paymentMethod"
       (methodChangeEvent)="onMethodChange($event)"

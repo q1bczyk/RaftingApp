@@ -29,7 +29,6 @@ namespace Project.Core.Services.BusinessService
 
             foreach (var reservation in addReservationEquipmentDTOs)
             {
-                Console.WriteLine("RESERVATION: " + reservation.EquipmentTypeId);
                 var dataToAdd = new ReservationEquipment
                 {
                     ReservationId = reservationId,

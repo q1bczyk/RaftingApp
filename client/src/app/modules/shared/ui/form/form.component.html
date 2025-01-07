@@ -74,7 +74,7 @@
     </small>
 
     }
-
+    <ng-content/>
     }
     <button [disabled]="isFormInvalid() || loadingService.isLoading()"
         [ngClass]="{'btn btn-primary rounded mt-2 p-2 px-5': true, 'fit-content-button': !fullWidth}" type="submit">

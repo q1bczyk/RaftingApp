@@ -17,6 +17,7 @@ namespace Project.Infrastructure.Repositories
         public async Task<List<EquipmentType>> GetAvaiableEquipmentAsync(ReservationDetailsDTO reservationDetailsDTO)
         {
             var reservationDateUtc = reservationDetailsDTO.Date.ToUniversalTime();
+            Console.WriteLine("DATA: " + reservationDateUtc);
             var systemSettings = await _context.Settings.FirstOrDefaultAsync();
 
             var allEquipment = await _context.EquipmentTypes
@@ -25,7 +26,7 @@ namespace Project.Infrastructure.Repositories
 
             var reservations = await _context.ReservationsEquipment
                 .Include(re => re.Reservation)
-                .Where(re => re.Reservation.ExecutionDate > reservationDateUtc.AddHours(systemSettings.HoursRentalTime) && re.Reservation.ExecutionDate < reservationDateUtc.AddHours(systemSettings.HoursRentalTime))
+                .Where(re => re.Reservation.ExecutionDate > reservationDateUtc.AddHours(-systemSettings.HoursRentalTime) && re.Reservation.ExecutionDate < reservationDateUtc.AddHours(systemSettings.HoursRentalTime))
                 .ToListAsync();
 
             var availableQuantities = allEquipment.ToDictionary(e => e.Id, e => e.Quantity);

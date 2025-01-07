@@ -1,13 +1,37 @@
 <app-reservation-form-card>
     <div class="row">
+        <div class="col-12 border-bottom mb-3">
+            <h1>Wybór daty</h1>
+            <p>Wybierz datę godzinę oraz liczbę osób uczestniczącej w spływie.</p></div>
         <div class="col-12 col-md-6">
-            <app-form 
-            [formSettings]="form" 
-            (formSubmitEvent)="onFormSubmit($event)"
-            />
+            <div class="d-flex flex-column">
+                <label>Godzina spływu</label>
+                <ngb-timepicker [(ngModel)]="time" [hourStep]="1" [minuteStep]="15" (ngModelChange)="timeValid()" />
+            </div>
+            <app-form [formSettings]="form" (formSubmitEvent)="onFormSubmit($event)">
+            </app-form>
         </div>
-        <div class="col-12 col-md-6">
-    
+        <div class="col-12 col-md-6 reservation-info">
+            <div>
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                    Spłw jest dostępny w terminie od <b>{{systemSettings?.seasonStartDate | date:'dd/MM' }}</b> do <b>{{systemSettings?.seasonEndDate | date:'dd/MM' }}</b>
+                </div>
+            </div>
+            <div>
+                <i class="bi bi-info-circle-fill"></i>
+                <div>
+                    Minimalne wyprzedzenie z jakim można dokonać rezerwacji to <b>{{systemSettings?.dayLatestBookingTime }}</b> dni
+                </div>
+            </div>
+            <div>
+                <i class="bi bi-info-circle-fill"></i>
+                <div>Maksymalne wyprzedzenie z jakim można dokonać rezerwacji to <b>{{systemSettings?.dayEarliestBookingTime }}</b> dni</div>
+            </div>
+            <div>
+                <i class="bi bi-info-circle-fill"></i>
+                <div>Maksymalny czas spływu to <b>{{systemSettings?.hoursRentalTime }} godziny</b>, po tym czasie sprzęt powinen zostać zwrócony</div>
+            </div>
         </div>
     </div>
 </app-reservation-form-card>

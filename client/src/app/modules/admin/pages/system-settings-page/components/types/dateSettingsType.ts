@@ -1,5 +1,4 @@
 import { NgbDateStruct, NgbTimeStruct } from "@ng-bootstrap/ng-bootstrap";
-import { dateToString } from "../../helpers/dateConventer";
 
 export interface DateSettingsType {
     openTime: NgbTimeStruct,
