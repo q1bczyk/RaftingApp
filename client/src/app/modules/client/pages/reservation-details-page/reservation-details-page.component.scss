@@ -1,0 +1,17 @@
+.container
+{
+    >div{
+        >div{
+            >div{
+            margin-top: 20px;
+            }
+
+            span{
+                font-weight: 600;
+            }
+        }
+    }
+    .text-primary{
+        color: var(--orange-500) !important;
+    }
+}

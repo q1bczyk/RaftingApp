@@ -1,1 +1,32 @@
-<p>reservation-details-page works!</p>
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12 col-lg-6 my-3">
+            <h3>Szczegóły rezerwacji</h3>
+            <div><i class="bi bi-receipt text-primary me-3"></i>ID rezerwacji: <span>{{reservationDetails.id}}</span></div>
+            <div><i class="bi bi-person-circle text-primary me-3"></i>Imię i nazwisko rezerwującego: <span>{{reservationDetails.bookerName}} {{reservationDetails.bookerLastname}}</span></div>
+            <div><i class="bi bi-calendar-check-fill text-primary me-3"></i>Data spływu: <span>{{reservationDetails.executionDate | date: dateFormat : 'UTC'}}</span></div>
+            <div><i class="bi bi-clock-fill text-primary me-3"></i>Godzina spływu: <span>{{reservationDetails.executionDate | date: "HH:mm" : 'UTC'}}</span></div>
+            <div><i class="bi bi-people-fill text-primary me-3"></i>Łączna ilość osób: <span>{{reservationDetails.participantNumber}}</span></div>
+        </div>
+        <div class="col-12 col-lg-6 my-3">
+            <h3>Wybrany sprzęt</h3>
+            @for (equipment of reservationDetails.reservationEquipment; track $index) {
+                <div class="d-flex justify-content-between align-items-center py-3 border-top" [class.border-top-0]="$index === 0">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">{{equipment.quantity}}x</div>
+                        {{equipment.equipmentType.typeName}}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="d-flex text-secondary align-items-center fs-5 me-3">
+                            <i class="bi bi-person-check me-1"></i>
+                            {{equipment.participants}}
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-12 py-3 border-top">
+            <i class="bi bi-info-circle-fill text-primary me-3"></i>
+            W przypadku odwołania rezerwacji prosiomy o kontakt telefoniczny na numer <b>+48 {{ this.contact }}</b>. Pełny zwrot kosztów maksymalnie <b>{{lastRefundDay}} {{lastRefundDay || 0 > 1 ? 'dzień' : 'dni'}}</b> przed odwołaniem</div>
+    </div>
+</div>
