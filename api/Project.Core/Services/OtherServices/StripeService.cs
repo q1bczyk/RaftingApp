@@ -1,3 +1,4 @@
+using api;
 using Microsoft.Extensions.Options;
 using Project.Core.Config;
 using Project.Core.DTO.PaymentDTO;
@@ -48,10 +49,10 @@ namespace Project.Core.Services.OtherServices
             StripeConfiguration.ApiKey = _secretKey;
             
             var systemSettings = await _settingsRepository.GetSettingsAsync();
-            DateTime today = DateTime.UtcNow.Date;
-            DateTime latestRefundDate = today.AddDays(-systemSettings.DayLatestBookingTime);
+            DateTime latestRefundDate = bookingDate.AddDays(-systemSettings.DayLatestBookingTime);
+            DateTime today = DateTime.UtcNow;
 
-            if(bookingDate > latestRefundDate) return;
+            if(today > latestRefundDate) return;
 
             var refoundOptions = new RefundCreateOptions
             {
