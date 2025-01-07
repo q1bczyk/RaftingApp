@@ -1,3 +1,4 @@
+using Project.Core.DTO.PaymentDTO;
 using Project.Core.DTO.ReservationEquipmentDTO;
 
 namespace Project.Core.DTO.ReservationsDTO
@@ -7,5 +8,6 @@ namespace Project.Core.DTO.ReservationsDTO
         public string Id { get; set; }
         public DateTime ReservationDate { get; set; } 
         public List<GetReservationEquipmentDTO> ReservationEquipment { get; set; }
+        public PaymentDetailsDTO Payment { get; set; }
     }
 }

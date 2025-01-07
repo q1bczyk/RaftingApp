@@ -1,4 +1,5 @@
 using Project.Core.DTO.EquipmentDTO;
+using Project.Core.DTO.PaymentDTO;
 
 namespace Project.Core.DTO.ReservationEquipmentDTO
 {

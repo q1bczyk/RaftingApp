@@ -55,6 +55,7 @@ namespace Project.Api.Extensions
                 cfg.CreateMap<BaseSettingsDTO, Settings>();
                 cfg.CreateMap<Settings, GetSettingsDTO>();
                 cfg.CreateMap<PaymentConfirmationDTO, Payment>();        
+                cfg.CreateMap<Payment, PaymentDetailsDTO>();        
             });
 
             IMapper mapper = config.CreateMapper();
@@ -72,6 +73,7 @@ namespace Project.Api.Extensions
             services.AddSingleton<IBaseMapper<Reservation, GetReservationDTO>>(new BaseMapper<Reservation, GetReservationDTO>(mapper));
             services.AddSingleton<IBaseMapper<ReservationEquipment, GetReservationEquipmentDTO>>(new BaseMapper<ReservationEquipment, GetReservationEquipmentDTO>(mapper));
             services.AddSingleton<IBaseMapper<Settings, GetSettingsDTO>>(new BaseMapper<Settings, GetSettingsDTO>(mapper));
+            services.AddSingleton<IBaseMapper<Payment, PaymentDetailsDTO>>(new BaseMapper<Payment, PaymentDetailsDTO>(mapper));
 
             return services;
         }
