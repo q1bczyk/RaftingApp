@@ -26,5 +26,11 @@ namespace Project.Api.Controllers
             var reservation = await _service.Create(addReservationDTO);
             return Ok(reservation);
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetReservationDTO>> GetReservation(string id){
+            var reservation = await _service.GetById(id);
+            return Ok(reservation);
+        }
     }
 }
