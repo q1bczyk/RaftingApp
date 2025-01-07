@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { AdminGuard } from './modules/admin/guard/admin.guard';
-import { HomePageComponent } from './modules/client/pages/home-page/home-page.component';
 
 export const routes: Routes = [
     {
@@ -10,11 +8,7 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                loadComponent: () => import('./modules/client/pages/home-page/home-page.component').then(m => m.HomePageComponent),
-            },
-            {
-                path: 'reservation/:id',
-                loadComponent: () => import('./modules/client/pages/reservation-details-page/reservation-details-page.component').then(m => m.ReservationDetailsPageComponent),
+                loadChildren: () => import('./modules/client/client.routes').then(m => m.clientRoutes),
             },
             {
                 path: 'auth',

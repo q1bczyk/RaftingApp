@@ -11,6 +11,7 @@ import { BlikConfirmationComponent } from "./blik-confirmation/blik-confirmation
 import { ConfirmPaymentType } from '../../../../../../../shared/types/api/payment-types/confirm-payment.type';
 import { ReservationService } from '../../../../../../../shared/services/api/reservation.service';
 import { take } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blik',
@@ -34,7 +35,8 @@ export class BlikComponent {
     private apiManager: ApiManager<{ clientSecret: string }>,
     private paymentService: PaymentService,
     private reservationStateService: ReservationStateService,
-    private reservationService: ReservationService) {
+    private reservationService: ReservationService,
+    private router : Router) {
     const reservationDetails: MakeReservationType = reservationStateService.getReservationDetails();
     this.blikForm.get('mail')?.setValue(reservationDetails.bookerEmail);
   }
@@ -78,8 +80,8 @@ export class BlikComponent {
       .pipe(
         take(1)
       )
-      .subscribe((data: any) => {
-        console.log(data);
+      .subscribe((data: {id : string}) => {
+        this.router.navigate([`/reservation/${data.id}`])
       });
   }
 }
