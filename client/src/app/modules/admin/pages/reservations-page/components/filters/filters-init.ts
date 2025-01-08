@@ -1,15 +1,14 @@
 export interface ReservationFiltersType{
-    startDate? : Date,
-    endDate? : Date,
-    specificDate? : Date,
-    lastNamePartial ? : string,
-    reservationId? : string
+    startDate? : Date | null,
+    endDate? : Date | null,
+    specificDate? : Date | null,
+    lastNamePartial ? : string | null,
+    reservationId? : string | null
   }
   
   export const filtersInit : ReservationFiltersType = {
-    startDate : undefined,
     endDate : undefined,
-    specificDate : new Date(),
+    specificDate : null,
     lastNamePartial : undefined,
     reservationId : undefined,
   }

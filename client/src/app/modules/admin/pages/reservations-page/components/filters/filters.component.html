@@ -1,5 +1,22 @@
-<div>
-    <div class="card flex justify-center">
-        <p-datepicker [(ngModel)]="rangeDates" selectionMode="range" [readonlyInput]="true" />
-    </div>
+<div class="row">
+    <app-date-range>
+        <div class="mb-3 col-12 col-sm-6 col-lg-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Id rezerwacji" aria-label=""
+                    aria-describedby="basic-addon1" [(ngModel)]="reservationId" >
+                <button class="btn btn-outline-primary" type="button" (click)="onReservationIdConfirm()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+        <div class="mb-3 col-12 col-sm-6 col-lg-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Nazwisko" aria-label=""
+                    aria-describedby="basic-addon1" [(ngModel)]="lastname" >
+                <button class="btn btn-outline-primary" type="button" (click)="onLastnameConfirm()">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </div>
+    </app-date-range>
 </div>

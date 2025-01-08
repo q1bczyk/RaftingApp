@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, WritableSignal } from '@angular/core';
 import { ReservationService } from '../../../../../shared/services/api/reservation.service';
 import { ApiManager } from '../../../../../core/api/api-manager';
 import { SingleReservationDetailsType } from '../../../../../shared/types/api/reservation-types/reservation-details.type';
 import { mapFiltersToQueryParams } from '../../../../helpers/filter-mapper';
-import { ReservationFiltersType } from '../filters/filters-init';
+import { ReservationFilterState } from '../filters/reservation-filter-state.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-reservation-table',
@@ -13,17 +14,19 @@ import { ReservationFiltersType } from '../filters/filters-init';
   styleUrl: './reservation-table.component.scss'
 })
 export class ReservationTableComponent implements OnChanges, OnInit{
-
-  @Input() filters! : ReservationFiltersType;
+  private filterSubscription!: Subscription;
 
   constructor(
     private service : ReservationService,
-    private apiManager : ApiManager<SingleReservationDetailsType[]>
+    private apiManager : ApiManager<SingleReservationDetailsType[]>,
+    private filterState : ReservationFilterState
     ){
-
+      
   }
   ngOnInit(): void {
-    this.fetchData();
+    this.filterSubscription = this.filterState.getActiveFiltersObservable().subscribe(() => {
+      this.fetchData(); 
+    });
   }
   
   ngOnChanges(changes: SimpleChanges): void {
@@ -31,7 +34,7 @@ export class ReservationTableComponent implements OnChanges, OnInit{
   }
 
   fetchData() : void{
-    const filterUrl : string = mapFiltersToQueryParams(this.filters);
+    const filterUrl : string = mapFiltersToQueryParams(this.filterState.getActiveFilters());
     this.apiManager.exeApiRequest(this.service.fetchFilteredReservations(filterUrl), () => console.log(this.apiManager.data()))
   }
 
