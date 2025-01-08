@@ -4,7 +4,7 @@ export const navItems : NavItemType[] = [
     {
         icon : 'bi bi-bar-chart-line',
         label : 'Dashboard',
-        path : '/admin',
+        path : '/dashboard',
     },
     {
         icon : 'bi bi-calendar-check',

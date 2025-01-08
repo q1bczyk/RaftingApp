@@ -34,10 +34,10 @@ namespace Project.Infrastructure.Repositories
                 query = query.Where(r => r.BookerLastname.ToLower().Contains(lastNamePartial.ToLower()));
             
             if (startDate.HasValue)
-                query = query.Where(r => r.ExecutionDate >= startDate.Value);
+                query = query.Where(r => r.ExecutionDate.Date >= startDate.Value.Date);
 
             if (endDate.HasValue)
-                query = query.Where(r => r.ExecutionDate <= endDate.Value);
+                query = query.Where(r => r.ExecutionDate.Date <= endDate.Value.Date);
 
              if (specificDate.HasValue)
             {

@@ -6,7 +6,6 @@ import { FormGroup, FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoadingService } from '../../services/loading.service';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { FileUploadEvent } from 'primeng/fileupload';
 import { CommonModule } from '@angular/common';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 

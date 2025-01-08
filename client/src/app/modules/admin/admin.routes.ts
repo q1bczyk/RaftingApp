@@ -9,6 +9,10 @@ export const adminRoutes: Routes = [
         canActivate : [AdminGuard],
         children: [
             {
+                path: 'bookings', 
+                loadComponent: () => import('./pages/reservations-page/reservations-page.component').then(m => m.ReservationsPageComponent)
+            }, 
+            {
                 path: 'equipment', 
                 loadComponent: () => import('./pages/equipment-page/equipment-page.component').then(m => m.EquipmentPageComponent)
             }, 
