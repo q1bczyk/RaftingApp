@@ -56,5 +56,11 @@ namespace Project.Core.Services.BusinessService
             await _paymentService.Refund(reservationDetails.Payment.StripeId, reservationDetails.Payment.Amount, reservationDetails.ExecutionDate);
             await _repository.Delete(reservationDetails);
         }
+
+        public async Task<List<GetReservationDTO>> GetFilteredData(DateTime? startDate = null, DateTime? endDate = null, DateTime? specificDate = null, string lastNamePartial = null, string reservationId = null)
+        {
+            var filteredReservations = await _repository.GetFilteredData(startDate, endDate, specificDate, lastNamePartial, reservationId);
+            return _toDTOMapper.MapToList(filteredReservations);
+        }
     }
 }

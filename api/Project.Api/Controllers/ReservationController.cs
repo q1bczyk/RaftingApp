@@ -16,9 +16,9 @@ namespace Project.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GetReservationDTO>>> GetAllReservations()
+        public async Task<ActionResult<List<GetReservationDTO>>> GetAllReservations(DateTime? startDate = null, DateTime? endDate = null, DateTime? specificDate = null, string lastNamePartial = null, string reservationId = null)
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetFilteredData(startDate, endDate, specificDate, lastNamePartial, reservationId));
         }
 
         [HttpPost]
