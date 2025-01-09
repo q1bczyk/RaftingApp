@@ -46,14 +46,6 @@ namespace Project.Infrastructure.Repositories
                 query = query.Where(r => r.ExecutionDate.Date == targetDate);
             }
 
-            if (!specificDate.HasValue && !endDate.HasValue && !startDate.HasValue && string.IsNullOrWhiteSpace(reservationId) && string.IsNullOrWhiteSpace(lastNamePartial))
-            {
-                DateTime todayUtc = DateTime.UtcNow.Date; 
-                DateTime tomorrowUtc = todayUtc.AddDays(1); 
-
-                query = query.Where(r => r.ExecutionDate >= todayUtc && r.ExecutionDate < tomorrowUtc);
-            }
-
             query = query.OrderBy(r => r.ExecutionDate);
 
             return await query.ToListAsync();

@@ -17,16 +17,6 @@ export const navItems : NavItemType[] = [
         path : 'equipment',
     },
     {
-        icon : 'bi bi-gift',
-        label : 'Promocje',
-        path : 'discounts',
-    },
-    {
-        icon : 'bi bi-cash-coin',
-        label : 'Płatności',
-        path : 'payments',
-    },
-    {
         icon : 'bi bi-people-fill',
         label : 'Konta',
         path : 'users',
