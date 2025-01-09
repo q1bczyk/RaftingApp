@@ -1,5 +1,6 @@
 using api;
 using Project.Api.Extensions;
+using Project.Core.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,5 +30,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<NotificationHub>("hubs/notification");
 
 app.Run();

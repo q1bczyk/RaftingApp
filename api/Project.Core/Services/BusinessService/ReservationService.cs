@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.SignalR;
 using Project.Core.DTO.PaymentDTO;
 using Project.Core.DTO.ReservationsDTO;
 using Project.Core.Entities;
@@ -5,6 +6,7 @@ using Project.Core.Interfaces.IMapper;
 using Project.Core.Interfaces.IRepositories;
 using Project.Core.Interfaces.IServices.IBusinessServices;
 using Project.Core.Interfaces.IServices.IOtherServices;
+using Project.Core.SignalR;
 
 namespace Project.Core.Services.BusinessService
 {
@@ -22,8 +24,9 @@ namespace Project.Core.Services.BusinessService
         private readonly IBaseMapper<PaymentConfirmationDTO, Payment> _paymentMapper;
         private readonly IReservationValidationService _reservationValidationService;
         private readonly IStripeService _paymentService;
+        IHubContext<NotificationHub> _notificationHub;
         
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService, IStripeService paymentService) : base(repository, toModelMapper, toDTOMapper)
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService, IStripeService paymentService, IHubContext<NotificationHub> notificationHub) : base(repository, toModelMapper, toDTOMapper)
         {
             _reservationEquipmentService = reservationEquipmentService;
             _mailService = mailService;
@@ -31,6 +34,7 @@ namespace Project.Core.Services.BusinessService
             _paymentMapper = paymentMapper;
             _reservationValidationService = reservationValidationService;
             _paymentService = paymentService;
+            _notificationHub = notificationHub;
         }
 
         public async override Task<GetReservationDTO> Create(AddReservationDTO createDTO)
@@ -48,7 +52,13 @@ namespace Project.Core.Services.BusinessService
             string formattedDate = createDTO.ExecutionDate.ToString("yyyy-MM-dd");
             await _mailService.SendBookingConfirmation(createDTO.BookerEmail, formattedDate, createDTO.ParticipantNumber, addedModel.Id);
 
-            return _toDTOMapper.MapToModel(reservationModel);
+            var mappedReservation = _toDTOMapper.MapToModel(reservationModel);
+
+            await _notificationHub.Clients
+                    .Group("admin")
+                    .SendAsync("ChangeOrderStatusNotification", mappedReservation);
+
+            return mappedReservation;
         }
 
         public async override Task Delete(string id){

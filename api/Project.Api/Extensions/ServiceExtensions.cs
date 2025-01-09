@@ -28,6 +28,7 @@ namespace Project.Api.Extensions
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IStripeService, StripeService>();
             services.AddScoped<IReservationValidationService, ReservationValidationService>();
+            services.AddSignalR();
 
             //business services
             services.AddScoped<IEquipmentTypeService, EquipmentTypeService>();
