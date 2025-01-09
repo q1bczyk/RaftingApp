@@ -56,7 +56,7 @@ namespace Project.Core.Services.BusinessService
 
             await _notificationHub.Clients
                     .Group("admin")
-                    .SendAsync("ChangeOrderStatusNotification", mappedReservation);
+                    .SendAsync("NewNotification", mappedReservation);
 
             return mappedReservation;
         }

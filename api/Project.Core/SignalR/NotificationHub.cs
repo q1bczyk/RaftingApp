@@ -5,9 +5,9 @@ namespace Project.Core.SignalR
 {
     public class NotificationHub : Hub
     {
-        public async Task JoinGroup(string connectionId)
+        public async Task JoinGroup()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, connectionId);
+            await Groups.AddToGroupAsync(Context.ConnectionId, "admin");
         }
         public async Task NewReservationNotification(string connectionId, GetReservationDTO getReservationDTO)
         {

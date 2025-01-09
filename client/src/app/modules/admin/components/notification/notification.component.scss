@@ -1,0 +1,28 @@
+.notification-box{
+    width: 300px;
+    position: absolute;
+    top: 54px;
+    right: 0;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 6px;
+    z-index: 1;
+    background-color: #f7f7f7;
+
+    .partial-data{
+        padding: 10px 0;
+
+        h5{
+            font-size: 16px;
+        }
+
+        >div{
+            >div{
+                color: gray;
+                font-weight: 300;
+                font-size: 12px;
+            }
+        }
+    }
+}

@@ -11,11 +11,28 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 
     i{
         cursor: pointer;
         right: 20px;
         top: 20px;
         color: var(--orange-500); 
+    }
+
+    .notification-count{
+        position: absolute;
+        bottom: -4px;
+        right: 0;
+        background-color: red;
+        width: 18px;
+        height: 18px;
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 500;
+        color: white;
     }
 }

@@ -5,6 +5,7 @@ import { HeaderComponent } from "./components/header/header.component";
 import { NavigationService } from './services/ui/navigation.service';
 import { CommonModule } from '@angular/common';
 import { FormModalComponent } from "./components/form-modal/form-modal.component";
+import { NotificationService } from './services/ui/notification.service';
 
 @Component({
   selector: 'app-admin',

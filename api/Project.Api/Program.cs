@@ -22,9 +22,10 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseCors(builder => builder
-    .AllowAnyOrigin()
+    .WithOrigins("http://localhost:4200")
     .AllowAnyHeader()
-    .AllowAnyMethod());
+    .AllowAnyMethod()
+    .AllowCredentials());
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
