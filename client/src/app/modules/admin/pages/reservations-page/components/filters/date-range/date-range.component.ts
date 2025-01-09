@@ -15,7 +15,7 @@ export class DateRangeComponent {
   calendar = inject(NgbCalendar);
   formatter = inject(NgbDateParserFormatter);
 
-  constructor(private filterState : ReservationFilterState){}
+  constructor(private filterState: ReservationFilterState) { }
 
   hoveredDate: NgbDate | null = null;
   fromDate: NgbDate | null = this.convertDateToNgbDate(this.filterState.getActiveFilters().specificDate);
@@ -63,13 +63,18 @@ export class DateRangeComponent {
     return parsed && this.calendar.isValid(NgbDate.from(parsed)) ? NgbDate.from(parsed) : currentValue;
   }
 
+  resetDates(): void {
+    this.fromDate = null;
+    this.toDate = null;
+  }
+
   private convertNgbDateToDate(ngbDate: NgbDate | null): Date | null {
-    if (!ngbDate) return null; 
+    if (!ngbDate) return null;
     return new Date(Date.UTC(ngbDate.year, ngbDate.month - 1, ngbDate.day)); // Użyj Date.UTC
-}
+  }
 
   private convertDateToNgbDate(date: Date | null | undefined): NgbDate | null {
-    if (!date) return null; 
+    if (!date) return null;
     return new NgbDate(date.getFullYear(), date.getMonth() + 1, date.getDate()); // Miesiące są indeksowane od 0
   }
 
