@@ -23,6 +23,7 @@ export class DateRangeComponent {
 
   onDateSelection(date: NgbDate) {
     if (!this.fromDate && !this.toDate) {
+      this.fromDate = date;
       this.filterState.setSpecificDate(this.convertNgbDateToDate(this.fromDate))
     } else if (this.fromDate && !this.toDate && date && date.after(this.fromDate)) {
       this.toDate = date;

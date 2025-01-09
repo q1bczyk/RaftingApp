@@ -5,11 +5,14 @@ import { SingleReservationDetailsType } from '../../../../../shared/types/api/re
 import { mapFiltersToQueryParams } from '../../../../helpers/filter-mapper';
 import { ReservationFilterState } from '../filters/reservation-filter-state.service';
 import { Subscription } from 'rxjs';
+import { ReservationItemComponent } from "./reservation-item/reservation-item.component";
+import { LoadingService } from '../../../../../shared/services/loading.service';
+import { NoDataComponent } from "../../../../../shared/ui/no-data/no-data.component";
 
 @Component({
   selector: 'app-reservation-table',
   standalone: true,
-  imports: [],
+  imports: [ReservationItemComponent, NoDataComponent],
   templateUrl: './reservation-table.component.html',
   styleUrl: './reservation-table.component.scss'
 })
@@ -18,8 +21,9 @@ export class ReservationTableComponent implements OnChanges, OnInit{
 
   constructor(
     private service : ReservationService,
-    private apiManager : ApiManager<SingleReservationDetailsType[]>,
-    private filterState : ReservationFilterState
+    public apiManager : ApiManager<SingleReservationDetailsType[]>,
+    private filterState : ReservationFilterState,
+    public loadingService : LoadingService
     ){
       
   }
@@ -35,7 +39,7 @@ export class ReservationTableComponent implements OnChanges, OnInit{
 
   fetchData() : void{
     const filterUrl : string = mapFiltersToQueryParams(this.filterState.getActiveFilters());
-    this.apiManager.exeApiRequest(this.service.fetchFilteredReservations(filterUrl), () => console.log(this.apiManager.data()))
+    this.apiManager.exeApiRequest(this.service.fetchFilteredReservations(filterUrl))
   }
 
 }

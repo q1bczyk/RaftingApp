@@ -4,6 +4,12 @@ import { BaseReservationType } from "./base-reservation.type";
 
 export interface SingleReservationDetailsType extends BaseReservationType{
     id : string,
-    reservationEquipment : GetEquipmentType[]
+    reservationEquipment : ReservationEquipmentType[]
     payment : ConfirmPaymentType
+}
+
+export interface ReservationEquipmentType{
+    quantity : number,
+    participants : number,
+    equipmentType : GetEquipmentType;
 }

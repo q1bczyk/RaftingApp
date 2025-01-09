@@ -1,0 +1,47 @@
+<div class="col-12 row border-top reservation-item d-flex py-3" [ngClass]="{'bg-light': index % 2 !== 0}">
+    <div class="row justify-content-center">
+        <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+            <div>Id rezerwacji:</div>
+            <h5>{{reservation.id}}</h5>
+        </div>
+        <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+            <div>Klient:</div>
+            <h5>{{reservation.bookerName + " " + reservation.bookerLastname}}</h5>
+        </div>
+        <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+            <div>Data spływu:</div>
+            <h5>{{reservation.executionDate | date: dateFormat}}</h5>
+        </div>
+        <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+            <div>Godzina spływu:</div>
+            <h5>{{reservation.executionDate | date: "H:mm" : 'UTC'}}</h5>
+        </div>
+        <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+            <div>Cena rezerwacji:</div>
+            <h5>{{reservation.bookPrice}} PLN</h5>
+        </div>
+        <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+            <div>Ilość osób</div>
+            <h5>{{reservation.participantNumber}}</h5>
+        </div>
+    </div>
+    <div>
+        @for (reservationEquipment of reservation.reservationEquipment; track $index) {
+            <div class="d-flex justify-content-between align-items-center py-1 border-top px-3" [class.border-top-0]="$index === 0">
+                <div class="d-flex align-items-center">
+                    <div class="me-4">{{reservationEquipment.quantity}}x</div>
+                    {{reservationEquipment.equipmentType.typeName}}
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="d-flex text-secondary align-items-center fs-5 me-3">
+                        <i class="bi bi-person-check me-1"></i>
+                        {{reservationEquipment.participants}}
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="partial-data col-12 col-sm-6 col-lg-3 px-3">
+        <button class="btn btn-danger">Usuń rezerwacje</button>
+    </div>
+</div>

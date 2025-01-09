@@ -1,0 +1,14 @@
+.reservation-item{
+    h5{
+        font-size: 16px;
+    }
+
+    .partial-data{
+        padding: 10px 0;
+        >div{
+            color: gray;
+            font-weight: 300;
+            font-size: 12px;
+        }
+    }
+}
