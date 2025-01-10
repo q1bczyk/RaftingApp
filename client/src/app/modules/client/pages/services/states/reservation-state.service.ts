@@ -123,4 +123,9 @@ export class ReservationStateService {
         })
     }
 
+    stateReset() : void{
+        this.setStep(1);
+        this.reservationData.set(reservationInitialState);
+    }
+
 }

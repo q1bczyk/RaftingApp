@@ -81,6 +81,7 @@ export class BlikComponent {
         take(1)
       )
       .subscribe((data: {id : string}) => {
+        this.reservationStateService.stateReset();
         this.router.navigate([`/reservation/${data.id}`])
       });
   }
