@@ -31,6 +31,7 @@ export class HeaderComponent {
 
   logout(): void {
     this.cookiesService.delete('token', 'admin');
+    localStorage.removeItem('role');
     this.router.navigate(['/auth/login']);
   }
 

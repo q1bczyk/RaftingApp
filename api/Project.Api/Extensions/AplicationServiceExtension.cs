@@ -15,9 +15,8 @@ namespace Project.Api.Extensions
             services.AddDbContext<DataContext>(opt => {
                 opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
-            
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<EmailConfig>(config.GetSection("EmailConfig"));
             services.Configure<AzureBlobConfig>(config.GetSection("AzureBlobConfig"));
             services.Configure<StripeConfig>(config.GetSection("StripeConfig"));

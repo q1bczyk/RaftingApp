@@ -33,4 +33,5 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHub<NotificationHub>("hubs/notification");
 
+await app.SeedDataAsync();
 app.Run();

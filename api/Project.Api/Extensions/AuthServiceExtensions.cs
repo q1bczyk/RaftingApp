@@ -18,6 +18,7 @@ namespace Project.Api.Extensions
                 opt.SignIn.RequireConfirmedEmail = true;
                 opt.User.AllowedUserNameCharacters = null;
             })
+            .AddRoles<IdentityRole<string>>()
             .AddEntityFrameworkStores<DataContext>()
             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider)
             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultEmailProvider);

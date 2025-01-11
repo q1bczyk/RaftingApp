@@ -4,5 +4,6 @@ namespace Project.Core.DTO.Auth
     {
         public string Id { get; set; }
         public string Token { get; set; }
+        public string Role { get; set; }
     }
 }
