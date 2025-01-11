@@ -14,8 +14,8 @@ namespace Project.Api.Controllers
             _authService = authService;
         }
 
-        [Authorize(Policy = "AdminOnly")] 
         [HttpPost("Register")]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult> Register(RegisterDTO registerDTO)
         {
             await _authService.Register(registerDTO);
