@@ -1,10 +1,8 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using Project.Core.DTO.ReservationsDTO;
 
 namespace Project.Core.SignalR
 {
-     [Authorize(Policy = "Users")] 
     public class NotificationHub : Hub
     {
         public async Task JoinGroup()
