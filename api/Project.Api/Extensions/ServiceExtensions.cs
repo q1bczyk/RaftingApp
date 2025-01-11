@@ -35,6 +35,7 @@ namespace Project.Api.Extensions
             services.AddScoped<IReservationService, ReservationService>();
             services.AddScoped<IReservationEquipmentService, ReservationEquipmentService>();
             services.AddScoped<ISettingsService, SettingsService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             //repositories
             services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
@@ -44,7 +45,6 @@ namespace Project.Api.Extensions
             services.AddScoped<IPaymentRepository, PaymentRepository>();
 
             var config = new MapperConfiguration(cfg => {
-                cfg.CreateMap<RegisterDTO, User>();
                 cfg.CreateMap<AddEquipmentTypeDTO, EquipmentType>();
                 cfg.CreateMap<EquipmentType, GetEquipmentTypeDTO>();
                 cfg.CreateMap<AddReservationDTO, Reservation>();
@@ -62,7 +62,6 @@ namespace Project.Api.Extensions
             IMapper mapper = config.CreateMapper();
 
             //mapper to model
-            services.AddSingleton<IBaseMapper<RegisterDTO, User>>(new BaseMapper<RegisterDTO, User>(mapper));
             services.AddSingleton<IBaseMapper<AddEquipmentTypeDTO, EquipmentType>>(new BaseMapper<AddEquipmentTypeDTO, EquipmentType>(mapper));
             services.AddSingleton<IBaseMapper<AddReservationDTO, Reservation>>(new BaseMapper<AddReservationDTO, Reservation>(mapper));
             services.AddSingleton<IBaseMapper<AddReservationEquipmentDTO, ReservationEquipment>>(new BaseMapper<AddReservationEquipmentDTO, ReservationEquipment>(mapper));

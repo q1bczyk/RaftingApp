@@ -14,14 +14,6 @@ namespace Project.Api.Controllers
             _authService = authService;
         }
 
-        [HttpPost("Register")]
-        [Authorize(Policy = "AdminOnly")] 
-        public async Task<ActionResult> Register(RegisterDTO registerDTO)
-        {
-            await _authService.Register(registerDTO);
-            return Ok(new SuccessResponseDTO("Account has been created. Confirmation link has been send on your email"));
-        }
-
         [HttpPost("Login")]
         public async Task<ActionResult<LoggedUserDTO>> Login(LoginDTO loginDTO)
         {
