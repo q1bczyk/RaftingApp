@@ -11,7 +11,8 @@ namespace Project.Api.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentityCore<User>(opt => {
+            services.AddIdentityCore<User>(opt =>
+            {
                 opt.Password.RequireNonAlphanumeric = true;
                 opt.Password.RequiredLength = 8;
                 opt.User.RequireUniqueEmail = true;
@@ -22,7 +23,7 @@ namespace Project.Api.Extensions
             .AddEntityFrameworkStores<DataContext>()
             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider)
             .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultEmailProvider);
-        
+
             services.Configure<DataProtectionTokenProviderOptions>(options =>
             {
                 options.TokenLifespan = TimeSpan.FromHours(1);
@@ -33,12 +34,18 @@ namespace Project.Api.Extensions
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                  ValidateIssuerSigningKey = true,
-                  IssuerSigningKey = new SymmetricSecurityKey(Encoding
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding
                                 .UTF8.GetBytes(config["TokenKey"])),
-                  ValidateIssuer = false,
-                  ValidateAudience = false
+                    ValidateIssuer = false,
+                    ValidateAudience = false
                 };
+            });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("admin"));
+                options.AddPolicy("Users", policy => policy.RequireRole("admin", "employee"));
             });
 
             return services;

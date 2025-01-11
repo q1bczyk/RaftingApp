@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTO.SettingsDTO;
 using Project.Core.Interfaces.IServices.IBusinessServices;
@@ -21,6 +22,7 @@ namespace Project.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult<GetSettingsDTO>> UpdateSettings(string id, BaseSettingsDTO newSettings)
         {
             var settings = await _settingsService.Update(newSettings, id);

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTO.BaseDTO;
 using Project.Core.DTO.EquipmentDTO;
@@ -16,6 +17,7 @@ namespace Project.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "Users")] 
         public async Task<ActionResult<List<GetReservationDTO>>> GetAllReservations(DateTime? startDate = null, DateTime? endDate = null, DateTime? specificDate = null, string lastNamePartial = null, string reservationId = null)
         {
             return Ok(await _service.GetFilteredData(startDate, endDate, specificDate, lastNamePartial, reservationId));
@@ -36,6 +38,7 @@ namespace Project.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "Users")] 
         public async Task<ActionResult<SuccessResponseDTO>> DeleteReservation(string id)
         {
             await _service.Delete(id);

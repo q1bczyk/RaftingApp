@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTO.BaseDTO;
 using Project.Core.DTO.EquipmentDTO;
@@ -18,6 +19,7 @@ namespace Project.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult<GetEquipmentTypeDTO>> AddEquipmentType(AddEquipmentTypeDTO addEquipmentTypeDTO)
         {
             var newEquipmentType = await _service.Create(addEquipmentTypeDTO);
@@ -25,6 +27,7 @@ namespace Project.Api.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult<SuccessResponseDTO>> DeleteEquipmentType(string id)
         {
             await _service.Delete(id);
@@ -32,6 +35,7 @@ namespace Project.Api.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult<GetEquipmentTypeDTO>> UpdateEquipmentType(AddEquipmentTypeDTO equipmentTypeDTO, string id)
         {
             var updatedData = await _service.Update(equipmentTypeDTO, id);
@@ -39,12 +43,14 @@ namespace Project.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult<GetEquipmentTypeDTO>> GetAllEquipment()
         {
             return Ok(await _service.GetAll());
         }
 
         [HttpGet("{id}")]
+        [Authorize(Policy = "AdminOnly")] 
         public async Task<ActionResult<GetEquipmentTypeDTO>> GetSingle(string id)
         {
             return Ok(await _service.GetById(id));

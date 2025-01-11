@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Project.Core.DTO.Auth;
 using Project.Core.DTO.BaseDTO;
@@ -13,6 +14,7 @@ namespace Project.Api.Controllers
             _authService = authService;
         }
 
+        [Authorize(Policy = "AdminOnly")] 
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterDTO registerDTO)
         {
