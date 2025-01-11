@@ -13,6 +13,7 @@ import { RegisterType } from "../types/register.type";
 import { isPlatformBrowser } from "@angular/common";
 import { CookieService } from "ngx-cookie-service";
 import { isTokenExpired } from "../helpers/tokenValidator";
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
     providedIn: 'root'
@@ -74,4 +75,13 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
         return false;
     }
 
+    isAdmin() : boolean{
+        if (isPlatformBrowser(this.platformId)) {
+            const token = this.cookiesService.get('token');
+            if(!token) return false; 
+            const decodedToken: any = jwtDecode(token); 
+            return decodedToken.role === 'admin'; 
+        }
+        return false;
+    }
 }

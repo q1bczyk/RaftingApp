@@ -44,7 +44,6 @@ export class LoginComponent extends BaseAuthComponent<LoggedInUserType, LoginTyp
 
     if (loggedUser && loggedUser.token){
       this.cookiesService.set('token', loggedUser.token)
-      localStorage.setItem('role', JSON.stringify(loggedUser?.role));
       this.router.navigate(['/admin']);
     }
     

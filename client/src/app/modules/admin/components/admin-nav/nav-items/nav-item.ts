@@ -1,6 +1,6 @@
 import { NavItemType } from "../../../types/ui/nav-item.type";
 
-export const navItems : NavItemType[] = [
+const navItems : NavItemType[] = [
     {
         icon : 'bi bi-bar-chart-line',
         label : 'Dashboard',
@@ -27,3 +27,8 @@ export const navItems : NavItemType[] = [
         path : 'settings',
     },
 ]
+
+export function getNav(isAdmin : boolean) : NavItemType[]{
+    if(isAdmin) return navItems;
+    return navItems.slice(0, 2);
+}

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuModule } from 'primeng/menu'; 
 import { NavItemType } from '../../types/ui/nav-item.type';
-import { navItems } from './nav-items/nav-item';
 import { LogoComponent } from "../../../shared/ui/logo/logo.component";
-import { NavigationService } from '../../services/ui/navigation.service';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../auth/services/auth.service';
+import { getNav } from './nav-items/nav-item';
+import { NavigationService } from '../../services/ui/navigation.service';
 
 @Component({
   selector: 'app-admin-nav',
@@ -15,10 +16,10 @@ import { CommonModule } from '@angular/common';
 })
 export class AdminNavComponent implements OnInit {
 
-  links : NavItemType[] = navItems; 
- 
-  constructor(public navigationService : NavigationService) { 
+  links : NavItemType[];
 
+  constructor(private authservice : AuthService, public navigationService : NavigationService){
+    this.links = getNav(authservice.isAdmin());
   }
 
   ngOnInit() {
