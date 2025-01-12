@@ -3,7 +3,7 @@ using Project.Core.DTO.Auth.Validation;
 
 namespace Project.Core.DTO.Auth
 {
-    public class SetNewPasswordDTO : ConfirmAccountDTO
+    public class SetPasswordDTO
     {
         [Required]
         [PasswordValidation]
@@ -11,5 +11,7 @@ namespace Project.Core.DTO.Auth
         [Required]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+        [Required]
+        public string UserId { get; set; }
     }
 }

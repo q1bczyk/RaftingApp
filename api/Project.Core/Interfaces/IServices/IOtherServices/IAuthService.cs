@@ -9,5 +9,6 @@ namespace Project.Core.Interfaces.IServices.IOtherServices
         Task ResendConfirmationToken(BaseAuthDTO confirmationDTO);
         Task PasswordReset(BaseAuthDTO passwordResetDTO);
         Task SetNewPassword(SetNewPasswordDTO setNewPasswordDTO);
+        Task SetPassword(SetPasswordDTO setPasswordDTO);
     }
 }

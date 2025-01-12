@@ -20,12 +20,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class NewPasswordComponent extends BaseAuthComponent<ApiSuccessResponse, NewPasswordType> implements OnInit{
 
-  private token : string = '';
-  private userId : string = '';
+  protected token : string = '';
+  protected userId : string = '';
   constructor(
     private loadingService: LoadingService,
     private route : ActivatedRoute,
-    private router : Router,
+    protected router : Router,
     authService : AuthService
   ){
     super(authService, new ApiManager<ApiSuccessResponse>(loadingService), newPasswordForm);
@@ -44,6 +44,21 @@ export class NewPasswordComponent extends BaseAuthComponent<ApiSuccessResponse, 
   }
 
   override onFormSubmit(form: FormGroup) : void {
+    this.apiManager.exeApiRequest(this.authService.setNewPassword(this.setData(form)), () => this.onChangePasswordSuccess());
+  }
+
+  protected onChangePasswordSuccess(){
+    this.router.navigate(['auth/login']);
+  }
+
+  private decodeToken(encodedToken: string): string {
+    let decodedToken = decodeURIComponent(encodedToken);
+    decodedToken = decodeURIComponent(decodedToken);
+    decodedToken = decodedToken.replaceAll(' ', '+');
+    return decodedToken;
+  }
+
+  protected setData(form: FormGroup) : NewPasswordType{
     const mappedForm : {password : string, confirmPassword : string} = this.convertForm(form)
     const newPasswordData : NewPasswordType = {
       userId : this.userId,
@@ -51,18 +66,7 @@ export class NewPasswordComponent extends BaseAuthComponent<ApiSuccessResponse, 
       password : mappedForm.password,
       confirmPassword : mappedForm.confirmPassword
     }
-    this.apiManager.exeApiRequest(this.authService.setNewPassword(newPasswordData), () => this.onChangePasswordSuccess());
-  }
-
-  onChangePasswordSuccess(){
-    this.router.navigate(['auth/login']);
-  }
-
-  decodeToken(encodedToken: string): string {
-    let decodedToken = decodeURIComponent(encodedToken);
-    decodedToken = decodeURIComponent(decodedToken);
-    decodedToken = decodedToken.replaceAll(' ', '+');
-    return decodedToken;
+    return newPasswordData;
   }
 
 }

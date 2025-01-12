@@ -18,6 +18,10 @@ export const authRoutes: Routes = [
                 path: 'new-password', 
                 loadComponent: () => import('./pages/new-password/new-password.component').then(m => m.NewPasswordComponent)
             },
+            {
+                path: 'confirm-account', 
+                loadComponent: () => import('./pages/confrim-account/confrim-account.component').then(m => m.ConfrimAccountComponent)
+            },
         ]
     },
    

@@ -14,6 +14,7 @@ import { isPlatformBrowser } from "@angular/common";
 import { CookieService } from "ngx-cookie-service";
 import { isTokenExpired } from "../helpers/tokenValidator";
 import { jwtDecode } from "jwt-decode";
+import { SetPasswordType } from "../types/set-password.type";
 
 @Injectable({
     providedIn: 'root'
@@ -29,10 +30,15 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
     {
         super(http, 'auth');
     }
-
-    register(data: RegisterType): Observable<ApiSuccessResponse> {
-        throw new Error("Method not implemented.");
+    setPassword(data: SetPasswordType): Observable<ApiSuccessResponse> {
+        return this.http.post<ApiSuccessResponse>(`${this.url}/SetPassword`, data)
+        .pipe(
+            map(res => {
+                return res;
+            })
+        )
     }
+
     login(data: LoginType): Observable<LoggedInUserType> {
         return this.http.post<LoggedInUserType>(`${this.url}/login`, data)
             .pipe(
@@ -43,7 +49,12 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
     }
     
     confirmAccount(data: ConfirmAccountType): Observable<ApiSuccessResponse> {
-        throw new Error("Method not implemented.");
+        return this.http.post<ApiSuccessResponse>(`${this.url}/confirmAccount`, data)
+        .pipe(
+            map(res => {
+                return res;
+            })
+        )
     }
 
     passwordReset(data: BaseAuthType): Observable<ApiSuccessResponse> {
@@ -54,6 +65,7 @@ export class AuthService extends BaseApiService implements AuthServiceInterface
                 })
             )
     }
+
     resendConfirmationToken(data: BaseAuthType): Observable<ApiSuccessResponse> {
         throw new Error("Method not implemented.");
     }

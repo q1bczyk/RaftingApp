@@ -48,5 +48,12 @@ namespace Project.Api.Controllers
             await _authService.SetNewPassword(setNewPasswordDTO);
             return Ok(new SuccessResponseDTO("Password has been changed"));
         }
+
+        [HttpPost("SetPassword")]
+        public async Task<ActionResult> SetPassword(SetPasswordDTO setPasswordDTO)
+        {
+            await _authService.SetPassword(setPasswordDTO);
+            return Ok(new SuccessResponseDTO("Password has been created"));
+        }
     }
 }

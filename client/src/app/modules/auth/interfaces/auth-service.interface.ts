@@ -6,13 +6,14 @@ import { LoggedInUserType } from "../types/logged-in-user.type";
 import { ConfirmAccountType } from "../types/confirm-account.type";
 import { BaseAuthType } from "../types/base-auth.type";
 import { NewPasswordType } from "../types/new-password.type";
+import { SetPasswordType } from "../types/set-password.type";
 
 export interface AuthServiceInterface{
-    register(data : RegisterType) : Observable<ApiSuccessResponse>
-    login(data : LoginType) : Observable<LoggedInUserType>
-    confirmAccount(data : ConfirmAccountType) : Observable<ApiSuccessResponse>
-    passwordReset(data : BaseAuthType) : Observable<ApiSuccessResponse>
-    resendConfirmationToken(data : BaseAuthType) : Observable<ApiSuccessResponse>
-    setNewPassword(data : NewPasswordType) : Observable<ApiSuccessResponse> 
-    isAuthenticated(): boolean 
+    login(data : LoginType) : Observable<LoggedInUserType>;
+    confirmAccount(data : ConfirmAccountType) : Observable<ApiSuccessResponse>;
+    passwordReset(data : BaseAuthType) : Observable<ApiSuccessResponse>;
+    resendConfirmationToken(data : BaseAuthType) : Observable<ApiSuccessResponse>;
+    setNewPassword(data : NewPasswordType) : Observable<ApiSuccessResponse>; 
+    isAuthenticated(): boolean;
+    setPassword(data : SetPasswordType) : Observable<ApiSuccessResponse>;
 }

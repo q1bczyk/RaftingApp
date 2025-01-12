@@ -26,12 +26,10 @@ namespace Project.Core.Services.OtherServices
                 throw new ApiControlledException("Account is already confirmed", 400, "Account is already confirmed");
 
             var result = await _userManager.ConfirmEmailAsync(user, confirmAccountDTO.Token);
+
             if(!result.Succeeded)
                 throw new ApiControlledException("Account activation failed", 400, string.Join(", ", result.Errors.Select(e => e.Description)));
 
-            var passwordResult = await _userManager.AddPasswordAsync(user, confirmAccountDTO.Password);
-            if(!passwordResult.Succeeded)
-                throw new ApiControlledException("Account activation failed", 400, string.Join(", ", passwordResult.Errors.Select(e => e.Description)));
         }
 
         public async Task<LoggedUserDTO> Login(LoginDTO loginDTO)
@@ -79,6 +77,15 @@ namespace Project.Core.Services.OtherServices
             if(!result.Succeeded)
                 throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
 
+        }
+
+        public async Task SetPassword(SetPasswordDTO setPasswordDTO)
+        {
+            var user = await GetUserById(setPasswordDTO.UserId);
+            var result = await _userManager.AddPasswordAsync(user, setPasswordDTO.Password);
+
+            if(!result.Succeeded)
+                throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
         }
 
         private async Task<User> GetUserByEmail(string email)
