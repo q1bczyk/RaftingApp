@@ -29,7 +29,7 @@ namespace Project.Core.Services.BusinessService
             if (!result.Succeeded)
                 throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
 
-            string role = accountDTO.IsAdmin ? "admin" : "employee"; 
+            string role = accountDTO.IsAdmin ? "admin" : "employee";
             var roleResult = await _userManager.AddToRoleAsync(newUser, role);
 
             if (!roleResult.Succeeded)
@@ -39,14 +39,44 @@ namespace Project.Core.Services.BusinessService
             await _mailService.SendConfirmToken(newUser.Email, token, newUser.Id);
         }
 
-        public Task DeleteAccount(string id)
+        public async Task DeleteAccount(string email)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(email);
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            if (userRoles.FirstOrDefault() == "admin")
+            {
+                int adminCount = 0; 
+                var users = _userManager.Users.ToList();
+                foreach (var item in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(item);
+                    if(roles.FirstOrDefault() == "admin") adminCount++;
+                }
+                if(adminCount <= 1)
+                    throw new ApiControlledException("Błąd usuwania konta", 409, "Nie można usunąc ostatniego administratora!");
+            }
+
+            await _userManager.DeleteAsync(user);
         }
 
-        public Task<List<GetAccountDTO>> GetAccounts()
+        public async Task<List<GetAccountDTO>> GetAccounts()
         {
-            throw new NotImplementedException();
+            var users = _userManager.Users.ToList();
+            var usersWithRoles = new List<GetAccountDTO>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                usersWithRoles.Add(new GetAccountDTO
+                {
+                    Email = user.Email,
+                    IsAdmin = roles.FirstOrDefault() == "admin",
+                    IsAccountActive = user.EmailConfirmed,
+                });
+            }
+
+            return usersWithRoles;
         }
 
         public Task RoleEdit(string id, bool isAdmin)

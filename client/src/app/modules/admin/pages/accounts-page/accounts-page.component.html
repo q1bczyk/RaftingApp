@@ -1,3 +1,5 @@
 <app-page-wrapper [activePageIndex]="3">
-    <p>accounts-page works!</p>
+    @for(account of apiManager.data(); track $index) {
+        <app-account-item [account]="account" [index]="$index" (deleteEvent)="deleteData($event)"/>
+    }
 </app-page-wrapper>

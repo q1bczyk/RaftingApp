@@ -1,0 +1,15 @@
+<div class="col-12 border-top reservation-item d-flex py-3 justify-content-between" [ngClass]="{'bg-light': index % 2 !== 0}">
+    <div class="d-flex align-items-center">
+        <div>{{account.email}}</div>
+        <div class="d-flex align-items-center ms-3 role" [ngClass]="{'bg-secondary': !account.isAdmin}">
+            {{account.isAdmin ? 'admin' : 'pracownik'}}
+        </div>
+        <div class="d-flex align-items-center ms-3 status">
+            <div class="dot me-1" [ngClass]="{'bg-danger': !account.isAccountActive}"></div>
+            <div class="text-secondary">{{account.isAccountActive ? 'aktywne' : 'nieaktywne'}}</div>
+        </div>
+    </div>
+    <div>
+        <button class="btn btn-danger" (click)="onDelete(account.email)"><i class="bi bi-trash3"></i></button>
+    </div>
+</div>

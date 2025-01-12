@@ -22,5 +22,19 @@ namespace Project.Api.Controllers
             await _accountService.CreateAccount(accountDTO);
             return Ok(new SuccessResponseDTO("Konto założone prawidłowo!"));
         }
+
+        [HttpGet]
+        public async Task<ActionResult<List<GetAccountDTO>>> GetAccounts()
+        {
+            var accounts = await _accountService.GetAccounts();
+            return Ok(accounts);
+        }
+
+        [HttpDelete("{email}")]
+        public async Task<ActionResult<List<GetAccountDTO>>> DeleteAccount(string email)
+        {
+            await _accountService.DeleteAccount(email);
+            return Ok("Pomyślnie usunięto konto");
+        }
     }
 }
