@@ -1,0 +1,5 @@
+.checkbox{
+    input[type="checkbox"]:checked {
+        accent-color: var(--orange-500);
+    }
+}

@@ -20,7 +20,7 @@ export class BaseReadDirective<TGet, TService extends CrudService<TGet, any, any
     public apiManager : ApiManager<TGet[]>, 
     public confirmationModalService : ConfirmationModalService,
     protected apiDeleteManager : ApiManager<ApiSuccessResponse>,
-    private toastService : ToastService,
+    protected toastService : ToastService,
     public loadingService : LoadingService
     )
     {}

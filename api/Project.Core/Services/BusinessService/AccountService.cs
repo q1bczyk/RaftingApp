@@ -21,9 +21,13 @@ namespace Project.Core.Services.BusinessService
 
         public async Task CreateAccount(BaseAccountDTO accountDTO)
         {
+            var user = await _userManager.FindByEmailAsync(accountDTO.Email);
+            if (user != null)
+                throw new ApiControlledException("Błąd dodawania konta", 409, "Konto o tym emailu już istnieje");
+                
             var newUser = new User();
-            newUser.UserName = accountDTO.Email.ToLower();
-            newUser.Email = accountDTO.Email.ToLower();
+            newUser.UserName = accountDTO.Email;
+            newUser.Email = accountDTO.Email;
 
             var result = await _userManager.CreateAsync(newUser);
             if (!result.Succeeded)

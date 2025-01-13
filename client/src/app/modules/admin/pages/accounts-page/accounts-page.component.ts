@@ -10,16 +10,17 @@ import { ApiSuccessResponse } from '../../../core/types/api-success-response.typ
 import { ToastService } from '../../../shared/services/ui/toasts/toast.service';
 import { LoadingService } from '../../../shared/services/loading.service';
 import { AccountItemComponent } from "./components/account-item/account-item.component";
+import { AddAccountComponent } from "./components/add-account/add-account.component";
+import { FormModalComponent } from '../../components/form-modal/form-modal.component';
 
 @Component({
   selector: 'app-accounts-page',
   standalone: true,
-  imports: [PageWrapperComponent, AccountItemComponent],
+  imports: [PageWrapperComponent, AccountItemComponent, AddAccountComponent, FormModalComponent],
   templateUrl: './accounts-page.component.html',
   styleUrl: './accounts-page.component.scss'
 })
 export class AccountsPageComponent extends BaseReadDirective<GetAccountType, AccountService>{
-  
   constructor(
     modalFormSerivce : ModalFormService,
     service : AccountService, 
@@ -32,6 +33,18 @@ export class AccountsPageComponent extends BaseReadDirective<GetAccountType, Acc
   }
 
   deleteData(email : string) : void{
-    this.confirmationModalService.openModal(() => this.deleteApiRequest(email));
+    this.confirmationModalService.openModal(() => this.deleteAccount(email));
+  }
+
+  private deleteAccount(email : string) : void{
+    this.service.delete(email).pipe(
+    ).subscribe(res => {
+        this.toastService.showToast("Pomyślnie usunięto konto", 'success');
+        this.apiManager.exeApiRequest(this.service.fetchAll());
+    });
+  }
+
+  onSuccessAdded() : void{
+    this.apiManager.exeApiRequest(this.service.fetchAll())
   }
 }

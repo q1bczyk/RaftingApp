@@ -34,7 +34,7 @@ namespace Project.Api.Controllers
         public async Task<ActionResult<List<GetAccountDTO>>> DeleteAccount(string email)
         {
             await _accountService.DeleteAccount(email);
-            return Ok("Pomyślnie usunięto konto");
+            return Ok(new SuccessResponseDTO("Konto usunięte prawidłowo"));
         }
     }
 }

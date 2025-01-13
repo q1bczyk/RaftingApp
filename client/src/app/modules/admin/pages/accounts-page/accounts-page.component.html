@@ -1,4 +1,12 @@
 <app-page-wrapper [activePageIndex]="3">
+    <div class="col-12 d-flex justify-content-end mb-3">
+        <button class="btn btn-primary" (click)="openModal()">Dodaj konto</button>
+        @if(modalFormService.isModalOpen()){
+            <app-form-modal>
+                <app-add-account (addAccountEvent)="onSuccessAdded()"/>
+            </app-form-modal>
+        }
+    </div>
     @for(account of apiManager.data(); track $index) {
         <app-account-item [account]="account" [index]="$index" (deleteEvent)="deleteData($event)"/>
     }

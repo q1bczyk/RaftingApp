@@ -1,0 +1,41 @@
+<h4 class="mb-3">Dodaj konto</h4>
+<form [formGroup]="addAccountForm" (ngSubmit)="onSubmit()">
+    <div class="d-flex flex-column mb-2">
+      <label for="email" class="mb-2">Email:</label>
+      <input pInputText id="email" type="email" formControlName="email" placeholder="example@mail.com" />
+      <div *ngIf="addAccountForm.get('email')?.invalid && addAccountForm.get('email')?.touched">
+        <small id="username-help" class="text-danger">
+            <i class="bi bi-info-circle-fill me-2"></i>
+            Wprowadź poprawny email
+        </small>
+      </div>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" formControlName="isAdmin" />
+        Administrator
+      </label>
+    </div>
+    <div class="mt-4 d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary me-2" [disabled]="addAccountForm.invalid || loadingService.isLoading()" (click)="onSubmit()">
+          @if (loadingService.isLoading()){
+            <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
+                <span class="sr-only"></span>
+            </div>
+            }
+            @else {
+            Dodaj
+            }
+        </button>
+        <button type="submit" class="btn btn-danger text-uppercase" (click)="modalService.closeModal()" [disabled]="loadingService.isLoading()">
+          @if (loadingService.isLoading()){
+            <div class="spinner-border spinner-border-sm text-secondary text-center" role="status">
+                <span class="sr-only"></span>
+            </div>
+            }
+            @else {
+            Anuluj
+            }
+        </button>
+    </div>
+</form>

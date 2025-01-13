@@ -1,6 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { ErrorService } from "../../shared/services/error.service";
 import { Observable, catchError } from "rxjs";
 import { ApiErrorResponse } from "../types/api-error-response.type";
 import { LoadingService } from "../../shared/services/loading.service";
