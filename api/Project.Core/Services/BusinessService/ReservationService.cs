@@ -18,7 +18,6 @@ namespace Project.Core.Services.BusinessService
     IReservationRepository
     >, IReservationService
     {
-        private readonly IReservationEquipmentService _reservationEquipmentService;
         private readonly IMailService _mailService;
         private readonly IPaymentRepository _paymentRepository;
         private readonly IBaseMapper<PaymentConfirmationDTO, Payment> _paymentMapper;
@@ -26,9 +25,8 @@ namespace Project.Core.Services.BusinessService
         private readonly IStripeService _paymentService;
         IHubContext<NotificationHub> _notificationHub;
         
-        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IReservationEquipmentService reservationEquipmentService, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService, IStripeService paymentService, IHubContext<NotificationHub> notificationHub) : base(repository, toModelMapper, toDTOMapper)
+        public ReservationService(IReservationRepository repository, IBaseMapper<AddReservationDTO, Reservation> toModelMapper, IBaseMapper<Reservation, GetReservationDTO> toDTOMapper, IMailService mailService, IPaymentRepository paymentRepository, IBaseMapper<PaymentConfirmationDTO, Payment> paymentMapper, IReservationValidationService reservationValidationService, IStripeService paymentService, IHubContext<NotificationHub> notificationHub) : base(repository, toModelMapper, toDTOMapper)
         {
-            _reservationEquipmentService = reservationEquipmentService;
             _mailService = mailService;
             _paymentRepository = paymentRepository;
             _paymentMapper = paymentMapper;
@@ -46,8 +44,6 @@ namespace Project.Core.Services.BusinessService
             var payment = _paymentMapper.MapToModel(createDTO.Payment);
             payment.ReservationId = addedModel.Id;
             await _paymentRepository.Create(payment);
-
-            await _reservationEquipmentService.AddMany(createDTO.ReservationEquipment, addedModel.Id);
 
             string formattedDate = createDTO.ExecutionDate.ToString("yyyy-MM-dd");
             await _mailService.SendBookingConfirmation(createDTO.BookerEmail, formattedDate, createDTO.ParticipantNumber, addedModel.Id);

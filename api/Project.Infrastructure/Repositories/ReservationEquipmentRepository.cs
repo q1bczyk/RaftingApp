@@ -17,7 +17,6 @@ namespace Project.Infrastructure.Repositories
         public async Task<List<EquipmentType>> GetAvaiableEquipmentAsync(ReservationDetailsDTO reservationDetailsDTO)
         {
             var reservationDateUtc = reservationDetailsDTO.Date.ToUniversalTime();
-            Console.WriteLine("DATA: " + reservationDateUtc);
             var systemSettings = await _context.Settings.FirstOrDefaultAsync();
 
             var allEquipment = await _context.EquipmentTypes

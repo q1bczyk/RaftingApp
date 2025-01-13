@@ -1,3 +1,4 @@
+using System.Security.Principal;
 using api;
 using Project.Core.DTO.EquipmentDTO;
 using Project.Core.DTO.ReservationEquipmentDTO;
@@ -21,36 +22,6 @@ namespace Project.Core.Services.BusinessService
             _repository = repository;
             _equipmentTypeMapper = equipmentTypeMapper;
             _fileService = fileService;
-        }
-
-        public async Task AddMany(List<AddReservationEquipmentDTO> addReservationEquipmentDTOs, string reservationId)
-        {
-            var newReservations = new List<ReservationEquipment>();
-
-            foreach (var reservation in addReservationEquipmentDTOs)
-            {
-                var dataToAdd = new ReservationEquipment
-                {
-                    ReservationId = reservationId,
-                    EquipmentTypeId = reservation.EquipmentTypeId,
-                    Quantity = reservation.Quantity,
-                    Participants = reservation.Participants,
-                };
-
-                newReservations.Add(dataToAdd);
-            }
-
-            await _repository.CreateRange(newReservations);
-        }
-
-        public async Task DeleteAll(string reservationId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task DeleteSingle(string reservationId, string equipmentId)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<List<GetEquipmentTypeDTO>> FetchAvaiableEquipment(ReservationDetailsDTO reservationDetailsDTO)
