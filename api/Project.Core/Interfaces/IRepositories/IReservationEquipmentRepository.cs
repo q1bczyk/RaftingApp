@@ -6,5 +6,6 @@ namespace Project.Core.Interfaces.IRepositories
     public interface IReservationEquipmentRepository : IBaseRepository<ReservationEquipment>
     {
         Task<List<EquipmentType>> GetAvaiableEquipmentAsync(ReservationDetailsDTO reservationDetailsDTO);
+        Task<List<EquipmentType>> GetAvailableEquipmentByNow();
     }
 }

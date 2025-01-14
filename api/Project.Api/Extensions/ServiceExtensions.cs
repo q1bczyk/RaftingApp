@@ -8,6 +8,7 @@ using Project.Core.DTO.SettingsDTO;
 using Project.Core.Entities;
 using Project.Core.Interfaces.IMapper;
 using Project.Core.Interfaces.IRepositories;
+using Project.Core.Interfaces.IServices;
 using Project.Core.Interfaces.IServices.IBusinessServices;
 using Project.Core.Interfaces.IServices.IOtherServices;
 using Project.Core.Mapper;
@@ -36,6 +37,7 @@ namespace Project.Api.Extensions
             services.AddScoped<IReservationEquipmentService, ReservationEquipmentService>();
             services.AddScoped<ISettingsService, SettingsService>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             //repositories
             services.AddScoped<IEquipmentTypeRepository, EquipmentTypeRepository>();
