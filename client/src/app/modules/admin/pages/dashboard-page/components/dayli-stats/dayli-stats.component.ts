@@ -25,7 +25,7 @@ export class DayliStatsComponent {
         reservations : this.reservations.length,
         clients: this.reservations.reduce((total, reservation) => total + reservation.participantNumber, 0) || 0,
         price: this.reservations.reduce((total, reservation) => total + reservation.bookPrice, 0) || 0,
-        equipment: this.availableEquipment.reduce((total, equipment) => total + equipment.quantity, 0) || 0,
+        equipment: this.availableEquipment.reduce((total, equipment) => total + equipment.maxParticipants * equipment.quantity, 0) || 0,
       }
 
       return stats;

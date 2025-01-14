@@ -11,6 +11,6 @@ namespace Project.Core.Interfaces.IRepositories
             string lastNamePartial = null,
             string reservationId = null
         );
-        
+         public Task<List<Reservation>> GetTodayReservations();
     }
 }

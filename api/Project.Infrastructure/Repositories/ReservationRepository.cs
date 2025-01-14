@@ -65,5 +65,20 @@ namespace Project.Infrastructure.Repositories
 
             return reservation;
         }
+
+        public Task<List<Reservation>> GetTodayReservations()
+        {
+            var startDate = DateTime.Now.ToUniversalTime();
+            var endDate = startDate.Date.AddDays(1).AddTicks(-1).ToUniversalTime();
+
+            var reservations = _context.Reservations
+                .Include(r => r.Payment)
+                .Include(r => r.ReservationEquipment)
+                    .ThenInclude(re => re.EquipmentType)
+                .Where(r => r.ExecutionDate > startDate && r.ExecutionDate <= endDate)
+                .ToListAsync();
+
+            return reservations;
+        }
     }
 }

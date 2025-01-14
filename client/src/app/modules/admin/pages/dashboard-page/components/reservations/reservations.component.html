@@ -4,5 +4,11 @@
         @for (item of reservations; track $index) {
             <app-reservation-item [reservation]="item" [index]="$index" [showButton]="false"/>
         }
+        @empty {
+            <div class="col-12 d-flex flex-column align-items-center">
+                <i class="bi bi-calendar-x" style="font-size: 50px; color: var(--orange-500)"></i>
+                <div>Brak rezerwacji</div>
+            </div>
+        }
     </div>
 </div>

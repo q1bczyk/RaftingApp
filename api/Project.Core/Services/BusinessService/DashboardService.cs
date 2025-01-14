@@ -38,17 +38,13 @@ namespace Project.Core.Services.BusinessService
 
         private async Task<List<GetReservationDTO>> GetReservations()
         {
-            var startDate = DateTime.Now;
-            var endDate = startDate.Date.AddDays(1).AddTicks(-1);
-
-            var reservations = await this._reservationRepository.GetFilteredData(startDate.ToUniversalTime(), endDate.ToUniversalTime());
-
+            var reservations = await _reservationRepository.GetTodayReservations();
             return _reservationDTOMapper.MapToList(reservations);
         }
 
         private async Task<List<GetEquipmentTypeDTO>> GetEquipment()
         {
-            var equipment = await this._reservationEquipmentRepository.GetAvailableEquipmentByNow();
+            var equipment = await _reservationEquipmentRepository.GetAvailableEquipmentByNow();
             return _equipmentTypeMapper.MapToList(equipment);
         }
     }
