@@ -14,6 +14,7 @@ export class ReservationItemComponent {
   @Output() reservationDeleteEvent : EventEmitter<string> = new EventEmitter<string>
   @Input() reservation! : SingleReservationDetailsType;
   @Input() index! : number;
+  @Input() showButton : boolean = true;
   dateFormat : string = dateFormat;
 
   onDelete(id : string){

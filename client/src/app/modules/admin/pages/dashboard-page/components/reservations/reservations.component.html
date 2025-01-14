@@ -1,0 +1,8 @@
+<div class="rounded shadow p-5 dashboard-reservation">
+    <h5 class="mb-3">Pozostałe rezerwacje:</h5>
+    <div>
+        @for (item of reservations; track $index) {
+            <app-reservation-item [reservation]="item" [index]="$index" [showButton]="false"/>
+        }
+    </div>
+</div>

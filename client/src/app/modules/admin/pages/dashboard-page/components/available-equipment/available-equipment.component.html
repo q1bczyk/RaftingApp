@@ -1,0 +1,17 @@
+<div class="col-12 shadow rounded p-4" style="height: 100%;">
+    <h5>Wolny sprzęt:</h5>
+    @for (item of equipment; track $index){
+        <div class="d-flex justify-content-between align-items-center py-3 border-top" [class.border-top-0]="$index === 0">
+            <div class="d-flex align-items-center">
+                <div class="me-4">{{item.quantity}}x</div>
+                {{item.typeName}}
+            </div>
+        </div>
+    }
+    @empty {
+        <div class="col-12 d-flex flex-column align-items-center">
+            <i class="bi bi-x-circle" style="font-size: 50px; color: var(--orange-500)"></i>
+            <div>Brak wolnego sprzętu</div>
+        </div>
+    }
+</div>
