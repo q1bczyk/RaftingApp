@@ -58,7 +58,7 @@ namespace Project.Core.Services.BusinessService
                     if(roles.FirstOrDefault() == "admin") adminCount++;
                 }
                 if(adminCount <= 1)
-                    throw new ApiControlledException("Błąd usuwania konta", 409, "Nie można usunąc ostatniego administratora!");
+                    throw new ApiControlledException("Błąd usuwania konta", 409, "Nie można usunąć ostatniego administratora!");
             }
 
             await _userManager.DeleteAsync(user);

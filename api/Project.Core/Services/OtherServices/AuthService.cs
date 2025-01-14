@@ -20,43 +20,50 @@ namespace Project.Core.Services.OtherServices
         }
         public async Task ConfirmAccount(ConfirmAccountDTO confirmAccountDTO)
         {
-            var user = await GetUserById(confirmAccountDTO.UserId); 
+            var user = await GetUserById(confirmAccountDTO.UserId);
 
-            if(user.EmailConfirmed)
+            if (user.EmailConfirmed)
                 throw new ApiControlledException("Account is already confirmed", 400, "Account is already confirmed");
 
             var result = await _userManager.ConfirmEmailAsync(user, confirmAccountDTO.Token);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 throw new ApiControlledException("Account activation failed", 400, string.Join(", ", result.Errors.Select(e => e.Description)));
 
         }
 
         public async Task<LoggedUserDTO> Login(LoginDTO loginDTO)
         {
-            var user = await GetUserByEmail(loginDTO.Email);
-            
-            var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
-            if(!loginSuccess)
+            try
+            {
+                var user = await GetUserByEmail(loginDTO.Email);
+                var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
+                if (!loginSuccess)
+                    throw new ApiControlledException("Błędny email lub hasło", 401, "Błędny email lub hasło. Wprowadź poprawne dane");
+
+                if (!user.EmailConfirmed)
+                    throw new ApiControlledException("Konto nie jest potwierdzone", 401, "Sprawdź maila i potwierdź konto");
+
+                var token = await _tokenService.CreateToken(user);
+                var roles = await _userManager.GetRolesAsync(user);
+
+                var loggedUser = new LoggedUserDTO
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    Token = token,
+                    Role = roles.FirstOrDefault()
+                };
+
+                return loggedUser;
+            }
+            catch (NotFoundException ex)
+            {
                 throw new ApiControlledException("Błędny email lub hasło", 401, "Błędny email lub hasło. Wprowadź poprawne dane");
-
-            if(!user.EmailConfirmed)
-                throw new ApiControlledException("Konto nie jest potwierdzone", 401, "Sprawdź maila i potwierdź konto");
-
-            var token = await _tokenService.CreateToken(user);
-            var roles = await _userManager.GetRolesAsync(user);
-
-            var loggedUser = new LoggedUserDTO{
-                Id = user.Id,
-                Email = user.Email,
-                Token = token,
-                Role = roles.FirstOrDefault()
-            };
-
-            return loggedUser;
+            }
         }
 
-        public async Task PasswordReset(BaseAuthDTO passwordResetDTO )
+        public async Task PasswordReset(BaseAuthDTO passwordResetDTO)
         {
             var user = await GetUserByEmail(passwordResetDTO.Email);
             string token = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -74,7 +81,7 @@ namespace Project.Core.Services.OtherServices
         {
             var user = await GetUserById(setNewPasswordDTO.UserId);
             var result = await _userManager.ResetPasswordAsync(user, setNewPasswordDTO.Token, setNewPasswordDTO.Password);
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
 
         }
@@ -84,7 +91,7 @@ namespace Project.Core.Services.OtherServices
             var user = await GetUserById(setPasswordDTO.UserId);
             var result = await _userManager.AddPasswordAsync(user, setPasswordDTO.Password);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 throw new ApiControlledException(string.Join(" ", result.Errors.Select(e => e.Description)), 400);
         }
 
@@ -92,7 +99,7 @@ namespace Project.Core.Services.OtherServices
         {
             var user = await _userManager.FindByEmailAsync(email);
 
-            if(user == null)
+            if (user == null)
                 throw new NotFoundException("User not found");
 
             return user;
@@ -102,7 +109,7 @@ namespace Project.Core.Services.OtherServices
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-            if(user == null)
+            if (user == null)
                 throw new NotFoundException("User not found");
 
             return user;
