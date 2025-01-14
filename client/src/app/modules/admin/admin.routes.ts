@@ -10,6 +10,10 @@ export const adminRoutes: Routes = [
         canActivate : [AuthGuard],
         children: [
             {
+                path: 'dashboard', 
+                loadComponent: () => import('./pages/dashboard-page/dashboard-page.component').then(m => m.DashboardPageComponent)
+            },
+            {
                 path: 'bookings', 
                 loadComponent: () => import('./pages/reservations-page/reservations-page.component').then(m => m.ReservationsPageComponent)
             }, 
