@@ -3,9 +3,9 @@
         <div class="d-flex align-items-center">
             <button class="btn btn-outline-primary ms-3" (click)="stepBack()">Wróć</button>
             @if(getParticipants().participantsLeft < getParticipants().participantsNumber){
-                <div class="cart-box" (click)="openMenu()">
-                    <i class="bi bi-cart fs-5 burger text-secondary"></i>
-                    <p class="text-dark">{{getSelectedEquipment()}}</p>
+                <div class="icon-handler shadow p-relative ms-3" (click)="openMenu()">
+                    <i class="bi bi-cart-check fs-4"></i>
+                    <div class="notification-count">{{getSelectedEquipment()}}</div>
                 </div>
             }
         </div>

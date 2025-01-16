@@ -16,9 +16,8 @@ export class AdminGuard implements CanActivate{
     
       canActivate(): boolean {
         if (isPlatformBrowser(this.platformId)) {
-          if (this.authService.isAdmin()){
+          if (this.authService.isAdmin())
             return true; 
-          }
           else {
             this.router.navigate(['/not-found']);
             return false; 
