@@ -15,11 +15,12 @@ import { SystemSettingsHandlerService } from '../../../../../shared/services/oth
 import { GetSystemSettingsType } from '../../../../../shared/types/api/system-settings-types/get-system-settings.type';
 import { DatePipe } from '@angular/common';
 import { ToastService } from '../../../../../shared/services/ui/toasts/toast.service';
+import { ToastsComponent } from "../../../../../shared/ui/toasts/toasts.component";
 
 @Component({
   selector: 'app-date-selection',
   standalone: true,
-  imports: [FormComponent, ReservationFormCardComponent, NgbTimepickerModule, FormsModule, DatePipe],
+  imports: [FormComponent, ReservationFormCardComponent, NgbTimepickerModule, FormsModule, DatePipe, ToastsComponent],
   templateUrl: './date-selection.component.html',
   styleUrl: './date-selection.component.scss'
 })

@@ -6,7 +6,7 @@ import { ToastService } from '../../services/ui/toasts/toast.service';
   standalone: true,
   imports: [],
   templateUrl: './toasts.component.html',
-  styleUrl: './toasts.component.scss'
+  styleUrl: './toasts.component.scss',
 })
 export class ToastsComponent {
   constructor(public toastService : ToastService){}
@@ -15,13 +15,10 @@ export class ToastsComponent {
     switch(this.toastService.getToastState()?.messageType){
       case 'success':
         return "bi bi-check-circle"
-        break;
       case 'error':
         return 'bi bi-x-circle'
-        break;
       case 'info':
           return "bi bi-info-circle"
-          break;
       default:
         return ''
     }

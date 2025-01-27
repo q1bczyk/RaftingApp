@@ -14,13 +14,12 @@ export class ErrorInterceptor implements HttpInterceptor{
         
         return next.handle(req).pipe(
             catchError( (e : ApiErrorResponse) => {
-                console.log(e)
                 switch(e.error.statusCode){
                     case 500:
                      this.router.navigate(["/server-error"]);
                      break;
                     case 401:
-                        this.router.navigate(["/auth/login"]);
+                        this.UnauthorizeHandle();
                         break;
                     case 409:
                         this.toastService.showToast(e.error.details, 'error');
@@ -32,4 +31,12 @@ export class ErrorInterceptor implements HttpInterceptor{
         )
     }
 
+    private UnauthorizeHandle() : void{
+        const currentPath = this.router.url; 
+            if (currentPath === "/auth/login") 
+                this.toastService.showToast("Błędny login lub hasło", "error");
+            else 
+                this.router.navigate(["/auth/login"]);
+    }
 }
+
