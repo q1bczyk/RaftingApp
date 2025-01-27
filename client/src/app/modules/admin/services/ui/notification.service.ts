@@ -23,11 +23,10 @@ export class NotificationService {
                 this.joinGroup();           
             })
             .catch(err => {
-                console.log(err)
+                
             })
 
         this.hubConnection.on("NewNotification", (newReservation: SingleReservationDetailsType) => {
-            console.log(newReservation);
             this.newReservationReceived.emit(newReservation);
         });       
     }
