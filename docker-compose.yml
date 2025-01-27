@@ -26,7 +26,6 @@ services:
       - /root/.nuget/packages
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=postgres-db;Database=TwojaBazaDanych;Username=postgres;Password=TwojeHaslo123;
     networks:
       - app-network
     depends_on:

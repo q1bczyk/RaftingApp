@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalujemy zależności
-RUN npm install
+RUN npm install --force
 
 # Kopiujemy wszystkie pliki aplikacji do kontenera
 COPY . .
