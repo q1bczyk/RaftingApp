@@ -41,7 +41,7 @@ namespace Project.Infrastructure.Repositories
         {
             var data = await _context.Set<T>().FindAsync(id);
             if(data == null)
-                throw new NotFoundException("Not found!");
+                throw new ApiControlledException("Nie znaleziono zasobu!", 404);
             return data;
         }
 

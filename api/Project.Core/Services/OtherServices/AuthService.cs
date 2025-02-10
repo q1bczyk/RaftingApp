@@ -34,33 +34,26 @@ namespace Project.Core.Services.OtherServices
 
         public async Task<LoggedUserDTO> Login(LoginDTO loginDTO)
         {
-            try
-            {
-                var user = await GetUserByEmail(loginDTO.Email);
-                var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
-                if (!loginSuccess)
-                    throw new ApiControlledException("Błędny email lub hasło", 401, "Błędny email lub hasło. Wprowadź poprawne dane");
-
-                if (!user.EmailConfirmed)
-                    throw new ApiControlledException("Konto nie jest potwierdzone", 401, "Sprawdź maila i potwierdź konto");
-
-                var token = await _tokenService.CreateToken(user);
-                var roles = await _userManager.GetRolesAsync(user);
-
-                var loggedUser = new LoggedUserDTO
-                {
-                    Id = user.Id,
-                    Email = user.Email,
-                    Token = token,
-                    Role = roles.FirstOrDefault()
-                };
-
-                return loggedUser;
-            }
-            catch (NotFoundException ex)
-            {
+            var user = await GetUserByEmail(loginDTO.Email);
+            var loginSuccess = await _userManager.CheckPasswordAsync(user, loginDTO.Password);
+            if (!loginSuccess)
                 throw new ApiControlledException("Błędny email lub hasło", 401, "Błędny email lub hasło. Wprowadź poprawne dane");
-            }
+
+            if (!user.EmailConfirmed)
+                throw new ApiControlledException("Konto nie jest potwierdzone", 401, "Sprawdź maila i potwierdź konto");
+
+            var token = await _tokenService.CreateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var loggedUser = new LoggedUserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Token = token,
+                Role = roles.FirstOrDefault()
+            };
+
+            return loggedUser;
         }
 
         public async Task PasswordReset(BaseAuthDTO passwordResetDTO)
@@ -100,7 +93,7 @@ namespace Project.Core.Services.OtherServices
             var user = await _userManager.FindByEmailAsync(email);
 
             if (user == null)
-                throw new NotFoundException("User not found");
+                throw new ApiControlledException("Użytkownik nie istnieje", 404);
 
             return user;
         }
@@ -110,7 +103,7 @@ namespace Project.Core.Services.OtherServices
             var user = await _userManager.FindByIdAsync(userId);
 
             if (user == null)
-                throw new NotFoundException("User not found");
+                throw new ApiControlledException("Użytkownik nie istnieje", 404);
 
             return user;
         }

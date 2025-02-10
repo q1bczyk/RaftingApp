@@ -15,7 +15,11 @@ namespace Project.Core.Services.BusinessService
         private readonly IBaseMapper<EquipmentType, GetEquipmentTypeDTO> _equipmentTypeMapper;
         private readonly IBaseMapper<Reservation, GetReservationDTO> _reservationDTOMapper;
 
-        public DashboardService(IReservationEquipmentRepository reservationEquipmentRepository, IReservationRepository reservationRepository, IBaseMapper<EquipmentType, GetEquipmentTypeDTO> equipmentTypeMapper, IBaseMapper<Reservation, GetReservationDTO> reservationDTOMapper)
+        public DashboardService(
+            IReservationEquipmentRepository reservationEquipmentRepository, 
+            IReservationRepository reservationRepository, 
+            IBaseMapper<EquipmentType, GetEquipmentTypeDTO> equipmentTypeMapper, 
+            IBaseMapper<Reservation, GetReservationDTO> reservationDTOMapper)
         {
             _reservationEquipmentRepository = reservationEquipmentRepository;
             _reservationRepository = reservationRepository;
@@ -49,3 +53,4 @@ namespace Project.Core.Services.BusinessService
         }
     }
 }
+

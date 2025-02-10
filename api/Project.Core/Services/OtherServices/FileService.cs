@@ -55,10 +55,14 @@ namespace Project.Core.Services.OtherServices
 
         private void IsFileExtensionAllowed(IFormFile file)
         {
-            if(file == null) new ApiControlledException("Plik nie został przesłany", 400, "Plik jest wymagany");
+            if(file == null) 
+                new ApiControlledException("Plik nie został przesłany", 400, "Plik jest wymagany");
+
             string[] allowExtensions = { ".jpg", ".jpeg", ".png"};
             string extension = Path.GetExtension(file.FileName).ToLower();
-            if(!allowExtensions.Contains(extension)) throw new ApiControlledException("Format zdjęcia jest niepoprawny", 400, "Dostępne formaty to jpg, jpeg, png");
+
+            if(!allowExtensions.Contains(extension)) 
+                throw new ApiControlledException("Format zdjęcia jest niepoprawny", 400, "Dostępne formaty to jpg, jpeg, png");
         }
     }
 }

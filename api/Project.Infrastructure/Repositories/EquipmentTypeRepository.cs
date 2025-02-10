@@ -9,7 +9,7 @@ namespace Project.Infrastructure.Repositories
     {
         public EquipmentTypeRepository(DataContext context) : base(context){}
 
-        public async Task<List<EquipmentType>> GetAllAsync()
+        public override async Task<List<EquipmentType>> GetAllAsync()
         {
             return await _context.EquipmentTypes
             .OrderBy(e => e.MinParticipants)

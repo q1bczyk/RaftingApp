@@ -61,7 +61,7 @@ namespace Project.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
 
             if (reservation == null)
-                throw new NotFoundException("Not found!");
+                throw new ApiControlledException("Nie znaleziono zasobu!", 404);
 
             return reservation;
         }

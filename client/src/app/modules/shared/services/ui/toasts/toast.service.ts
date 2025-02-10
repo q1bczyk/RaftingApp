@@ -24,3 +24,5 @@ interface ToastType{
     message : string,
     messageType : string,
 }
+
+

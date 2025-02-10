@@ -4,15 +4,14 @@ namespace api
     {
         public int StatusCode;
         public string Details;
-        public ApiControlledException(string message, int statusCode = 400 ,string details = null) : base(message)
+        public ApiControlledException(string message, int statusCode = 400 , string details = "Wystąpił błąd") : base(message)
         {
-            Details = details ?? "An error occurred";
             StatusCode = statusCode;
         }
-        public ApiControlledException(string message, Exception innerException, int statusCode = 400, string details = null) : base(message, innerException)
+        public ApiControlledException(string message, Exception innerException, int statusCode = 400, string details = "Wystąpił błąd") : base(message, innerException)
         {
-            Details = details ?? "An error occurred";
             StatusCode = statusCode;
         }
     }
 }
+

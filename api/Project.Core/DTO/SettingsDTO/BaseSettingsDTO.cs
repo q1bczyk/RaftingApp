@@ -8,7 +8,7 @@ namespace Project.Core.DTO.SettingsDTO
     public class BaseSettingsDTO
     {
         [Required]
-        [Range(1, int.MaxValue, ErrorMessage = "HoursRentalTime must be at least 1.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Czas wypożycznia musi być większy bądź równy 1")]
         public int HoursRentalTime { get; set; }
         [Required]
         public DateTime SeasonStartDate { get; set; }
@@ -24,3 +24,4 @@ namespace Project.Core.DTO.SettingsDTO
         public string Email { get; set; }
     }
 }
+
