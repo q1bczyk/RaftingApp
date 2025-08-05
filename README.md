@@ -33,5 +33,5 @@ Projekt został zrealizowany z użyciem następujących technologii:
 ## Prezentacja aplikacji
 
 Film demonstracyjny przedstawiający działanie aplikacji znajduje się w katalogu głównym projektu:  
-📽️ `./demo.mp4`
+📽️ `./app-presentation.mp4`
 
