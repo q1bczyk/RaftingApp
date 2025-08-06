@@ -27,9 +27,9 @@ Projekt został zrealizowany z użyciem następujących technologii:
 - **Frontend:**  
   `Angular`, `TypeScript`, `HTML`, `SCSS`, `Bootstrap`
 
-- **Płatności:**  
-  `Stripe API`
-
+- **Inne:**
+  `Docker`, `GIT`, `Stripe API`
+  
 ## Prezentacja aplikacji
 
 Film demonstracyjny przedstawiający działanie aplikacji znajduje się w katalogu głównym projektu:  
